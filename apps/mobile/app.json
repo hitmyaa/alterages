@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Alterages",
+    "slug": "alterages",
+    "version": "0.0.0",
+    "orientation": "portrait",
+    "scheme": "alterages",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "fr.alterages.app"
+    },
+    "android": {
+      "package": "fr.alterages.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

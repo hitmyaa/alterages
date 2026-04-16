@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* AlterAges — thème clair
+     * Terracotta + sauge + crème, valeurs tirées du site vitrine V12.
+     * Converties en HSL pour piloter les tokens shadcn/ui.
+     */
+
+    /* cream #F8F4EE */
+    --background: 36 50% 95%;
+    /* deep #3D3020 */
+    --foreground: 33 31% 18%;
+
+    /* warm #FDFAF6 */
+    --card: 38 58% 98%;
+    --card-foreground: 33 31% 18%;
+
+    --popover: 38 58% 98%;
+    --popover-foreground: 33 31% 18%;
+
+    /* terra #B85C2C */
+    --primary: 20 62% 45%;
+    --primary-foreground: 36 50% 97%;
+
+    /* sage #5C7A62 */
+    --secondary: 129 14% 42%;
+    --secondary-foreground: 36 50% 97%;
+
+    /* bd-light #ECE4D4 */
+    --muted: 38 42% 88%;
+    /* mid #6A5A3E */
+    --muted-foreground: 36 26% 33%;
+
+    --accent: 38 42% 88%;
+    --accent-foreground: 33 31% 18%;
+
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 36 50% 97%;
+
+    /* bd #DDD0BA */
+    --border: 37 32% 80%;
+    --input: 37 32% 80%;
+    /* terra ring */
+    --ring: 20 62% 45%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Thème sombre (deep comme fond) — à affiner si besoin */
+    --background: 33 31% 14%;
+    --foreground: 36 50% 95%;
+
+    --card: 33 31% 16%;
+    --card-foreground: 36 50% 95%;
+
+    --popover: 33 31% 16%;
+    --popover-foreground: 36 50% 95%;
+
+    --primary: 19 60% 56%;
+    --primary-foreground: 33 31% 14%;
+
+    --secondary: 127 20% 66%;
+    --secondary-foreground: 33 31% 14%;
+
+    --muted: 33 20% 22%;
+    --muted-foreground: 36 25% 70%;
+
+    --accent: 33 20% 22%;
+    --accent-foreground: 36 50% 95%;
+
+    --destructive: 0 63% 50%;
+    --destructive-foreground: 36 50% 95%;
+
+    --border: 33 20% 25%;
+    --input: 33 20% 25%;
+    --ring: 19 60% 56%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+    font-weight: 300;
+  }
+
+  /* Ajuste l'offset du scroll pour tenir compte de la nav fixe (58px + marge) */
+  :target,
+  section[id] {
+    scroll-margin-top: 80px;
+  }
+}
+
+@layer components {
+  /* Étiquette de section (Playfair + uppercase + tracking) */
+  .eyebrow {
+    @apply mb-3 inline-block text-[0.68rem] font-medium uppercase tracking-tag text-terra;
+  }
+
+  .eyebrow-invert {
+    @apply mb-3 inline-block text-[0.68rem] font-medium uppercase tracking-tag text-terra-light;
+  }
+
+  /* Titres serif avec italique de mise en valeur */
+  .heading-serif em {
+    @apply font-normal italic text-terra;
+  }
+
+  /* Texture douce en fond (grain léger) pour donner de la chaleur aux zones claires */
+  .bg-grain {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(61, 48, 32, 0.05) 1px,
+      transparent 0
+    );
+    background-size: 24px 24px;
+  }
+}

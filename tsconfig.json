@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@alterages/shared": ["./packages/shared/src/index.ts"],
+      "@alterages/shared/*": ["./packages/shared/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "**/node_modules", "**/dist", "**/.next", "**/.expo"]
+}
