@@ -99,7 +99,7 @@
   /* Ajuste l'offset du scroll pour tenir compte de la nav fixe (58px + marge) */
   :target,
   section[id] {
-    scroll-margin-top: 80px;
+    scroll-margin-top: 96px;
   }
 }
 

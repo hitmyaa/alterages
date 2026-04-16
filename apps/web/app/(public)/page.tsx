@@ -3,7 +3,6 @@ import {
   CalendarCheck2,
   CheckCircle2,
   FileCheck2,
-  GraduationCap,
   Home,
   Linkedin,
   type LucideIcon,
@@ -12,9 +11,9 @@ import {
   Phone,
   Quote,
   Search,
-  ShieldCheck,
   X,
 } from 'lucide-react';
+import Image from 'next/image';
 
 import { ContactForm } from './_components/contact-form';
 
@@ -58,25 +57,23 @@ function HeroSection() {
         }}
       />
 
-      <div className="container relative z-10 grid min-h-[calc(100vh-58px-6rem)] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        <div className="animate-fade-up">
-          <span className="mb-7 inline-flex items-center gap-2 rounded-full border border-sage-light/60 bg-warm px-3 py-1.5 text-[0.68rem] uppercase tracking-[0.1em] text-sage">
-            <span className="h-1.5 w-1.5 rounded-full bg-sage" />
-            Projet · Lyon · Lancement septembre 2026
+      <div className="container relative z-10 grid min-h-[calc(100vh-76px-6rem)] grid-cols-1 items-stretch gap-12 lg:grid-cols-2 lg:gap-20">
+        <div className="flex animate-fade-up flex-col justify-center">
+          <span className="mb-7 inline-flex w-fit items-center gap-2 self-start rounded-full border border-sage-light/60 bg-warm px-3.5 py-1.5 text-[0.7rem] uppercase tracking-[0.12em] text-sage shadow-sm">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sage opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-sage" />
+            </span>
+            Lyon · Lancement septembre 2026
           </span>
 
-          <h1 className="font-serif text-[clamp(3rem,5.5vw,5.2rem)] font-normal leading-[0.95] tracking-tight text-deep">
-            Alter<em className="font-normal italic text-terra">Ages</em>
+          <h1 className="max-w-xl font-serif text-[clamp(2.2rem,4.5vw,4rem)] font-normal italic leading-[1.1] tracking-tight text-deep">
+            Quand la <span className="not-italic text-terra">jeunesse</span> prend soin
+            de la <span className="not-italic text-terra">sagesse</span>
           </h1>
 
-          <p className="mt-4 max-w-md font-serif text-lg italic leading-snug text-mid md:text-xl">
-            Quand la jeunesse prend soin de la sagesse
-          </p>
-
           <p className="mt-6 max-w-md text-[0.95rem] leading-[1.95] text-mid">
-            Des services d'aide à domicile assurés par des étudiants formés et engagés,
-            avec une gestion administrative entièrement prise en charge et une
-            tarification transparente, sans frais cachés.
+            Des services d'aide à domicile assurés par des étudiants formés et engagés.
           </p>
 
           <div className="mt-10 flex flex-wrap gap-3">
@@ -96,36 +93,17 @@ function HeroSection() {
           </div>
         </div>
 
-        {/* Visuel éditorial — composition abstraite en attendant une photographie */}
-        <div className="relative animate-fade-up lg:[animation-delay:120ms]">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-[0_30px_80px_-20px_rgba(61,48,32,0.25)] ring-1 ring-bd/60">
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  'linear-gradient(135deg, #FDFAF6 0%, #F0E4D0 45%, #D4B595 100%)',
-              }}
+        {/* Visuel hero — masqué sous lg (ratio 4:5 qui prendrait trop de place sur mobile) */}
+        <div className="relative hidden animate-fade-up lg:flex lg:items-center lg:[animation-delay:120ms]">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-[0_30px_80px_-20px_rgba(61,48,32,0.25)] ring-1 ring-bd/60">
+            <Image
+              src="/images/image-principale.png"
+              alt="Accompagnement intergénérationnel AlterAges — une jeune étudiante et une personne âgée"
+              fill
+              priority
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover"
             />
-            <div
-              className="absolute -right-16 -top-16 h-64 w-64 rounded-full blur-3xl"
-              style={{ background: 'rgba(184,92,44,0.35)' }}
-              aria-hidden
-            />
-            <div
-              className="absolute -bottom-16 -left-8 h-56 w-56 rounded-full blur-3xl"
-              style={{ background: 'rgba(92,122,98,0.32)' }}
-              aria-hidden
-            />
-
-            <div className="relative flex h-full flex-col justify-end p-10">
-              <p className="font-serif text-[clamp(1.4rem,2.2vw,2rem)] italic leading-[1.25] text-deep">
-                &laquo; Ce que j'apprécie, c'est de savoir que la famille n'est pas
-                livrée à elle-même. &raquo;
-              </p>
-              <p className="mt-4 text-[0.78rem] uppercase tracking-[0.1em] text-mid">
-                Assistante sociale · CLIC Lyon 6<sup>e</sup>
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -151,22 +129,22 @@ function PrescripteursSection() {
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           <PrescCard
-            icon={FileCheck2}
-            title="Zéro charge administrative"
-            description="Toute la gestion administrative est prise en charge."
-            accentFrom="rgba(184,92,44,0.35)"
+            image="/images/prescripteurs/zero-charge-adminsitrative.webp"
+            imageAlt="Main tenant un stylo au-dessus de documents administratifs sur un bureau chaleureux"
+            title="Zéro paperasse"
+            description="Contrats, CESU, bulletins de salaire : tout est pris en charge."
           />
           <PrescCard
-            icon={GraduationCap}
+            image="/images/prescripteurs/etudiants-formés.webp"
+            imageAlt="Étudiante en formation, concentrée, dans un intérieur lumineux"
             title="Des étudiants formés"
             description="Tous nos étudiants suivent une formation interne obligatoire."
-            accentFrom="rgba(92,122,98,0.35)"
           />
           <PrescCard
-            icon={ShieldCheck}
+            image="/images/prescripteurs/suivi-de-confiance.webp"
+            imageAlt="Dossier ouvert et tasse de café sur un bureau en bois"
             title="Un suivi de confiance"
             description="Un suivi peut être mis en place à la demande du prescripteur."
-            accentFrom="rgba(212,120,74,0.35)"
           />
         </div>
 
@@ -217,29 +195,40 @@ function PrescripteursSection() {
 }
 
 function PrescCard({
-  icon: Icon,
+  image,
+  imageAlt,
   title,
   description,
-  accentFrom,
 }: {
-  icon: LucideIcon;
+  image: string;
+  imageAlt: string;
   title: string;
   description: string;
-  accentFrom: string;
 }) {
   return (
-    <article className="group relative flex min-h-[220px] flex-col justify-end overflow-hidden rounded-xl border border-white/10 bg-white/[0.04] p-7 transition-transform hover:-translate-y-1">
+    <article className="group relative flex min-h-[260px] flex-col justify-end overflow-hidden rounded-xl border border-white/10 transition-transform hover:-translate-y-1">
+      {/* Image de fond */}
+      <Image
+        src={image}
+        alt={imageAlt}
+        fill
+        sizes="(min-width: 768px) 33vw, 100vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+      {/* Dégradé sombre pour la lisibilité du texte */}
       <div
         aria-hidden
-        className="absolute -right-12 -top-12 h-40 w-40 rounded-full blur-2xl"
-        style={{ background: accentFrom }}
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(to top, rgba(30,20,10,0.92) 40%, rgba(30,20,10,0.55) 100%)',
+        }}
       />
-      <div className="relative">
-        <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-terra-light">
-          <Icon className="h-5 w-5" />
-        </div>
+
+      {/* Contenu textuel */}
+      <div className="relative p-6">
         <h3 className="font-serif text-lg text-white">{title}</h3>
-        <p className="mt-2 text-[0.85rem] leading-[1.75] text-white/70">{description}</p>
+        <p className="mt-2 text-[0.85rem] leading-[1.75] text-white/75">{description}</p>
       </div>
     </article>
   );
@@ -301,7 +290,7 @@ function EtudiantsSection() {
           </ul>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 self-start">
+        <div className="grid grid-cols-2 gap-3 self-center">
           <ProfileCard
             name="Léa, 22 ans"
             meta="Travail social · Lyon 3"
@@ -361,12 +350,12 @@ function ProfileCard({
   return (
     <article className="group rounded-xl border border-bd bg-warm p-5 text-center transition-all hover:-translate-y-1 hover:border-sage-light">
       <div
-        className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full font-serif text-lg text-white"
+        className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full font-sans text-lg font-semibold text-white"
         style={{ background: accent }}
       >
         {initial}
       </div>
-      <div className="font-serif text-[0.92rem] text-deep">{name}</div>
+      <div className="text-[0.92rem] font-medium text-deep">{name}</div>
       <div className="mt-1 text-[0.75rem] leading-snug text-mid">{meta}</div>
       <span className="mt-3 inline-block rounded-full bg-sage-light/20 px-3 py-0.5 text-[0.66rem] font-medium tracking-wide text-sage">
         {badge}
@@ -452,33 +441,33 @@ function SuiviSection() {
 const comparisonRows = [
   {
     label: "Employeur de l'intervenant",
-    alt: { text: "L'organisme" },
-    good: { text: 'Le bénéficiaire, lien direct' },
+    alt: "L'organisme",
+    good: 'Le bénéficiaire',
   },
   {
     label: 'Marge sur les heures',
-    alt: { text: 'Oui, souvent opaque', negative: true },
-    good: { text: 'Aucune', positive: true },
+    alt: 'Oui, souvent opaque',
+    good: 'Aucune',
   },
   {
     label: "Crédit d'impôt 50%",
-    alt: { text: 'Partiel' },
-    good: { text: 'Sur 100% des dépenses' },
+    alt: 'Partiel',
+    good: 'Sur 100% des dépenses',
   },
   {
     label: "Choix de l'intervenant",
-    alt: { text: 'Imposé', negative: true },
-    good: { text: 'Au choix', positive: true },
+    alt: 'Imposé',
+    good: 'Au choix',
   },
   {
     label: "Lien avec l'intervenant",
-    alt: { text: 'Indirect, rotations fréquentes' },
-    good: { text: 'Direct, stable, choisi' },
+    alt: 'Indirect, rotations fréquentes',
+    good: 'Direct, stable, choisi',
   },
   {
     label: 'Frais cachés',
-    alt: { text: 'Fréquents', negative: true },
-    good: { text: 'Zéro', positive: true },
+    alt: 'Fréquents',
+    good: 'Zéro',
   },
 ] as const;
 
@@ -489,25 +478,27 @@ function TarifSection() {
         <span className="eyebrow">Tarification</span>
         <h2 className="heading-serif max-w-3xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-deep">
           Moins cher qu'un prestataire,<br />
-          plus transparent que tout le reste
+          infiniment plus humain
         </h2>
         <p className="mt-4 max-w-2xl text-[0.95rem] leading-[1.8] text-mid">
           Le bénéficiaire paie directement le salaire de son intervenant. AlterAges
           facture un forfait de gestion mensuel fixe, couvrant toute l'administration.
         </p>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <div className="mt-12 grid items-start gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+          {/* Tableau comparatif — colonne gauche */}
           <div className="overflow-hidden rounded-xl border border-bd bg-warm">
-            <table className="w-full border-collapse text-left">
+            {/* Desktop */}
+            <table className="hidden w-full border-collapse text-left md:table">
               <thead>
                 <tr>
-                  <th className="w-[38%] bg-cream px-4 py-3 text-[0.7rem] font-medium uppercase tracking-[0.09em] text-light">
-                    &nbsp;
+                  <th className="bg-sage px-3 py-3 text-[0.68rem] font-medium uppercase tracking-[0.09em] text-white">
+                    Critère
                   </th>
-                  <th className="bg-[#4a3a28] px-4 py-3 text-[0.7rem] font-medium uppercase tracking-[0.09em] text-white">
-                    Prestataire classique
+                  <th className="bg-[#4a3a28] px-3 py-3 text-[0.68rem] font-medium uppercase tracking-[0.09em] text-white">
+                    Prestataire
                   </th>
-                  <th className="bg-terra px-4 py-3 text-[0.7rem] font-medium uppercase tracking-[0.09em] text-white">
+                  <th className="bg-terra px-3 py-3 text-[0.68rem] font-medium uppercase tracking-[0.09em] text-white">
                     AlterAges
                   </th>
                 </tr>
@@ -515,43 +506,60 @@ function TarifSection() {
               <tbody>
                 {comparisonRows.map((row) => (
                   <tr key={row.label} className="border-t border-bd">
-                    <td className="bg-cream px-4 py-3 text-[0.84rem] text-mid">
+                    <td className="whitespace-nowrap bg-cream px-3 py-2.5 text-[0.78rem] font-medium text-deep">
                       {row.label}
                     </td>
-                    <td className="bg-cream px-4 py-3 text-[0.84rem] text-mid">
-                      <span
-                        className={
-                          'negative' in row.alt && row.alt.negative
-                            ? 'inline-flex items-center gap-1.5 text-light'
-                            : ''
-                        }
-                      >
-                        {'negative' in row.alt && row.alt.negative ? (
-                          <X className="h-3.5 w-3.5" aria-hidden />
-                        ) : null}
-                        {row.alt.text}
+                    <td className="whitespace-nowrap bg-cream px-3 py-2.5 text-[0.78rem]">
+                      <span className="inline-flex items-center gap-1.5 text-light">
+                        <X className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                        {row.alt}
                       </span>
                     </td>
-                    <td className="bg-[#fef2ea] px-4 py-3 text-[0.84rem] font-medium text-terra">
-                      <span
-                        className={
-                          'positive' in row.good && row.good.positive
-                            ? 'inline-flex items-center gap-1.5 text-sage'
-                            : ''
-                        }
-                      >
-                        {'positive' in row.good && row.good.positive ? (
-                          <CheckCircle2 className="h-3.5 w-3.5" aria-hidden />
-                        ) : null}
-                        {row.good.text}
+                    <td className="whitespace-nowrap bg-[#fef2ea] px-3 py-2.5 text-[0.78rem] font-medium text-terra">
+                      <span className="inline-flex items-center gap-1.5">
+                        <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-sage" aria-hidden />
+                        {row.good}
                       </span>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+
+            {/* Mobile — cartes compactes avec header comparatif */}
+            <div className="md:hidden">
+              <div className="grid grid-cols-2 border-b border-bd">
+                <div className="bg-[#4a3a28] px-4 py-2.5 text-center text-[0.68rem] font-medium uppercase tracking-[0.09em] text-white">
+                  Prestataire
+                </div>
+                <div className="bg-terra px-4 py-2.5 text-center text-[0.68rem] font-medium uppercase tracking-[0.09em] text-white">
+                  AlterAges
+                </div>
+              </div>
+
+              <div className="flex flex-col divide-y divide-bd">
+                {comparisonRows.map((row) => (
+                  <article key={row.label} className="bg-warm px-4 py-4">
+                    <h3 className="text-[0.75rem] font-medium uppercase tracking-[0.08em] text-sage">
+                      {row.label}
+                    </h3>
+                    <div className="mt-2 grid grid-cols-2 gap-3 text-[0.82rem]">
+                      <div className="flex items-start gap-1.5 text-light">
+                        <X className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
+                        <span>{row.alt}</span>
+                      </div>
+                      <div className="flex items-start gap-1.5 font-medium text-terra">
+                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-sage" aria-hidden />
+                        <span>{row.good}</span>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
 
+          {/* Cartes détaillées — colonne droite */}
           <div className="flex flex-col gap-4">
             <InfoCard
               title="Salaire de l'étudiant"
@@ -562,8 +570,8 @@ function TarifSection() {
               description="Un montant fixe couvrant sélection, contrats, CESU, bulletins de salaire, suivi et remplacements. Communiqué au lancement en septembre 2026."
             />
             <div className="flex items-center gap-5 rounded-xl bg-deep px-6 py-5 text-white">
-              <div className="font-serif text-[2.5rem] leading-none text-terra-light">
-                50<span className="align-top text-2xl">%</span>
+              <div className="font-sans text-[2.75rem] font-bold leading-none tracking-tight text-terra-light tabular-nums">
+                50<span className="ml-0.5 align-top text-xl font-semibold">%</span>
               </div>
               <div className="text-[0.83rem] leading-[1.75] text-white/60">
                 <strong className="block font-medium text-white">

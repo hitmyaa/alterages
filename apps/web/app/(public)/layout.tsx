@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const navSections = [
@@ -11,12 +12,22 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header className="fixed inset-x-0 top-0 z-40 border-b border-bd-light/80 bg-cream/90 backdrop-blur-md">
-        <div className="container flex h-[58px] items-center justify-between">
+        <div className="container flex h-[76px] items-center justify-between">
           <Link
             href="/"
-            className="font-serif text-xl tracking-tight text-terra transition-opacity hover:opacity-80"
+            className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
           >
-            AlterAges
+            <Image
+              src="/images/transparent-logo.webp"
+              alt="Logo AlterAges"
+              width={56}
+              height={56}
+              priority
+              className="h-14 w-14 object-contain"
+            />
+            <span className="font-serif text-xl tracking-tight text-deep">
+              Alter<em className="font-normal italic text-terra">Ages</em>
+            </span>
           </Link>
 
           <nav aria-label="Navigation principale" className="hidden items-center gap-8 md:flex">
@@ -46,7 +57,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         </div>
       </header>
 
-      <main className="flex-1 pt-[58px]">{children}</main>
+      <main className="flex-1 pt-[76px]">{children}</main>
 
       <footer className="bg-deep px-6 py-10 text-center text-[0.78rem] leading-loose tracking-wide text-white/75">
         <p>
