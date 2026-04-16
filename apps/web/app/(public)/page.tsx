@@ -326,6 +326,11 @@ function EtudiantsSection() {
             badge="Repas · Courses"
             accent="#B0A08A"
           />
+
+          <p className="col-span-2 pt-2 text-[0.72rem] leading-[1.6] text-light">
+            * Ces profils sont illustratifs et représentent le type d'intervenants
+            qu'AlterAges souhaite recruter d'ici septembre 2026.
+          </p>
         </div>
       </div>
     </section>
@@ -596,7 +601,7 @@ function ContactSection() {
             Parlons du projet
           </h2>
 
-          <div className="mt-7 flex items-center gap-4 rounded-xl bg-deep px-5 py-4">
+          <div className="mt-7 flex items-start gap-4 rounded-xl bg-deep px-5 py-4">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-terra font-serif text-base text-white">
               FS
             </div>
@@ -604,11 +609,22 @@ function ContactSection() {
               <strong className="block text-[0.92rem] font-medium text-white">
                 Faustine Sornay
               </strong>
-              <span className="text-[0.79rem] text-white/55">
+              <span className="block text-[0.79rem] text-white/55">
                 Porteuse du projet AlterAges · Lyon
+              </span>
+              <span className="mt-1.5 block text-[0.77rem] leading-[1.6] text-white/45">
+                Ancienne auxiliaire de vie, je crée AlterAges avec une idée simple :
+                replacer l'humain et le lien intergénérationnel au cœur d'un modèle
+                d'aide à domicile repensé.
               </span>
             </div>
           </div>
+
+          <p className="mt-5 max-w-md text-[0.92rem] leading-[1.95] text-mid">
+            Professionnel du secteur, famille qui anticipe, partenaire potentiel :
+            contactez-nous avant le lancement. Plus tôt on échange, mieux on construit
+            quelque chose qui répond vraiment à vos besoins.
+          </p>
 
           <div className="mt-6 flex flex-col gap-3">
             <CoordItem

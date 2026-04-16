@@ -130,15 +130,9 @@ export function ContactForm() {
 
       {sent ? (
         <div className="mt-4 rounded-md border border-[#a8d5ad] bg-[#eaf5ec] px-5 py-3 text-[0.85rem] leading-[1.7] text-[#2a5c30]">
-          Votre messagerie vient de s'ouvrir avec le message pré-rempli. Si rien ne s'est
-          passé, écrivez directement à{' '}
-          <a
-            href="mailto:contact@alter-ages.fr"
-            className="font-medium underline underline-offset-2"
-          >
-            contact@alter-ages.fr
-          </a>
-          .
+          Votre messagerie s'est ouverte avec le message prêt à envoyer. Si rien ne
+          s'affiche, écrivez à <strong>contact@alter-ages.fr</strong> ou appelez le{' '}
+          <strong>06 73 87 75 71</strong>.
         </div>
       ) : null}
     </form>
