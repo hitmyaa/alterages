@@ -459,7 +459,7 @@ const comparisonRows = [
   {
     label: "Profil de l'intervenant",
     alt: 'Auxiliaire polyvalent·e',
-    good: 'Étudiant en santé / social',
+    good: 'Étudiant qualifié',
   },
   {
     label: "Choix de l'intervenant",
