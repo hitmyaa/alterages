@@ -326,7 +326,7 @@ function EtudiantsSection() {
 
 function ChecklistItem({ children }: { children: React.ReactNode }) {
   return (
-    <li className="flex items-start gap-3 rounded-lg border-l-2 border-sage-light bg-warm px-4 py-3 text-[0.88rem] leading-[1.65] text-mid">
+    <li className="flex items-start gap-3 rounded-lg border-l-2 border-terra bg-warm px-4 py-3 text-[0.88rem] leading-[1.65] text-mid">
       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-terra" />
       <span>{children}</span>
     </li>
@@ -621,18 +621,24 @@ function ContactSection() {
             Parlons du projet
           </h2>
 
-          <div className="mt-7 flex items-start gap-4 rounded-xl bg-deep px-5 py-4">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-terra font-serif text-base text-white">
-              FS
+          <div className="mt-7 flex items-start gap-5 rounded-xl bg-deep px-6 py-5">
+            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-terra ring-2 ring-terra/40 sm:h-24 sm:w-24">
+              <Image
+                src="/images/faustine.webp"
+                alt="Portrait de Faustine Sornay"
+                fill
+                sizes="(min-width: 640px) 96px, 80px"
+                className="object-cover"
+              />
             </div>
             <div>
-              <strong className="block text-[0.92rem] font-medium text-white">
+              <strong className="block text-[0.95rem] font-semibold text-white">
                 Faustine Sornay
               </strong>
-              <span className="block text-[0.79rem] text-white/55">
+              <span className="block text-[0.82rem] text-white/80">
                 Porteuse du projet AlterAges · Lyon
               </span>
-              <span className="mt-1.5 block text-[0.77rem] leading-[1.6] text-white/45">
+              <span className="mt-2 block text-[0.8rem] leading-[1.7] text-white/75">
                 Ancienne auxiliaire de vie, je crée AlterAges avec une idée simple :
                 replacer l'humain et le lien intergénérationnel au cœur d'un modèle
                 d'aide à domicile repensé.

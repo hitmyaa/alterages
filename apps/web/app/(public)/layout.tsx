@@ -18,14 +18,14 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
           >
             <Image
-              src="/images/transparent-logo.webp"
+              src="/images/transparent-logo-terra.svg"
               alt="Logo AlterAges"
-              width={56}
-              height={56}
+              width={40}
+              height={40}
               priority
-              className="h-14 w-14 object-contain"
+              className="h-10 w-10 object-contain"
             />
-            <span className="font-serif text-xl tracking-tight text-deep">
+            <span className="font-serif text-[1.6rem] leading-none tracking-tight text-deep">
               Alter<em className="font-normal italic text-terra">Ages</em>
             </span>
           </Link>
