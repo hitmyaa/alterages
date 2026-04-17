@@ -57,7 +57,7 @@ function HeroSection() {
         }}
       />
 
-      <div className="container relative z-10 grid min-h-[calc(100vh-76px-6rem)] grid-cols-1 items-stretch gap-12 lg:grid-cols-2 lg:gap-20">
+      <div className="container relative z-10 grid grid-cols-1 items-stretch gap-12 lg:grid-cols-2 lg:gap-20">
         <div className="flex animate-fade-up flex-col justify-center">
           <span className="mb-7 inline-flex w-fit items-center gap-2 self-start rounded-full border border-sage-light/60 bg-warm px-3.5 py-1.5 text-[0.7rem] uppercase tracking-[0.12em] text-sage shadow-sm">
             <span className="relative flex h-1.5 w-1.5">
@@ -93,9 +93,10 @@ function HeroSection() {
           </div>
         </div>
 
-        {/* Visuel hero — masqué sous lg (ratio 4:5 qui prendrait trop de place sur mobile) */}
-        <div className="relative hidden animate-fade-up lg:flex lg:items-center lg:[animation-delay:120ms]">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-[0_30px_80px_-20px_rgba(61,48,32,0.25)] ring-1 ring-bd/60">
+        {/* Visuel hero — la hauteur est dict\u00e9e par le bloc texte \u00e0 gauche ; l'image
+             crop via object-cover pour remplir cette hauteur. Masqu\u00e9e sous lg. */}
+        <div className="relative hidden animate-fade-up lg:flex lg:[animation-delay:120ms]">
+          <div className="relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl shadow-[0_30px_80px_-20px_rgba(61,48,32,0.25)] ring-1 ring-bd/60">
             <Image
               src="/images/image-principale.png"
               alt="Accompagnement intergénérationnel AlterAges — une jeune étudiante et une personne âgée"
@@ -123,8 +124,9 @@ function PrescripteursSection() {
           on gère tout le reste
         </h2>
         <p className="mt-4 max-w-xl text-[0.95rem] leading-[1.9] text-white/65">
-          Nous prenons en charge de A à Z tous les bénéficiaires, avec confiance et
-          professionnalisme.
+          Nous prenons en charge de A à Z tous les bénéficiaires,
+          <br />
+          avec confiance et professionnalisme.
         </p>
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
@@ -154,9 +156,9 @@ function PrescripteursSection() {
           </span>
           <div className="grid gap-4 md:grid-cols-3">
             <Testimonial
-              quote="Ce que j'apprécie, c'est de savoir que la famille n'est pas livrée à elle-même. Il y a quelqu'un qui gère et qui me tient au courant si besoin."
-              role="Assistante sociale, CLIC Lyon 6e"
-              meta="Partenaire fondatrice · avant lancement"
+              quote="C'est sécurisant. Le fait d'avoir un interlocuteur principal permet de lever la crainte des bénéficiaires de faire entrer quelqu'un chez eux."
+              role="Médecin généraliste · Lyon 6e"
+              meta="Entretien prescripteur · avril 2026"
             />
             <Testimonial
               quote="Orienter vers des étudiants formés et suivis, c'est une garantie que je n'avais pas avec d'autres solutions. Je recommande maintenant avec confiance."
@@ -171,19 +173,15 @@ function PrescripteursSection() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-6 rounded-xl border border-terra/30 bg-terra/10 px-8 py-7 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-2xl">
-            <strong className="block text-base font-medium text-white">
-              Devenir partenaire fondateur
-            </strong>
-            <p className="mt-1 text-sm leading-relaxed text-white/60">
-              Le projet se construit et votre regard terrain est précieux. Rejoignez-nous
-              avant le lancement pour co-construire l'offre.
-            </p>
-          </div>
+        <div className="mt-10 flex flex-col gap-4 rounded-xl border border-terra/30 bg-terra/10 px-6 py-4 md:flex-row md:items-center md:justify-between md:gap-8">
+          <p className="text-sm text-white/75 md:whitespace-nowrap">
+            <strong className="font-medium text-white">Devenir partenaire fondateur</strong>
+            <span className="mx-2 text-white/30">—</span>
+            Le projet se construit, votre regard terrain est précieux avant le lancement.
+          </p>
           <a
             href="#contact"
-            className="group inline-flex shrink-0 items-center gap-2 self-start rounded-sm bg-white px-6 py-3 text-sm font-medium text-deep transition-opacity hover:opacity-90 md:self-auto"
+            className="group inline-flex shrink-0 items-center gap-2 self-start rounded-sm bg-white px-6 py-2.5 text-sm font-medium text-deep transition-opacity hover:opacity-90 md:self-auto"
           >
             Prendre contact
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -290,7 +288,7 @@ function EtudiantsSection() {
           </ul>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 self-center">
+        <div className="grid grid-cols-2 gap-3 self-start lg:mt-[10.5rem]">
           <ProfileCard
             name="Léa, 22 ans"
             meta="Travail social · Lyon 3"
@@ -329,7 +327,7 @@ function EtudiantsSection() {
 function ChecklistItem({ children }: { children: React.ReactNode }) {
   return (
     <li className="flex items-start gap-3 rounded-lg border-l-2 border-sage-light bg-warm px-4 py-3 text-[0.88rem] leading-[1.65] text-mid">
-      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-sage" />
+      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-terra" />
       <span>{children}</span>
     </li>
   );
@@ -398,13 +396,12 @@ function SuiviSection() {
   return (
     <section id="suivi" className="bg-warm px-6 py-24 md:py-28">
       <div className="container">
-        <span className="eyebrow">Le suivi</span>
+        <span className="eyebrow">Le parcours client</span>
         <h2 className="heading-serif max-w-3xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-deep">
           De l'orientation à l'intervention, un seul fil conducteur
         </h2>
-        <p className="mt-4 max-w-2xl text-[0.95rem] leading-[1.8] text-mid">
-          Un interlocuteur unique, joignable, qui connaît le dossier. De la première
-          prise de contact au suivi mensuel.
+        <p className="mt-4 text-[0.95rem] leading-[1.8] text-mid">
+          Un interlocuteur unique, joignable, qui connaît le dossier. De la première prise de contact au suivi mensuel.
         </p>
 
         <ol className="relative mt-16 grid gap-10 md:grid-cols-5 md:gap-0">
@@ -420,7 +417,7 @@ function SuiviSection() {
               key={title}
               className="group relative flex flex-col items-center text-center md:px-3"
             >
-              <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] border-terra bg-warm font-serif text-lg text-terra transition-all group-hover:bg-terra group-hover:text-white">
+              <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] border-terra bg-warm font-sans text-base font-semibold tabular-nums text-terra transition-all group-hover:bg-terra group-hover:text-white">
                 <span className="group-hover:hidden">{idx + 1}</span>
                 <Icon className="hidden h-5 w-5 group-hover:block" aria-hidden />
               </div>
@@ -455,6 +452,16 @@ const comparisonRows = [
     good: 'Sur 100% des dépenses',
   },
   {
+    label: 'Frais cachés',
+    alt: 'Fréquents',
+    good: 'Zéro',
+  },
+  {
+    label: "Profil de l'intervenant",
+    alt: 'Auxiliaire polyvalent·e',
+    good: 'Étudiant en santé / social',
+  },
+  {
     label: "Choix de l'intervenant",
     alt: 'Imposé',
     good: 'Au choix',
@@ -465,9 +472,14 @@ const comparisonRows = [
     good: 'Direct, stable, choisi',
   },
   {
-    label: 'Frais cachés',
-    alt: 'Fréquents',
-    good: 'Zéro',
+    label: 'Dimension sociale',
+    alt: 'Tâches à exécuter',
+    good: 'Lien intergénérationnel',
+  },
+  {
+    label: 'Engagement',
+    alt: 'Préavis contractuel',
+    good: 'Sans engagement',
   },
 ] as const;
 
@@ -517,7 +529,7 @@ function TarifSection() {
                     </td>
                     <td className="whitespace-nowrap bg-[#fef2ea] px-3 py-2.5 text-[0.78rem] font-medium text-terra">
                       <span className="inline-flex items-center gap-1.5">
-                        <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-sage" aria-hidden />
+                        <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-terra" aria-hidden />
                         {row.good}
                       </span>
                     </td>
@@ -549,7 +561,7 @@ function TarifSection() {
                         <span>{row.alt}</span>
                       </div>
                       <div className="flex items-start gap-1.5 font-medium text-terra">
-                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-sage" aria-hidden />
+                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-terra" aria-hidden />
                         <span>{row.good}</span>
                       </div>
                     </div>
