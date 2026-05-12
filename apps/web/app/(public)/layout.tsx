@@ -1,61 +1,9 @@
-import Image from 'next/image';
-import Link from 'next/link';
-
-const navSections = [
-  { href: '/#prescripteurs', label: 'Prescripteurs' },
-  { href: '/#etudiants', label: 'Étudiants' },
-  { href: '/#suivi', label: 'Suivi' },
-  { href: '/#tarif', label: 'Tarification' },
-] as const;
+import { PublicHeader } from '@/components/site/public-header';
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-bd-light/80 bg-cream/90 backdrop-blur-md">
-        <div className="container flex h-[76px] items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
-          >
-            <Image
-              src="/images/transparent-logo-terra.svg"
-              alt="Logo AlterAges"
-              width={40}
-              height={40}
-              priority
-              className="h-10 w-10 object-contain"
-            />
-            <span className="font-serif text-[1.6rem] leading-none tracking-tight text-deep">
-              Alter<em className="font-normal italic text-terra">Ages</em>
-            </span>
-          </Link>
-
-          <nav aria-label="Navigation principale" className="hidden items-center gap-8 md:flex">
-            {navSections.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-[0.78rem] uppercase tracking-[0.07em] text-mid transition-colors hover:text-terra"
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Link
-              href="/#contact"
-              className="rounded-sm bg-terra px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors hover:bg-terra-dark"
-            >
-              Nous contacter
-            </Link>
-          </nav>
-
-          <Link
-            href="/#contact"
-            className="rounded-sm bg-terra px-4 py-2 text-xs font-medium uppercase tracking-wider text-white transition-colors hover:bg-terra-dark md:hidden"
-          >
-            Contact
-          </Link>
-        </div>
-      </header>
+      <PublicHeader />
 
       <main className="flex-1 pt-[76px]">{children}</main>
 

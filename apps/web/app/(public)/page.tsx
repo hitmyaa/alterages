@@ -286,6 +286,14 @@ function EtudiantsSection() {
               d'intervention, posture professionnelle
             </ChecklistItem>
           </ul>
+
+          <a
+            href="/etudiants"
+            className="group mt-8 inline-flex items-center gap-2 text-sm font-medium text-terra transition-colors hover:text-terra-dark"
+          >
+            Découvrir le programme étudiant
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
         </div>
 
         <div className="grid grid-cols-2 gap-3 self-start lg:mt-[10.5rem]">
