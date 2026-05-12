@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import {
-  ArrowRight,
   CalendarCheck2,
   ClipboardList,
   FileCheck2,
@@ -11,6 +10,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 
+import { InterestButton } from '@/components/auth/interest-button';
 import {
   AdvantageItem,
   ChecklistItem,
@@ -202,10 +202,7 @@ export default function EtudiantsPage() {
             </p>
 
             <div className="mt-10">
-              <a href="#rejoindre" className="btn-primary group">
-                Je suis intéressé(e)
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </a>
+              <InterestButton />
             </div>
           </div>
 
@@ -277,10 +274,7 @@ export default function EtudiantsPage() {
             </div>
 
             <div className="mt-8">
-              <a href="#rejoindre" className="btn-primary group">
-                Je suis intéressé(e)
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </a>
+              <InterestButton />
             </div>
           </div>
 
@@ -350,10 +344,7 @@ export default function EtudiantsPage() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <a href="#rejoindre" className="btn-on-dark group">
-            Rejoindre et accéder à la formation
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
+          <InterestButton variant="on-dark" label="Rejoindre et accéder à la formation" />
         </div>
       </Section>
 
@@ -370,10 +361,7 @@ export default function EtudiantsPage() {
         </div>
 
         <div className="mt-12 flex justify-center">
-          <a href="#rejoindre" className="btn-primary group">
-            Commencer la démarche
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
+          <InterestButton label="Commencer la démarche" />
         </div>
       </Section>
 
@@ -477,7 +465,7 @@ export default function EtudiantsPage() {
       <Section tone="warm" id="rejoindre" className="bg-terra text-white">
         <div className="text-center">
           <h2 className="heading-serif h2 mx-auto max-w-2xl text-white">
-            Prêt à rejoindre <em className="font-normal italic text-deep">l’aventure</em> ?
+            Prêt à rejoindre <em className="font-normal italic">l’aventure</em> ?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[0.95rem] leading-[1.9] text-white/80">
             Pas de CV ni de lettre de motivation. Une candidature rapide,
@@ -486,13 +474,7 @@ export default function EtudiantsPage() {
           </p>
 
           <div className="mt-10 flex justify-center">
-            <a
-              href="/#contact"
-              className="group inline-flex items-center gap-2 rounded-sm bg-white px-7 py-3 text-sm font-medium text-terra-dark shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-            >
-              Je suis intéressé(e)
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
+            <InterestButton variant="on-terra" />
           </div>
         </div>
       </Section>

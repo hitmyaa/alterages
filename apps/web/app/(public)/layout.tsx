@@ -1,11 +1,14 @@
+import { AuthModal } from '@/components/auth/auth-modal';
+import { AuthModalProvider } from '@/components/auth/auth-modal-provider';
 import { PublicHeader } from '@/components/site/public-header';
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <PublicHeader />
+    <AuthModalProvider>
+      <div className="flex min-h-screen flex-col bg-background">
+        <PublicHeader />
 
-      <main className="flex-1 pt-[76px]">{children}</main>
+        <main className="flex-1 pt-[76px]">{children}</main>
 
       <footer className="bg-deep px-6 py-10 text-center text-[0.78rem] leading-loose tracking-wide text-white/75">
         <p>
@@ -36,6 +39,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           actuellement commercialisé.
         </p>
       </footer>
-    </div>
+      </div>
+
+      <AuthModal />
+    </AuthModalProvider>
   );
 }

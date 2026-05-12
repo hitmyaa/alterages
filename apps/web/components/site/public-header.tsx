@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { InterestButton } from '@/components/auth/interest-button';
+
 type NavItem = { href: string; label: string };
 
 /* Liens par défaut — landing + pages neutres (a-propos, tarifs, etc.). */
@@ -26,16 +28,15 @@ const etudiantsNav: ReadonlyArray<NavItem> = [
 /**
  * Header public — adapte sa navigation et son CTA principal selon la route :
  * - `/etudiants` : ancres internes à la page + CTA "Je suis intéressé(e)"
+ *   qui ouvre la modal d'authentification (via `InterestButton`).
  * - autres pages : liens vers les sections de la landing + CTA "Nous contacter"
+ *   classique (Link vers /#contact).
  */
 export function PublicHeader() {
   const pathname = usePathname();
   const isEtudiants = pathname === '/etudiants';
 
   const navItems = isEtudiants ? etudiantsNav : landingNav;
-  const ctaLabel = isEtudiants ? 'Je suis intéressé(e)' : 'Nous contacter';
-  const ctaShort = isEtudiants ? 'Intéressé(e)' : 'Contact';
-  const ctaHref = isEtudiants ? '#rejoindre' : '/#contact';
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-bd-light/80 bg-cream/90 backdrop-blur-md">
@@ -70,20 +71,28 @@ export function PublicHeader() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href={ctaHref}
-            className="rounded-sm bg-terra px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors hover:bg-terra-dark"
-          >
-            {ctaLabel}
-          </Link>
+          {isEtudiants ? (
+            <InterestButton variant="nav" label="Je suis intéressé(e)" />
+          ) : (
+            <Link
+              href="/#contact"
+              className="rounded-sm bg-terra px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors hover:bg-terra-dark"
+            >
+              Nous contacter
+            </Link>
+          )}
         </nav>
 
-        <Link
-          href={ctaHref}
-          className="rounded-sm bg-terra px-4 py-2 text-xs font-medium uppercase tracking-wider text-white transition-colors hover:bg-terra-dark md:hidden"
-        >
-          {ctaShort}
-        </Link>
+        {isEtudiants ? (
+          <InterestButton variant="nav-short" label="Intéressé(e)" />
+        ) : (
+          <Link
+            href="/#contact"
+            className="rounded-sm bg-terra px-4 py-2 text-xs font-medium uppercase tracking-wider text-white transition-colors hover:bg-terra-dark md:hidden"
+          >
+            Contact
+          </Link>
+        )}
       </div>
     </header>
   );
