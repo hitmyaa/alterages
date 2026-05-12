@@ -327,8 +327,7 @@ export default function EtudiantsPage() {
             />
           ))}
           <FormationModule
-            badge="Validation finale"
-            icon={ShieldCheck}
+            badge="Validation"
             title="QCM et cas pratiques"
             description="Un QCM et deux cas pratiques pour valider vos acquis."
             points={[
@@ -465,7 +464,7 @@ export default function EtudiantsPage() {
       <Section tone="warm" id="rejoindre" className="bg-terra text-white">
         <div className="text-center">
           <h2 className="heading-serif h2 mx-auto max-w-2xl text-white">
-            Prêt à rejoindre <em className="font-normal italic">l’aventure</em> ?
+            Prêt à rejoindre l’aventure ?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[0.95rem] leading-[1.9] text-white/80">
             Pas de CV ni de lettre de motivation. Une candidature rapide,

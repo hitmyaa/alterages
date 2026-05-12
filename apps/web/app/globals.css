@@ -199,6 +199,28 @@
     );
   }
 
+  /* ===== Champs de formulaire =====
+   * `.field-input` : base inputs/textarea — border bd, focus terra avec
+   * ring discret. `.field-select` ajoute un chevron SVG custom (couleur
+   * mid) à la place de l'arrow laid du navigateur.
+   */
+  .field-input {
+    @apply w-full rounded-md border border-bd bg-white px-3.5 py-2.5 text-[0.9rem] text-deep transition-colors placeholder:text-light hover:border-terra-light/60 focus:border-terra focus:outline-none focus:ring-1 focus:ring-terra/30;
+  }
+
+  .field-select {
+    @apply field-input cursor-pointer pr-10;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236A5A3E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 14px;
+  }
+
+  .field-invalid {
+    @apply border-destructive/60 focus:border-destructive focus:ring-destructive/20;
+  }
+
   /* ===== Boutons marketing =====
    * Les boutons CTA de la landing n'utilisent pas le composant `<Button>`
    * shadcn ; ces classes répliquent leur style pour permettre l'usage sur

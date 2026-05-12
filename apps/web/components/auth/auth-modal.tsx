@@ -51,6 +51,10 @@ export function AuthModal() {
         </button>
 
         <div className="relative z-10">
+          <h2 id="auth-modal-title" className="sr-only">
+            Rejoindre AlterAges — espace étudiant
+          </h2>
+
           <div className="text-center">
             <p className="font-serif text-[1.5rem] leading-none text-terra-light">
               AlterAges
@@ -60,18 +64,7 @@ export function AuthModal() {
             </p>
           </div>
 
-          <h2
-            id="auth-modal-title"
-            className="mt-7 text-center font-serif text-[1.4rem] italic leading-tight text-white"
-          >
-            Rejoignez le vivier
-          </h2>
-          <p className="mt-2 text-center text-[0.85rem] leading-[1.7] text-white/55">
-            Créez votre espace en quelques secondes. Votre dossier se complète à
-            votre rythme.
-          </p>
-
-          <div className="mt-7 flex flex-col gap-2.5">
+          <div className="mt-8 flex flex-col gap-2.5">
             <button
               type="button"
               onClick={startOnboarding}

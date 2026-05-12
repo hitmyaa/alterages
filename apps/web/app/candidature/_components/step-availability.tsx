@@ -11,20 +11,77 @@ import { cn } from '@/lib/utils';
 
 const DAYS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'] as const;
 
-/* Créneaux de 2 heures entre 7h et 19h. */
+/* Créneaux de 2 heures entre 6h et 20h (7 créneaux). */
 const SLOTS = [
-  { label: '7h – 9h', short: '7–9' },
-  { label: '9h – 11h', short: '9–11' },
-  { label: '11h – 13h', short: '11–13' },
-  { label: '13h – 15h', short: '13–15' },
-  { label: '15h – 17h', short: '15–17' },
-  { label: '17h – 19h', short: '17–19' },
+  { label: '6h – 8h' },
+  { label: '8h – 10h' },
+  { label: '10h – 12h' },
+  { label: '12h – 14h' },
+  { label: '14h – 16h' },
+  { label: '16h – 18h' },
+  { label: '18h – 20h' },
 ] as const;
 
-/** Clé d'une cellule : `${dayIdx}-${slotIdx}` (0..6 × 0..5). */
+/** Clé d'une cellule : `${dayIdx}-${slotIdx}` (0..6 × 0..6). */
 export type AvailabilityKey = string;
 
 const cellKey = (day: number, slot: number) => `${day}-${slot}`;
+
+/* Indices par catégorie pour les presets. */
+const WEEKDAYS = [0, 1, 2, 3, 4] as const;
+const WEEKEND = [5, 6] as const;
+const EVENING_SLOTS = [5, 6] as const; // 16-18 + 18-20
+
+/* ------------------------------------------------------------------ */
+/*                         PRESETS                                     */
+/* ------------------------------------------------------------------ */
+
+interface Preset {
+  id: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  /** Calcule l'ensemble des clés du preset. */
+  keys: () => Set<AvailabilityKey>;
+}
+
+const PRESETS: ReadonlyArray<Preset> = [
+  {
+    id: 'soirs-semaine',
+    label: 'Soirs en semaine',
+    icon: Moon,
+    keys: () => {
+      const set = new Set<AvailabilityKey>();
+      WEEKDAYS.forEach((d) =>
+        EVENING_SLOTS.forEach((s) => set.add(cellKey(d, s))),
+      );
+      return set;
+    },
+  },
+  {
+    id: 'weekends',
+    label: 'Weekends',
+    icon: Sun,
+    keys: () => {
+      const set = new Set<AvailabilityKey>();
+      WEEKEND.forEach((d) =>
+        SLOTS.forEach((_, s) => set.add(cellKey(d, s))),
+      );
+      return set;
+    },
+  },
+  {
+    id: 'all',
+    label: 'Toute la semaine',
+    icon: Sparkles,
+    keys: () => {
+      const set = new Set<AvailabilityKey>();
+      DAYS.forEach((_, d) =>
+        SLOTS.forEach((_s, s) => set.add(cellKey(d, s))),
+      );
+      return set;
+    },
+  },
+];
 
 /* ------------------------------------------------------------------ */
 /*                         PROPS                                       */
@@ -33,6 +90,9 @@ const cellKey = (day: number, slot: number) => `${day}-${slot}`;
 interface StepAvailabilityProps {
   value: ReadonlySet<AvailabilityKey>;
   onChange: (next: Set<AvailabilityKey>) => void;
+  /** Bypass : l'étudiant cochera ses dispos plus tard depuis son espace. */
+  unsetLater: boolean;
+  onChangeUnsetLater: (v: boolean) => void;
 }
 
 /* ------------------------------------------------------------------ */
@@ -40,15 +100,23 @@ interface StepAvailabilityProps {
 /* ------------------------------------------------------------------ */
 
 /**
- * Grille de disponibilités — 7 jours × 6 créneaux de 2h (7-19h).
+ * Grille de disponibilités — 7 jours × 7 créneaux de 2h (6h-20h).
  *
  * Interactions rapides :
- * - Click sur cellule : toggle individuel
- * - Click sur en-tête jour : toggle toute la colonne
- * - Click sur en-tête créneau : toggle toute la ligne
- * - Presets : Semaine soirs / Weekends / Toute la semaine / Effacer
+ * - Click cellule : toggle individuel
+ * - Click en-tête jour/créneau : toggle ligne/colonne entière
+ * - Presets cumulables (Soirs en semaine / Weekends / Toute la semaine) :
+ *   click ajoute les créneaux du preset, re-click les retire
+ * - Bouton "Effacer" séparé à droite : reset complet
+ * - Checkbox "renseigner plus tard" : grise toute la grille et permet de
+ *   passer l'étape sans rien remplir
  */
-export function StepAvailability({ value, onChange }: StepAvailabilityProps) {
+export function StepAvailability({
+  value,
+  onChange,
+  unsetLater,
+  onChangeUnsetLater,
+}: StepAvailabilityProps) {
   const toggleCell = (day: number, slot: number) => {
     const next = new Set(value);
     const key = cellKey(day, slot);
@@ -79,50 +147,83 @@ export function StepAvailability({ value, onChange }: StepAvailabilityProps) {
     onChange(next);
   };
 
-  /* Presets — remplacent intégralement la sélection. */
-  const applyPreset = (preset: 'soirs-semaine' | 'weekends' | 'all' | 'clear') => {
-    const next = new Set<AvailabilityKey>();
-    if (preset === 'soirs-semaine') {
-      [0, 1, 2, 3, 4].forEach((day) => next.add(cellKey(day, 5)));
-    } else if (preset === 'weekends') {
-      [5, 6].forEach((day) =>
-        SLOTS.forEach((_, slot) => next.add(cellKey(day, slot))),
-      );
-    } else if (preset === 'all') {
-      DAYS.forEach((_, day) =>
-        SLOTS.forEach((_, slot) => next.add(cellKey(day, slot))),
-      );
-    }
+  /* Toggle additif/soustractif : si tous les créneaux du preset sont déjà
+   * cochés → on les retire ; sinon → on les ajoute (cumul avec l'existant). */
+  const togglePreset = (preset: Preset) => {
+    const presetKeys = preset.keys();
+    const next = new Set(value);
+    const allIn = [...presetKeys].every((k) => next.has(k));
+    presetKeys.forEach((k) => {
+      if (allIn) next.delete(k);
+      else next.add(k);
+    });
     onChange(next);
   };
 
+  const isPresetActive = (preset: Preset) => {
+    const presetKeys = preset.keys();
+    return [...presetKeys].every((k) => value.has(k));
+  };
+
+  const clearAll = () => onChange(new Set());
+
   const selectedCount = value.size;
+  const disabled = unsetLater;
 
   return (
     <div className="flex flex-col gap-5">
-      {/* Presets rapides */}
-      <div>
+      {/* Presets + Effacer — tous sur la même ligne, Effacer en style ghost */}
+      <div
+        className={cn(
+          'transition-opacity',
+          disabled && 'pointer-events-none opacity-50',
+        )}
+      >
         <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.06em] text-mid">
           Sélection rapide
         </p>
-        <div className="flex flex-wrap gap-2">
-          <PresetButton icon={Moon} onClick={() => applyPreset('soirs-semaine')}>
-            Soirs en semaine
-          </PresetButton>
-          <PresetButton icon={Sun} onClick={() => applyPreset('weekends')}>
-            Weekends
-          </PresetButton>
-          <PresetButton icon={Sparkles} onClick={() => applyPreset('all')}>
-            Toute la semaine
-          </PresetButton>
-          <PresetButton icon={Eraser} onClick={() => applyPreset('clear')}>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {PRESETS.map((preset) => {
+            const active = isPresetActive(preset);
+            const Icon = preset.icon;
+            return (
+              <button
+                key={preset.id}
+                type="button"
+                onClick={() => togglePreset(preset)}
+                aria-pressed={active}
+                className={cn(
+                  'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[0.76rem] font-medium transition-colors',
+                  active
+                    ? 'border-terra bg-terra/10 text-terra'
+                    : 'border-bd bg-white text-mid hover:border-terra hover:text-terra',
+                )}
+              >
+                <Icon className="h-3.5 w-3.5" aria-hidden />
+                {preset.label}
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            onClick={clearAll}
+            disabled={disabled || selectedCount === 0}
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.76rem] font-medium text-light transition-colors hover:text-mid disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <Eraser className="h-3.5 w-3.5" aria-hidden />
             Effacer
-          </PresetButton>
+          </button>
         </div>
       </div>
 
       {/* Grille jours × créneaux */}
-      <div className="overflow-x-auto">
+      <div
+        className={cn(
+          'overflow-x-auto transition-opacity',
+          disabled && 'pointer-events-none opacity-50',
+        )}
+      >
         <table className="w-full border-separate border-spacing-1.5">
           <thead>
             <tr>
@@ -208,44 +309,45 @@ export function StepAvailability({ value, onChange }: StepAvailabilityProps) {
 
       {/* Compteur */}
       <p className="text-[0.78rem] text-mid">
-        {selectedCount === 0 ? (
+        {disabled ? (
+          <span className="text-light italic">
+            Vous compléterez vos disponibilités plus tard depuis votre espace.
+          </span>
+        ) : selectedCount === 0 ? (
           <span className="text-light">Aucun créneau sélectionné</span>
         ) : (
           <>
             <strong className="text-terra">{selectedCount}</strong>{' '}
             {selectedCount > 1 ? 'créneaux sélectionnés' : 'créneau sélectionné'}
-            {' — '}
+            {', '}
             <span className="text-light">
               soit {selectedCount * 2}h par semaine
             </span>
           </>
         )}
       </p>
+
+      {/* Bypass card — "Je remplirai plus tard". Placée en bas comme
+          échappatoire : on encourage d'abord à essayer la grille, et la
+          checkbox est une porte de sortie pour qui ne peut pas encore. */}
+      <label
+        className={cn(
+          'flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition-colors',
+          unsetLater
+            ? 'border-terra/40 bg-terra/[0.08]'
+            : 'border-bd-light bg-warm hover:border-terra/30',
+        )}
+      >
+        <input
+          type="checkbox"
+          checked={unsetLater}
+          onChange={(e) => onChangeUnsetLater(e.target.checked)}
+          className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-terra"
+        />
+        <span className="text-[0.84rem] font-medium leading-[1.6] text-deep">
+          Mon planning n’est pas encore fixé, je le compléterai plus tard.
+        </span>
+      </label>
     </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*                          SUB                                        */
-/* ------------------------------------------------------------------ */
-
-function PresetButton({
-  icon: Icon,
-  onClick,
-  children,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="inline-flex items-center gap-1.5 rounded-full border border-bd bg-white px-3 py-1.5 text-[0.76rem] font-medium text-mid transition-colors hover:border-terra hover:text-terra"
-    >
-      <Icon className="h-3.5 w-3.5" aria-hidden />
-      {children}
-    </button>
   );
 }

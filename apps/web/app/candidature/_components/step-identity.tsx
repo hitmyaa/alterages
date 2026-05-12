@@ -22,6 +22,27 @@ export const emptyIdentity: IdentityData = {
   annee: '',
 };
 
+/**
+ * Renvoie `true` si la date ISO (YYYY-MM-DD) correspond à une personne
+ * d'au moins 18 ans à la date d'aujourd'hui. Renvoie `false` si la date
+ * est vide ou invalide.
+ */
+export function isOver18(dateStr: string): boolean {
+  if (!dateStr) return false;
+  const birth = new Date(dateStr);
+  if (Number.isNaN(birth.getTime())) return false;
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+  const monthDiff = today.getMonth() - birth.getMonth();
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birth.getDate())
+  ) {
+    age -= 1;
+  }
+  return age >= 18;
+}
+
 interface StepIdentityProps {
   data: IdentityData;
   onChange: (data: IdentityData) => void;
@@ -32,8 +53,8 @@ const formationGroups = [
   {
     label: 'Santé et paramédical',
     options: [
-      'Infirmier(ère) — IFSI',
-      'Aide-soignant(e) — IFAS',
+      'Infirmier(ère), IFSI',
+      'Aide-soignant(e), IFAS',
       'Médecine',
       'Pharmacie',
       'Kiné / Ergothérapeute / Orthophoniste',
@@ -68,6 +89,17 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
     onChange({ ...data, [key]: value });
   };
 
+  /* Date max = aujourd'hui − 18 ans (clamp natif via attribut HTML). */
+  const maxBirthDate = React.useMemo(() => {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 18);
+    return d.toISOString().split('T')[0];
+  }, []);
+
+  /* Erreur uniquement si une date a été saisie mais ne donne pas 18 ans. */
+  const showAgeError =
+    data.dateNaissance.length > 0 && !isOver18(data.dateNaissance);
+
   return (
     <div className="flex flex-col gap-5">
       <div className="grid gap-5 sm:grid-cols-2">
@@ -77,7 +109,7 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
             value={data.prenom}
             onChange={(e) => set('prenom', e.target.value)}
             placeholder="Votre prénom"
-            className={inputClasses}
+            className="field-input"
           />
         </Field>
         <Field label="Nom *">
@@ -86,18 +118,27 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
             value={data.nom}
             onChange={(e) => set('nom', e.target.value)}
             placeholder="Votre nom"
-            className={inputClasses}
+            className="field-input"
           />
         </Field>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Date de naissance">
+        <Field
+          label="Date de naissance"
+          error={
+            showAgeError
+              ? 'Vous devez avoir au moins 18 ans pour candidater.'
+              : undefined
+          }
+        >
           <input
             type="date"
             value={data.dateNaissance}
             onChange={(e) => set('dateNaissance', e.target.value)}
-            className={inputClasses}
+            max={maxBirthDate}
+            aria-invalid={showAgeError}
+            className={`field-input ${showAgeError ? 'field-invalid' : ''}`}
           />
         </Field>
         <Field label="Téléphone">
@@ -106,7 +147,7 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
             value={data.telephone}
             onChange={(e) => set('telephone', e.target.value)}
             placeholder="06 xx xx xx xx"
-            className={inputClasses}
+            className="field-input"
           />
         </Field>
       </div>
@@ -115,7 +156,7 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
         <select
           value={data.formation}
           onChange={(e) => set('formation', e.target.value)}
-          className={inputClasses}
+          className="field-select"
         >
           <option value="">Sélectionner...</option>
           {formationGroups.map((group) => (
@@ -137,14 +178,14 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
             value={data.etablissement}
             onChange={(e) => set('etablissement', e.target.value)}
             placeholder="École ou université"
-            className={inputClasses}
+            className="field-input"
           />
         </Field>
         <Field label="Année d’étude">
           <select
             value={data.annee}
             onChange={(e) => set('annee', e.target.value)}
-            className={inputClasses}
+            className="field-select"
           >
             <option value="">Sélectionner...</option>
             {annees.map((a) => (
@@ -159,15 +200,14 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
   );
 }
 
-const inputClasses =
-  'w-full rounded-md border border-bd bg-white px-3.5 py-2.5 text-[0.9rem] text-deep transition-colors placeholder:text-light focus:border-terra focus:outline-none focus:ring-1 focus:ring-terra/30';
-
 function Field({
   label,
   children,
+  error,
 }: {
   label: string;
   children: React.ReactNode;
+  error?: string;
 }) {
   return (
     <label className="flex flex-col gap-2">
@@ -175,6 +215,9 @@ function Field({
         {label}
       </span>
       {children}
+      {error ? (
+        <span className="text-[0.74rem] text-destructive">{error}</span>
+      ) : null}
     </label>
   );
 }

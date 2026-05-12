@@ -1,5 +1,4 @@
 import { ArrowLeft } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 /**
@@ -7,6 +6,9 @@ import Link from 'next/link';
  * (public) pour ne pas hériter du header marketing et du footer. Pattern
  * type "checkout fullscreen" (Stripe, Linear) : l'utilisateur est focus
  * sur le parcours, distractions minimales.
+ *
+ * Header minimal : un seul élément, le bouton de retour vers `/etudiants`.
+ * Le logo est volontairement absent — moins d'options = moins de fuite.
  */
 export default function CandidatureLayout({
   children,
@@ -16,31 +18,13 @@ export default function CandidatureLayout({
   return (
     <div className="flex min-h-screen flex-col bg-warm">
       <header className="sticky top-0 z-30 border-b border-bd-light/80 bg-cream/90 backdrop-blur-md">
-        <div className="container flex h-[68px] items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
-          >
-            <Image
-              src="/images/transparent-logo-terra.svg"
-              alt="Logo AlterAges"
-              width={36}
-              height={36}
-              priority
-              className="h-9 w-9 object-contain"
-            />
-            <span className="font-serif text-[1.45rem] leading-none tracking-tight text-deep">
-              Alter<em className="font-normal italic text-terra">Ages</em>
-            </span>
-          </Link>
-
+        <div className="container flex h-[68px] items-center">
           <Link
             href="/etudiants"
-            className="inline-flex items-center gap-2 text-[0.78rem] text-mid transition-colors hover:text-terra"
+            className="group inline-flex items-center gap-2 text-[0.85rem] font-medium text-mid transition-colors hover:text-terra"
           >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Retour à la page étudiants</span>
-            <span className="sm:hidden">Retour</span>
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+            Retour à la page étudiants
           </Link>
         </div>
       </header>
