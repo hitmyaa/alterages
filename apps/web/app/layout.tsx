@@ -19,6 +19,8 @@ const playfair = Playfair_Display({
   display: 'swap',
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+
 export const metadata: Metadata = {
   title: {
     default: 'AlterAges — Quand la jeunesse prend soin de la sagesse',
@@ -26,7 +28,66 @@ export const metadata: Metadata = {
   },
   description:
     "AlterAges met en relation des étudiants du médico-social formés avec des personnes âgées, pour un accompagnement à domicile humain, transparent et de confiance. Lyon, lancement septembre 2026.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  metadataBase: new URL(SITE_URL),
+  applicationName: 'AlterAges',
+  keywords: [
+    'AlterAges',
+    'alter ages',
+    'aide à domicile',
+    'aide à domicile Lyon',
+    'auxiliaire de vie',
+    'accompagnement personnes âgées',
+    'étudiants médico-social',
+    'maintien à domicile',
+    'service à la personne Lyon',
+    'SAP Lyon',
+  ],
+  authors: [{ name: 'Faustine Sornay' }],
+  creator: 'AlterAges',
+  publisher: 'AlterAges',
+  category: 'health',
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'fr_FR',
+    url: '/',
+    siteName: 'AlterAges',
+    title: 'AlterAges — Quand la jeunesse prend soin de la sagesse',
+    description:
+      "Aide à domicile à Lyon assurée par des étudiants du médico-social, formés et engagés. Lancement septembre 2026.",
+    images: [
+      {
+        url: '/images/image-principale.png',
+        width: 1200,
+        height: 630,
+        alt: 'AlterAges — accompagnement à domicile par des étudiants formés',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AlterAges — Quand la jeunesse prend soin de la sagesse',
+    description:
+      "Aide à domicile à Lyon assurée par des étudiants du médico-social, formés et engagés.",
+    images: ['/images/image-principale.png'],
+  },
+  verification: {
+    // À remplir après création du compte Google Search Console
+    // google: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
