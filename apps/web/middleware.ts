@@ -1,25 +1,28 @@
-import { NextResponse, type NextRequest } from 'next/server';
+import { type NextRequest } from 'next/server';
+
+import { updateSession } from '@/lib/supabase/middleware';
 
 /**
- * Middleware Next.js — protège le back-office `/admin`.
+ * Middleware Next.js — refresh la session Supabase à chaque request et
+ * protège les routes authentifiées (`/espace`, `/candidature`).
  *
- * Version stub : redirige toute tentative d'accès à `/admin` vers la page de connexion.
- * À remplacer par une vérification de session + rôle (via `@supabase/ssr`) dès que
- * l'authentification réelle sera branchée.
+ * Le matcher exclut les assets statiques et les routes publiques pour
+ * éviter un appel Supabase inutile sur chaque image.
  */
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  if (pathname.startsWith('/admin')) {
-    // TODO: vérifier la session Supabase + le rôle admin avant de laisser passer.
-    const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('redirect', pathname);
-    return NextResponse.redirect(loginUrl);
-  }
-
-  return NextResponse.next();
+export async function middleware(request: NextRequest) {
+  return await updateSession(request);
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: [
+    /*
+     * Match toutes les requêtes sauf :
+     * - _next/static (assets statiques)
+     * - _next/image (optimisation images)
+     * - favicon, icons, images publiques
+     * - api/contact (formulaire public)
+     * - auth/* (routes d'authentification — gérées séparément)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|images|api/contact|auth|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
 };

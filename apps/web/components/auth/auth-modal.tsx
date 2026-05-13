@@ -1,29 +1,152 @@
 'use client';
 
-import { Mail, X } from 'lucide-react';
+import { CheckCircle2, Lock, Mail, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import { Halo } from '@/components/blocks/halo';
+import { createClient } from '@/lib/supabase/client';
+import { cn } from '@/lib/utils';
 
 import { useAuthModal } from './auth-modal-provider';
 
+type Mode = 'sign-in' | 'sign-up' | 'reset';
+
+/* Traduction française des erreurs Supabase les plus courantes. */
+function translateError(message: string): string {
+  const m = message.toLowerCase();
+  if (m.includes('invalid login credentials'))
+    return 'E-mail ou mot de passe incorrect.';
+  if (m.includes('user already registered'))
+    return 'Un compte existe déjà avec cet e-mail. Essayez de vous connecter.';
+  if (m.includes('password should be at least'))
+    return 'Le mot de passe doit contenir au moins 6 caractères.';
+  if (m.includes('email not confirmed'))
+    return 'E-mail non vérifié. Cliquez sur le lien envoyé dans votre boîte mail.';
+  if (m.includes('email rate limit'))
+    return 'Trop de tentatives. Réessayez dans quelques minutes.';
+  return message;
+}
+
 /**
- * Modal d'authentification — déclenchée par tous les CTA "Je suis intéressé(e)".
+ * Modal d'authentification — email + mot de passe traditionnel + Google OAuth.
  *
- * Pour l'instant, AUCUN provider d'auth n'est branché — chaque bouton se
- * contente de rediriger vers `/candidature` (le tunnel de préinscription).
- * À brancher plus tard : Supabase OAuth (Google/Apple) ou magic link email.
+ * 3 modes :
+ * - sign-in : connexion classique
+ * - sign-up : création de compte
+ * - reset   : demande d'envoi d'un lien de réinitialisation
+ *
+ * En cas de succès :
+ * - sign-in/sign-up avec session : redirige vers /espace ou /candidature
+ *   selon `user_metadata.onboarded`
+ * - reset : affiche l'écran de confirmation "lien envoyé"
  */
 export function AuthModal() {
   const { isOpen, close } = useAuthModal();
   const router = useRouter();
+  const supabase = React.useMemo(() => createClient(), []);
+
+  const [mode, setMode] = React.useState<Mode>('sign-in');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState<'google' | 'email' | null>(null);
+  const [sentTo, setSentTo] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
+
+  /* Reset l'état à chaque fermeture. */
+  React.useEffect(() => {
+    if (!isOpen) {
+      setMode('sign-in');
+      setEmail('');
+      setPassword('');
+      setLoading(null);
+      setSentTo(null);
+      setError(null);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const startOnboarding = () => {
+  const origin =
+    typeof window !== 'undefined' ? window.location.origin : '';
+
+  /* Redirige selon le flag onboarded de l'utilisateur. */
+  const routeAfterAuth = (onboarded: boolean) => {
     close();
-    router.push('/candidature');
+    router.push(onboarded ? '/espace' : '/candidature');
+    router.refresh();
+  };
+
+  /* --- GOOGLE OAUTH --- */
+  const handleGoogle = async () => {
+    setError(null);
+    setLoading('google');
+    const { error: err } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${origin}/auth/callback` },
+    });
+    if (err) {
+      setError(translateError(err.message));
+      setLoading(null);
+    }
+    /* Sinon redirection automatique vers Google. */
+  };
+
+  /* --- SUBMIT (sign-in / sign-up / reset) --- */
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading('email');
+
+    if (mode === 'sign-in') {
+      const { data, error: err } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+      if (err) {
+        setError(translateError(err.message));
+        setLoading(null);
+        return;
+      }
+      const onboarded = data.user?.user_metadata?.onboarded === true;
+      routeAfterAuth(onboarded);
+      return;
+    }
+
+    if (mode === 'sign-up') {
+      const { data, error: err } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: { emailRedirectTo: `${origin}/auth/callback` },
+      });
+      if (err) {
+        setError(translateError(err.message));
+        setLoading(null);
+        return;
+      }
+      /* Si "Confirm email" est désactivé côté Supabase, on a déjà une session.
+       * Sinon, on affiche l'écran "vérifiez votre email". */
+      if (data.session) {
+        routeAfterAuth(false);
+      } else {
+        setSentTo(email.trim());
+        setLoading(null);
+      }
+      return;
+    }
+
+    /* mode === 'reset' */
+    const { error: err } = await supabase.auth.resetPasswordForEmail(
+      email.trim(),
+      { redirectTo: `${origin}/auth/reset-password` },
+    );
+    if (err) {
+      setError(translateError(err.message));
+      setLoading(null);
+      return;
+    }
+    setSentTo(email.trim());
+    setLoading(null);
   };
 
   return (
@@ -52,7 +175,7 @@ export function AuthModal() {
 
         <div className="relative z-10">
           <h2 id="auth-modal-title" className="sr-only">
-            Rejoindre AlterAges — espace étudiant
+            Authentification AlterAges
           </h2>
 
           <div className="text-center">
@@ -64,50 +187,190 @@ export function AuthModal() {
             </p>
           </div>
 
-          <div className="mt-8 flex flex-col gap-2.5">
-            <button
-              type="button"
-              onClick={startOnboarding}
-              className="flex w-full items-center justify-center gap-3 rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 text-[0.85rem] text-white transition-colors hover:border-white/30 hover:bg-white/[0.12]"
-            >
-              <GoogleIcon />
-              Continuer avec Google
-            </button>
-            <button
-              type="button"
-              onClick={startOnboarding}
-              className="flex w-full items-center justify-center gap-3 rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 text-[0.85rem] text-white transition-colors hover:border-white/30 hover:bg-white/[0.12]"
-            >
-              <AppleIcon />
-              Continuer avec Apple
-            </button>
-          </div>
+          {/* ----------------- ÉCRAN succès reset ----------------- */}
+          {sentTo && mode === 'reset' ? (
+            <ResetSent email={sentTo} onBack={() => {
+              setSentTo(null);
+              setMode('sign-in');
+            }} />
+          ) : sentTo && mode === 'sign-up' ? (
+            <SignUpSent email={sentTo} onBack={() => {
+              setSentTo(null);
+              setMode('sign-in');
+            }} />
+          ) : (
+            <>
+              {/* ------- GOOGLE OAUTH ------- */}
+              {mode !== 'reset' ? (
+                <>
+                  <div className="mt-8">
+                    <button
+                      type="button"
+                      onClick={handleGoogle}
+                      disabled={loading !== null}
+                      className={cn(
+                        'flex w-full items-center justify-center gap-3 rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 text-[0.85rem] text-white transition-colors hover:border-white/30 hover:bg-white/[0.12]',
+                        loading !== null && 'cursor-wait opacity-60',
+                      )}
+                    >
+                      <GoogleIcon />
+                      {loading === 'google'
+                        ? 'Redirection…'
+                        : 'Continuer avec Google'}
+                    </button>
+                  </div>
 
-          <div className="my-5 flex items-center gap-3">
-            <span className="h-px flex-1 bg-white/10" />
-            <span className="text-[0.72rem] text-white/30">ou</span>
-            <span className="h-px flex-1 bg-white/10" />
-          </div>
+                  <div className="my-5 flex items-center gap-3">
+                    <span className="h-px flex-1 bg-white/10" />
+                    <span className="text-[0.72rem] text-white/30">ou</span>
+                    <span className="h-px flex-1 bg-white/10" />
+                  </div>
+                </>
+              ) : (
+                <div className="mt-8" />
+              )}
 
-          <button
-            type="button"
-            onClick={startOnboarding}
-            className="flex w-full items-center justify-center gap-2 rounded-md bg-terra px-4 py-3 text-[0.85rem] font-medium text-white transition-colors hover:bg-terra-dark"
-          >
-            <Mail className="h-4 w-4" />
-            Continuer avec mon e-mail
-          </button>
+              {/* ------- FORMULAIRE ------- */}
+              <form onSubmit={handleSubmit} className="flex flex-col gap-2.5">
+                <label className="relative">
+                  <Mail
+                    className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30"
+                    aria-hidden
+                  />
+                  <input
+                    type="email"
+                    required
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="votre@email.fr"
+                    disabled={loading !== null}
+                    className="w-full rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 pl-10 text-[0.88rem] text-white placeholder:text-white/30 transition-colors focus:border-terra-light focus:outline-none focus:ring-1 focus:ring-terra-light/30 disabled:opacity-60"
+                  />
+                </label>
 
-          <p className="mt-6 text-center text-[0.74rem] text-white/35">
-            Déjà inscrit ?{' '}
-            <button
-              type="button"
-              onClick={startOnboarding}
-              className="text-white/55 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
-            >
-              Me connecter
-            </button>
-          </p>
+                {mode !== 'reset' ? (
+                  <label className="relative">
+                    <Lock
+                      className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30"
+                      aria-hidden
+                    />
+                    <input
+                      type="password"
+                      required
+                      minLength={6}
+                      autoComplete={
+                        mode === 'sign-up' ? 'new-password' : 'current-password'
+                      }
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder={
+                        mode === 'sign-up'
+                          ? 'Mot de passe (min. 6 caractères)'
+                          : 'Mot de passe'
+                      }
+                      disabled={loading !== null}
+                      className="w-full rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 pl-10 text-[0.88rem] text-white placeholder:text-white/30 transition-colors focus:border-terra-light focus:outline-none focus:ring-1 focus:ring-terra-light/30 disabled:opacity-60"
+                    />
+                  </label>
+                ) : null}
+
+                {mode === 'sign-in' ? (
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMode('reset');
+                        setError(null);
+                      }}
+                      className="text-[0.74rem] text-white/45 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+                    >
+                      Mot de passe oublié ?
+                    </button>
+                  </div>
+                ) : null}
+
+                <button
+                  type="submit"
+                  disabled={
+                    loading !== null ||
+                    !email.trim() ||
+                    (mode !== 'reset' && password.length < 6)
+                  }
+                  className={cn(
+                    'mt-1 flex w-full items-center justify-center gap-2 rounded-md bg-terra px-4 py-3 text-[0.85rem] font-medium text-white transition-colors hover:bg-terra-dark',
+                    (loading !== null ||
+                      !email.trim() ||
+                      (mode !== 'reset' && password.length < 6)) &&
+                      'cursor-not-allowed opacity-60 hover:bg-terra',
+                  )}
+                >
+                  {loading === 'email'
+                    ? mode === 'reset'
+                      ? 'Envoi…'
+                      : 'Connexion…'
+                    : mode === 'sign-in'
+                      ? 'Se connecter'
+                      : mode === 'sign-up'
+                        ? 'Créer mon compte'
+                        : 'Envoyer le lien'}
+                </button>
+              </form>
+
+              {error ? (
+                <p
+                  role="alert"
+                  className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-center text-[0.78rem] text-white"
+                >
+                  {error}
+                </p>
+              ) : null}
+
+              {/* ------- TOGGLE MODE ------- */}
+              <p className="mt-6 text-center text-[0.78rem] text-white/45">
+                {mode === 'sign-in' ? (
+                  <>
+                    Pas encore de compte ?{' '}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMode('sign-up');
+                        setError(null);
+                      }}
+                      className="font-medium text-white/70 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+                    >
+                      Créer un compte
+                    </button>
+                  </>
+                ) : mode === 'sign-up' ? (
+                  <>
+                    Déjà inscrit ?{' '}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMode('sign-in');
+                        setError(null);
+                      }}
+                      className="font-medium text-white/70 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+                    >
+                      Se connecter
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMode('sign-in');
+                      setError(null);
+                    }}
+                    className="font-medium text-white/70 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+                  >
+                    ← Revenir à la connexion
+                  </button>
+                )}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -115,7 +378,61 @@ export function AuthModal() {
 }
 
 /* ------------------------------------------------------------------ */
-/*                              ICONS                                  */
+/*                        SUB COMPONENTS                               */
+/* ------------------------------------------------------------------ */
+
+function ResetSent({ email, onBack }: { email: string; onBack: () => void }) {
+  return (
+    <div className="mt-8 text-center">
+      <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sage/20 text-sage-light">
+        <CheckCircle2 className="h-6 w-6" aria-hidden />
+      </div>
+      <p className="font-serif text-[1.15rem] italic text-white">
+        Lien envoyé !
+      </p>
+      <p className="mx-auto mt-3 max-w-xs text-[0.85rem] leading-[1.7] text-white/55">
+        Un lien de réinitialisation a été envoyé à{' '}
+        <strong className="text-white">{email}</strong>. Cliquez dessus pour
+        définir un nouveau mot de passe.
+      </p>
+      <button
+        type="button"
+        onClick={onBack}
+        className="mt-6 text-[0.78rem] text-white/55 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+      >
+        ← Revenir à la connexion
+      </button>
+    </div>
+  );
+}
+
+function SignUpSent({ email, onBack }: { email: string; onBack: () => void }) {
+  return (
+    <div className="mt-8 text-center">
+      <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sage/20 text-sage-light">
+        <CheckCircle2 className="h-6 w-6" aria-hidden />
+      </div>
+      <p className="font-serif text-[1.15rem] italic text-white">
+        Confirmez votre e-mail
+      </p>
+      <p className="mx-auto mt-3 max-w-xs text-[0.85rem] leading-[1.7] text-white/55">
+        Un lien de confirmation a été envoyé à{' '}
+        <strong className="text-white">{email}</strong>. Cliquez dessus pour
+        activer votre compte.
+      </p>
+      <button
+        type="button"
+        onClick={onBack}
+        className="mt-6 text-[0.78rem] text-white/55 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+      >
+        ← Revenir à la connexion
+      </button>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*                              ICON                                   */
 /* ------------------------------------------------------------------ */
 
 function GoogleIcon() {
@@ -137,14 +454,6 @@ function GoogleIcon() {
         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
         fill="#EA4335"
       />
-    </svg>
-  );
-}
-
-function AppleIcon() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="white" aria-hidden>
-      <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.43c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.56-1.31 3.1-2.54 3.96zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
     </svg>
   );
 }

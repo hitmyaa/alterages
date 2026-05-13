@@ -26,11 +26,10 @@ const etudiantsNav: ReadonlyArray<NavItem> = [
 ];
 
 /**
- * Header public — adapte sa navigation et son CTA principal selon la route :
- * - `/etudiants` : ancres internes à la page + CTA "Je suis intéressé(e)"
- *   qui ouvre la modal d'authentification (via `InterestButton`).
- * - autres pages : liens vers les sections de la landing + CTA "Nous contacter"
- *   classique (Link vers /#contact).
+ * Header public — nav contextuelle (landing vs /etudiants) + 2 CTA terracotta
+ * côte à côte à droite : "Vous êtes étudiant ?" (lien vers /etudiants, masqué
+ * quand on y est déjà) et "Se connecter" (ouvre la modal d'authentification via
+ * `InterestButton`). Sur mobile, seul "Se connecter" reste visible.
  */
 export function PublicHeader() {
   const pathname = usePathname();
@@ -71,28 +70,20 @@ export function PublicHeader() {
               {item.label}
             </Link>
           ))}
-          {isEtudiants ? (
-            <InterestButton variant="nav" label="Je suis intéressé(e)" />
-          ) : (
-            <Link
-              href="/#contact"
-              className="rounded-sm bg-terra px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors hover:bg-terra-dark"
-            >
-              Nous contacter
-            </Link>
-          )}
+          <div className="flex items-center gap-2">
+            {isEtudiants ? null : (
+              <Link
+                href="/etudiants"
+                className="rounded-sm bg-terra px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors hover:bg-terra-dark"
+              >
+                Vous êtes étudiant ?
+              </Link>
+            )}
+            <InterestButton variant="nav" label="Se connecter" />
+          </div>
         </nav>
 
-        {isEtudiants ? (
-          <InterestButton variant="nav-short" label="Intéressé(e)" />
-        ) : (
-          <Link
-            href="/#contact"
-            className="rounded-sm bg-terra px-4 py-2 text-xs font-medium uppercase tracking-wider text-white transition-colors hover:bg-terra-dark md:hidden"
-          >
-            Contact
-          </Link>
-        )}
+        <InterestButton variant="nav-short" label="Se connecter" />
       </div>
     </header>
   );
