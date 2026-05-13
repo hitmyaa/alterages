@@ -49,6 +49,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  /* Déclaration explicite des icônes pour les crawlers (Google,
+   * Bing) et les contextes spécifiques (Safari iOS, écran d'accueil).
+   * `app/icon.png` et `app/apple-icon.png` sont auto-servis par
+   * Next.js — la déclaration ici garantit les <link rel> dans le HTML. */
+  icons: {
+    icon: [{ url: '/icon.png', type: 'image/png', sizes: '512x512' }],
+    apple: [{ url: '/apple-icon.png', sizes: '512x512' }],
+    shortcut: '/icon.png',
+  },
   robots: {
     index: true,
     follow: true,
