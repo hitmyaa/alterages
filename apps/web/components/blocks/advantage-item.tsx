@@ -17,29 +17,20 @@ export interface AdvantageItemProps {
  * texte à droite. Pensée pour être empilée dans une liste avec séparateurs
  * fins (le composant fournit la bordure basse, le dernier item la masque).
  */
-export function AdvantageItem({
-  value,
-  title,
-  description,
-  className,
-}: AdvantageItemProps) {
+export function AdvantageItem({ value, title, description, className }: AdvantageItemProps) {
   return (
     <div
       className={cn(
-        'flex items-center gap-4 border-b border-bd-light py-3.5 last:border-b-0',
+        'border-bd-light flex items-center gap-4 border-b py-3.5 last:border-b-0',
         className,
       )}
     >
-      <div className="min-w-[60px] font-sans text-[1.2rem] font-medium leading-none text-terra">
+      <div className="text-terra min-w-[60px] font-sans text-[1.2rem] font-medium leading-none">
         {value}
       </div>
       <div>
-        <strong className="block text-[0.88rem] font-medium text-deep">
-          {title}
-        </strong>
-        <span className="block text-[0.8rem] leading-[1.55] text-mid">
-          {description}
-        </span>
+        <strong className="text-deep block text-[0.88rem] font-medium">{title}</strong>
+        <span className="text-mid block text-[0.8rem] leading-[1.55]">{description}</span>
       </div>
     </div>
   );

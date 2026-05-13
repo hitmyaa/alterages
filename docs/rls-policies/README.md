@@ -8,18 +8,22 @@ Chaque table Supabase doit avoir RLS activée et ses policies documentées ici �
 # Policies — `<nom_table>`
 
 ## Contexte
+
 Brève description de ce que représente la table.
 
 ## Policies actives
 
 ### SELECT
+
 - **Qui peut lire ?** — description
 - **SQL** — lien vers la migration
 
 ### INSERT / UPDATE / DELETE
+
 - idem
 
 ## Scénarios adversaires testés
+
 - [ ] Utilisateur A ne peut pas voir les données de l'utilisateur B
 - [ ] Aidant ne peut pas modifier les données d'un bénéficiaire auquel il n'est pas lié
 - [ ] etc.

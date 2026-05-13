@@ -24,15 +24,15 @@ pnpm dev:mobile
 
 ## Scripts globaux
 
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Lance toutes les apps en parallèle |
-| `pnpm dev:web` | Lance uniquement Next.js |
-| `pnpm dev:mobile` | Lance uniquement Expo |
-| `pnpm build` | Build de production pour toutes les apps |
-| `pnpm lint` | ESLint sur tout le monorepo |
-| `pnpm typecheck` | Vérification TypeScript sur tout le monorepo |
-| `pnpm format` | Formatte le code avec Prettier |
+| Script            | Description                                  |
+| ----------------- | -------------------------------------------- |
+| `pnpm dev`        | Lance toutes les apps en parallèle           |
+| `pnpm dev:web`    | Lance uniquement Next.js                     |
+| `pnpm dev:mobile` | Lance uniquement Expo                        |
+| `pnpm build`      | Build de production pour toutes les apps     |
+| `pnpm lint`       | ESLint sur tout le monorepo                  |
+| `pnpm typecheck`  | Vérification TypeScript sur tout le monorepo |
+| `pnpm format`     | Formatte le code avec Prettier               |
 
 ## Architecture
 

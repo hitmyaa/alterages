@@ -108,7 +108,7 @@ export function EspaceSidebar({ user }: { user: SidebarUser }) {
         onClick={() => setMobileOpen(true)}
         aria-label="Ouvrir le menu"
         aria-expanded={mobileOpen}
-        className="fixed left-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-md border border-bd bg-warm text-mid shadow-soft transition-colors hover:border-terra hover:text-terra md:hidden"
+        className="border-bd bg-warm text-mid shadow-soft hover:border-terra hover:text-terra fixed left-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-md border transition-colors md:hidden"
       >
         <Menu className="h-4 w-4" aria-hidden />
       </button>
@@ -118,7 +118,7 @@ export function EspaceSidebar({ user }: { user: SidebarUser }) {
         <div
           onClick={() => setMobileOpen(false)}
           aria-hidden
-          className="fixed inset-0 z-40 bg-deep/50 backdrop-blur-sm md:hidden"
+          className="bg-deep/50 fixed inset-0 z-40 backdrop-blur-sm md:hidden"
         />
       ) : null}
 
@@ -126,16 +126,13 @@ export function EspaceSidebar({ user }: { user: SidebarUser }) {
       <aside
         aria-label="Navigation espace étudiant"
         className={cn(
-          'fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-bd-light bg-warm transition-transform duration-200 ease-out',
+          'border-bd-light bg-warm fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r transition-transform duration-200 ease-out',
           mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
         )}
       >
         {/* Header : logo + bouton fermer (mobile) */}
-        <div className="flex items-center justify-between border-b border-bd-light px-5 py-4">
-          <Link
-            href="/"
-            className="flex items-center gap-2 transition-opacity hover:opacity-80"
-          >
+        <div className="border-bd-light flex items-center justify-between border-b px-5 py-4">
+          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
             <Image
               src="/images/transparent-logo-terra.svg"
               alt="Logo AlterAges"
@@ -144,15 +141,15 @@ export function EspaceSidebar({ user }: { user: SidebarUser }) {
               priority
               className="h-8 w-8 object-contain"
             />
-            <span className="font-serif text-[1.3rem] leading-none tracking-tight text-deep">
-              Alter<em className="font-normal italic text-terra">Ages</em>
+            <span className="text-deep font-serif text-[1.3rem] leading-none tracking-tight">
+              Alter<em className="text-terra font-normal italic">Ages</em>
             </span>
           </Link>
           <button
             type="button"
             onClick={() => setMobileOpen(false)}
             aria-label="Fermer le menu"
-            className="flex h-8 w-8 items-center justify-center rounded-md text-mid transition-colors hover:text-terra md:hidden"
+            className="text-mid hover:text-terra flex h-8 w-8 items-center justify-center rounded-md transition-colors md:hidden"
           >
             <X className="h-4 w-4" aria-hidden />
           </button>
@@ -172,7 +169,7 @@ export function EspaceSidebar({ user }: { user: SidebarUser }) {
                     className={cn(
                       'flex items-center gap-3 rounded-md px-3 py-2.5 text-[0.88rem] transition-colors',
                       active
-                        ? 'bg-terra/10 font-medium text-terra'
+                        ? 'bg-terra/10 text-terra font-medium'
                         : 'text-mid hover:bg-cream hover:text-terra',
                     )}
                   >
@@ -186,35 +183,35 @@ export function EspaceSidebar({ user }: { user: SidebarUser }) {
         </nav>
 
         {/* Profile footer + dropdown menu */}
-        <div ref={profileRef} className="relative border-t border-bd-light p-3">
+        <div ref={profileRef} className="border-bd-light relative border-t p-3">
           {/* Dropdown menu — s'ouvre au-dessus du bouton profil */}
           {profileMenuOpen ? (
-            <div className="absolute inset-x-3 bottom-full mb-2 overflow-hidden rounded-md border border-bd bg-white shadow-soft-lg">
+            <div className="border-bd shadow-soft-lg absolute inset-x-3 bottom-full mb-2 overflow-hidden rounded-md border bg-white">
               <Link
                 href="/espace/profil"
-                className="flex items-center gap-2.5 px-3 py-2.5 text-[0.85rem] text-mid transition-colors hover:bg-cream hover:text-terra"
+                className="text-mid hover:bg-cream hover:text-terra flex items-center gap-2.5 px-3 py-2.5 text-[0.85rem] transition-colors"
               >
                 <User className="h-4 w-4 shrink-0" aria-hidden />
                 Profil
               </Link>
               <Link
                 href="/espace/formation"
-                className="flex items-center gap-2.5 border-t border-bd-light px-3 py-2.5 text-[0.85rem] text-mid transition-colors hover:bg-cream hover:text-terra"
+                className="border-bd-light text-mid hover:bg-cream hover:text-terra flex items-center gap-2.5 border-t px-3 py-2.5 text-[0.85rem] transition-colors"
               >
                 <GraduationCap className="h-4 w-4 shrink-0" aria-hidden />
                 Ma formation
               </Link>
               <Link
                 href="/espace/parametres"
-                className="flex items-center gap-2.5 border-t border-bd-light px-3 py-2.5 text-[0.85rem] text-mid transition-colors hover:bg-cream hover:text-terra"
+                className="border-bd-light text-mid hover:bg-cream hover:text-terra flex items-center gap-2.5 border-t px-3 py-2.5 text-[0.85rem] transition-colors"
               >
                 <Settings className="h-4 w-4 shrink-0" aria-hidden />
                 Paramètres
               </Link>
-              <form action="/auth/sign-out" method="post" className="border-t border-bd-light">
+              <form action="/auth/sign-out" method="post" className="border-bd-light border-t">
                 <button
                   type="submit"
-                  className="flex w-full items-center gap-2.5 px-3 py-2.5 text-left text-[0.85rem] text-mid transition-colors hover:bg-cream hover:text-destructive"
+                  className="text-mid hover:bg-cream hover:text-destructive flex w-full items-center gap-2.5 px-3 py-2.5 text-left text-[0.85rem] transition-colors"
                 >
                   <LogOut className="h-4 w-4 shrink-0" aria-hidden />
                   Se déconnecter
@@ -235,17 +232,15 @@ export function EspaceSidebar({ user }: { user: SidebarUser }) {
           >
             <span
               aria-hidden
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-terra text-[0.78rem] font-medium text-white"
+              className="bg-terra flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[0.78rem] font-medium text-white"
             >
               {user.initials}
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-[0.85rem] font-medium text-deep">
+              <span className="text-deep block truncate text-[0.85rem] font-medium">
                 {user.name}
               </span>
-              <span className="block truncate text-[0.72rem] text-mid">
-                {user.email}
-              </span>
+              <span className="text-mid block truncate text-[0.72rem]">{user.email}</span>
             </span>
           </button>
         </div>

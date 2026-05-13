@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: '%s · AlterAges',
   },
   description:
-    "AlterAges met en relation des étudiants du médico-social formés avec des personnes âgées, pour un accompagnement à domicile humain, transparent et de confiance. Lyon, lancement septembre 2026.",
+    'AlterAges met en relation des étudiants du médico-social formés avec des personnes âgées, pour un accompagnement à domicile humain, transparent et de confiance. Lyon, lancement septembre 2026.',
   metadataBase: new URL(SITE_URL),
   applicationName: 'AlterAges',
   keywords: [
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     siteName: 'AlterAges',
     title: 'AlterAges — Quand la jeunesse prend soin de la sagesse',
     description:
-      "Aide à domicile à Lyon assurée par des étudiants du médico-social, formés et engagés. Lancement septembre 2026.",
+      'Aide à domicile à Lyon assurée par des étudiants du médico-social, formés et engagés. Lancement septembre 2026.',
     images: [
       {
         url: '/images/image-principale.png',
@@ -90,7 +90,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'AlterAges — Quand la jeunesse prend soin de la sagesse',
     description:
-      "Aide à domicile à Lyon assurée par des étudiants du médico-social, formés et engagés.",
+      'Aide à domicile à Lyon assurée par des étudiants du médico-social, formés et engagés.',
     images: ['/images/image-principale.png'],
   },
   verification: {
@@ -101,12 +101,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="fr"
-      className={`${dmSans.variable} ${playfair.variable}`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-screen bg-background font-sans font-light leading-relaxed text-foreground antialiased">
+    <html lang="fr" className={`${dmSans.variable} ${playfair.variable}`} suppressHydrationWarning>
+      <body className="bg-background text-foreground min-h-screen font-sans font-light leading-relaxed antialiased">
         {children}
       </body>
     </html>

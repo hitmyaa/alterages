@@ -5,7 +5,9 @@
   "type": "module",
   "main": "./index.ts",
   "types": "./index.ts",
-  "files": ["index.ts"],
+  "files": [
+    "index.ts"
+  ],
   "dependencies": {
     "tailwindcss-animate": "^1.0.7"
   },

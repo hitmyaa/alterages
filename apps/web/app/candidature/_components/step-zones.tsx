@@ -81,11 +81,11 @@ export function StepZones({
   return (
     <div className="flex flex-col gap-6">
       {selected.size === 0 ? (
-        <div className="flex items-start gap-2.5 rounded-lg border border-terra/30 bg-terra/[0.06] px-4 py-3 text-[0.82rem] leading-[1.6] text-terra-dark">
+        <div className="border-terra/30 bg-terra/[0.06] text-terra-dark flex items-start gap-2.5 rounded-lg border px-4 py-3 text-[0.82rem] leading-[1.6]">
           <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
           <span>
-            <strong className="font-medium">Sélectionnez au moins une zone.</strong>{' '}
-            Vous pourrez la modifier à tout moment depuis votre espace.
+            <strong className="font-medium">Sélectionnez au moins une zone.</strong> Vous pourrez la
+            modifier à tout moment depuis votre espace.
           </span>
         </div>
       ) : null}
@@ -107,8 +107,8 @@ export function StepZones({
       />
 
       {/* Récap sélection */}
-      <div className="border-t border-bd-light pt-5">
-        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.06em] text-mid">
+      <div className="border-bd-light border-t pt-5">
+        <p className="text-mid mb-2 text-[0.72rem] font-medium uppercase tracking-[0.06em]">
           {selectedZones.length === 0
             ? 'Aucune zone sélectionnée'
             : `${selectedZones.length} ${selectedZones.length > 1 ? 'zones sélectionnées' : 'zone sélectionnée'}`}
@@ -118,14 +118,14 @@ export function StepZones({
             {selectedZones.map((z) => (
               <span
                 key={z.id}
-                className="inline-flex items-center gap-1 rounded-full bg-terra/10 px-2.5 py-0.5 text-[0.74rem] text-terra"
+                className="bg-terra/10 text-terra inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[0.74rem]"
               >
                 {z.label}
                 <button
                   type="button"
                   onClick={() => toggle(z.id)}
                   aria-label={`Retirer ${z.label}`}
-                  className="ml-0.5 text-terra/60 transition-colors hover:text-terra"
+                  className="text-terra/60 hover:text-terra ml-0.5 transition-colors"
                 >
                   ×
                 </button>
@@ -137,7 +137,7 @@ export function StepZones({
 
       {/* Mode de déplacement */}
       <label className="flex flex-col gap-2">
-        <span className="text-[0.72rem] font-medium uppercase tracking-[0.06em] text-mid">
+        <span className="text-mid text-[0.72rem] font-medium uppercase tracking-[0.06em]">
           Mode de déplacement
         </span>
         <select
@@ -174,7 +174,7 @@ function ZoneGroup({
 }) {
   return (
     <div>
-      <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.06em] text-mid">
+      <p className="text-mid mb-2 text-[0.72rem] font-medium uppercase tracking-[0.06em]">
         {title}
       </p>
       <div className="flex flex-wrap gap-2">
@@ -190,7 +190,7 @@ function ZoneGroup({
                 'rounded-full border px-3.5 py-1.5 text-[0.8rem] font-medium transition-colors',
                 isOn
                   ? 'border-terra bg-terra/10 text-terra'
-                  : 'border-bd bg-white text-mid hover:border-terra-light hover:text-terra',
+                  : 'border-bd text-mid hover:border-terra-light hover:text-terra bg-white',
               )}
             >
               {zone.label}

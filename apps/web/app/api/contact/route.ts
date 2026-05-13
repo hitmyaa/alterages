@@ -33,10 +33,7 @@ export async function POST(request: Request) {
 
   if (!apiKey || !to || !from) {
     console.error('[contact] Missing env vars');
-    return NextResponse.json(
-      { ok: false, error: 'server_misconfigured' },
-      { status: 500 },
-    );
+    return NextResponse.json({ ok: false, error: 'server_misconfigured' }, { status: 500 });
   }
 
   // Parse + validation
@@ -106,18 +103,12 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error('[contact] Resend error', error);
-      return NextResponse.json(
-        { ok: false, error: 'send_failed' },
-        { status: 502 },
-      );
+      return NextResponse.json({ ok: false, error: 'send_failed' }, { status: 502 });
     }
 
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error('[contact] Unexpected error', err);
-    return NextResponse.json(
-      { ok: false, error: 'unexpected' },
-      { status: 500 },
-    );
+    return NextResponse.json({ ok: false, error: 'unexpected' }, { status: 500 });
   }
 }

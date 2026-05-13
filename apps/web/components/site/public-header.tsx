@@ -38,12 +38,9 @@ export function PublicHeader() {
   const navItems = isEtudiants ? etudiantsNav : landingNav;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-bd-light/80 bg-cream/90 backdrop-blur-md">
+    <header className="border-bd-light/80 bg-cream/90 fixed inset-x-0 top-0 z-40 border-b backdrop-blur-md">
       <div className="container flex h-[76px] items-center justify-between">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
-        >
+        <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
           <Image
             src="/images/transparent-logo-terra.svg"
             alt="Logo AlterAges"
@@ -52,20 +49,17 @@ export function PublicHeader() {
             priority
             className="h-10 w-10 object-contain"
           />
-          <span className="font-serif text-[1.6rem] leading-none tracking-tight text-deep">
-            Alter<em className="font-normal italic text-terra">Ages</em>
+          <span className="text-deep font-serif text-[1.6rem] leading-none tracking-tight">
+            Alter<em className="text-terra font-normal italic">Ages</em>
           </span>
         </Link>
 
-        <nav
-          aria-label="Navigation principale"
-          className="hidden items-center gap-8 md:flex"
-        >
+        <nav aria-label="Navigation principale" className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-[0.78rem] uppercase tracking-[0.07em] text-mid transition-colors hover:text-terra"
+              className="text-mid hover:text-terra text-[0.78rem] uppercase tracking-[0.07em] transition-colors"
             >
               {item.label}
             </Link>
@@ -74,7 +68,7 @@ export function PublicHeader() {
             {isEtudiants ? null : (
               <Link
                 href="/etudiants"
-                className="rounded-sm bg-terra px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors hover:bg-terra-dark"
+                className="bg-terra hover:bg-terra-dark rounded-sm px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors"
               >
                 Vous êtes étudiant ?
               </Link>

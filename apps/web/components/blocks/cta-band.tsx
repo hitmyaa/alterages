@@ -32,44 +32,21 @@ export function CTABand({
 }: CTABandProps) {
   const isExternal = ctaHref.startsWith('http');
   const Tag = isExternal ? 'a' : Link;
-  const externalProps = isExternal
-    ? { target: '_blank', rel: 'noopener noreferrer' as const }
-    : {};
+  const externalProps = isExternal ? { target: '_blank', rel: 'noopener noreferrer' as const } : {};
 
   return (
     <div
       className={cn(
         'flex flex-col gap-4 rounded-xl px-6 py-4 md:flex-row md:items-center md:justify-between md:gap-8',
-        invert
-          ? 'border border-terra/30 bg-terra/10'
-          : 'bg-terra text-white',
+        invert ? 'border-terra/30 bg-terra/10 border' : 'bg-terra text-white',
         className,
       )}
     >
-      <p
-        className={cn(
-          'text-sm md:whitespace-nowrap',
-          invert ? 'text-white/75' : 'text-white/90',
-        )}
-      >
-        <strong
-          className={cn(
-            'font-medium',
-            invert ? 'text-white' : 'text-white',
-          )}
-        >
-          {title}
-        </strong>
+      <p className={cn('text-sm md:whitespace-nowrap', invert ? 'text-white/75' : 'text-white/90')}>
+        <strong className={cn('font-medium', invert ? 'text-white' : 'text-white')}>{title}</strong>
         {description ? (
           <>
-            <span
-              className={cn(
-                'mx-2',
-                invert ? 'text-white/30' : 'text-white/50',
-              )}
-            >
-              —
-            </span>
+            <span className={cn('mx-2', invert ? 'text-white/30' : 'text-white/50')}>—</span>
             {description}
           </>
         ) : null}
@@ -78,7 +55,7 @@ export function CTABand({
         href={ctaHref}
         className={cn(
           'group inline-flex shrink-0 items-center gap-2 self-start rounded-sm px-6 py-2.5 text-sm font-medium transition-opacity hover:opacity-90 md:self-auto',
-          invert ? 'bg-white text-deep' : 'bg-white text-terra',
+          invert ? 'text-deep bg-white' : 'text-terra bg-white',
         )}
         {...externalProps}
       >

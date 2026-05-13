@@ -11,11 +11,7 @@ import { createClient } from '@/lib/supabase/server';
  * n'est pas connecté, le middleware s'en occupe déjà — la redirect ici
  * est un filet de sécurité.
  */
-export default async function EspaceLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function EspaceLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient();
 
   const {
@@ -37,7 +33,7 @@ export default async function EspaceLayout({
   const sidebarUser = buildSidebarUser(user, profile);
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="bg-cream min-h-screen">
       <EspaceSidebar user={sidebarUser} />
       <main className="min-h-screen md:pl-64">{children}</main>
     </div>
@@ -58,17 +54,13 @@ interface ProfileSlice {
   nom: string | null;
 }
 
-function buildSidebarUser(
-  user: AuthUser,
-  profile: ProfileSlice | null,
-): SidebarUser {
+function buildSidebarUser(user: AuthUser, profile: ProfileSlice | null): SidebarUser {
   const prenom = profile?.prenom?.trim() ?? '';
   const nom = profile?.nom?.trim() ?? '';
   const email = user.email ?? '';
   const fullName = user.user_metadata?.full_name as string | undefined;
 
-  const name =
-    prenom && nom ? `${prenom} ${nom}` : fullName || email || 'Étudiant';
+  const name = prenom && nom ? `${prenom} ${nom}` : fullName || email || 'Étudiant';
 
   const initials =
     prenom && nom

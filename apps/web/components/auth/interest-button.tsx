@@ -49,11 +49,7 @@ export function InterestButton({
   const showArrow = withArrow && variant !== 'nav' && variant !== 'nav-short';
 
   return (
-    <button
-      type="button"
-      onClick={open}
-      className={cn(variantClasses[variant], className)}
-    >
+    <button type="button" onClick={open} className={cn(variantClasses[variant], className)}>
       {label}
       {showArrow ? (
         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

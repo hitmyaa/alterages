@@ -20,12 +20,8 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(
-          cookiesToSet: { name: string; value: string; options?: CookieOptions }[],
-        ) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value),
-          );
+        setAll(cookiesToSet: { name: string; value: string; options?: CookieOptions }[]) {
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
           supabaseResponse = NextResponse.next({ request });
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options),
@@ -42,8 +38,7 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const { pathname } = request.nextUrl;
-  const isProtectedRoute =
-    pathname.startsWith('/espace') || pathname.startsWith('/candidature');
+  const isProtectedRoute = pathname.startsWith('/espace') || pathname.startsWith('/candidature');
 
   if (isProtectedRoute && !user) {
     const url = request.nextUrl.clone();

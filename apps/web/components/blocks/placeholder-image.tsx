@@ -33,9 +33,7 @@ export function PlaceholderImage({
       )}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      <span className="text-[0.7rem] font-medium uppercase tracking-[0.14em]">
-        {label}
-      </span>
+      <span className="text-[0.7rem] font-medium uppercase tracking-[0.14em]">{label}</span>
     </div>
   );
 }

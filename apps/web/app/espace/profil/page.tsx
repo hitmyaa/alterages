@@ -58,10 +58,7 @@ export default async function ProfilPage() {
       )
       .eq('id', user.id)
       .maybeSingle(),
-    supabase
-      .from('student_availabilities')
-      .select('day_idx, slot_idx')
-      .eq('profile_id', user.id),
+    supabase.from('student_availabilities').select('day_idx, slot_idx').eq('profile_id', user.id),
     supabase.from('student_zones').select('zone_id').eq('profile_id', user.id),
   ]);
 
@@ -72,15 +69,15 @@ export default async function ProfilPage() {
   return (
     <div className="p-6 pt-20 md:p-10 md:pt-10">
       <header className="mb-8">
-        <p className="text-[0.72rem] font-medium uppercase tracking-[0.1em] text-light">
+        <p className="text-light text-[0.72rem] font-medium uppercase tracking-[0.1em]">
           Espace étudiant
         </p>
-        <h1 className="heading-serif font-serif text-[clamp(1.6rem,3vw,2.2rem)] leading-[1.15] text-deep">
+        <h1 className="heading-serif text-deep font-serif text-[clamp(1.6rem,3vw,2.2rem)] leading-[1.15]">
           Profil
         </h1>
-        <p className="mt-1 text-[0.85rem] text-mid">
-          Informations renseignées lors de votre préinscription. Tout sera
-          éditable depuis cette page très bientôt.
+        <p className="text-mid mt-1 text-[0.85rem]">
+          Informations renseignées lors de votre préinscription. Tout sera éditable depuis cette
+          page très bientôt.
         </p>
       </header>
 
@@ -89,10 +86,7 @@ export default async function ProfilPage() {
         <Card title="Identité">
           <Row label="Prénom" value={profile?.prenom} />
           <Row label="Nom" value={profile?.nom} />
-          <Row
-            label="Date de naissance"
-            value={formatDate(profile?.date_naissance)}
-          />
+          <Row label="Date de naissance" value={formatDate(profile?.date_naissance)} />
           <Row label="Téléphone" value={profile?.telephone} />
           <Row label="E-mail" value={user.email} />
         </Card>
@@ -107,26 +101,22 @@ export default async function ProfilPage() {
         {/* Disponibilités */}
         <Card title="Disponibilités">
           {profile?.availability_later ? (
-            <p className="text-[0.85rem] italic text-light">
+            <p className="text-light text-[0.85rem] italic">
               Vous compléterez vos disponibilités plus tard.
             </p>
           ) : availabilities.length === 0 ? (
-            <p className="text-[0.85rem] italic text-light">
-              Aucun créneau renseigné.
-            </p>
+            <p className="text-light text-[0.85rem] italic">Aucun créneau renseigné.</p>
           ) : (
             <div className="flex flex-wrap gap-1.5">
               {availabilities
                 .slice()
                 .sort((a, b) =>
-                  a.day_idx === b.day_idx
-                    ? a.slot_idx - b.slot_idx
-                    : a.day_idx - b.day_idx,
+                  a.day_idx === b.day_idx ? a.slot_idx - b.slot_idx : a.day_idx - b.day_idx,
                 )
                 .map((slot) => (
                   <span
                     key={`${slot.day_idx}-${slot.slot_idx}`}
-                    className="inline-flex items-center gap-1 rounded-full bg-terra/10 px-2.5 py-0.5 text-[0.74rem] text-terra"
+                    className="bg-terra/10 text-terra inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[0.74rem]"
                   >
                     {DAYS[slot.day_idx]} · {SLOTS[slot.slot_idx]}
                   </span>
@@ -141,15 +131,13 @@ export default async function ProfilPage() {
             <Row label="Mode de déplacement" value={profile?.transport_mode} />
           </div>
           {zones.length === 0 ? (
-            <p className="text-[0.85rem] italic text-light">
-              Aucune zone sélectionnée.
-            </p>
+            <p className="text-light text-[0.85rem] italic">Aucune zone sélectionnée.</p>
           ) : (
             <div className="flex flex-wrap gap-1.5">
               {zones.map((z) => (
                 <span
                   key={z.zone_id}
-                  className="inline-flex items-center gap-1 rounded-full bg-terra/10 px-2.5 py-0.5 text-[0.74rem] text-terra"
+                  className="bg-terra/10 text-terra inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[0.74rem]"
                 >
                   {ZONE_LABELS[z.zone_id] ?? z.zone_id}
                 </span>
@@ -166,16 +154,10 @@ export default async function ProfilPage() {
 /*                            SUB                                      */
 /* ------------------------------------------------------------------ */
 
-function Card({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-xl border border-bd bg-white p-6">
-      <h2 className="mb-4 text-[0.72rem] font-medium uppercase tracking-[0.06em] text-light">
+    <section className="border-bd rounded-xl border bg-white p-6">
+      <h2 className="text-light mb-4 text-[0.72rem] font-medium uppercase tracking-[0.06em]">
         {title}
       </h2>
       <div className="flex flex-col gap-2">{children}</div>
@@ -183,19 +165,15 @@ function Card({
   );
 }
 
-function Row({
-  label,
-  value,
-}: {
-  label: string;
-  value: string | null | undefined;
-}) {
+function Row({ label, value }: { label: string; value: string | null | undefined }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-bd-light py-1.5 last:border-b-0">
-      <span className="text-[0.78rem] text-mid">{label}</span>
-      <span className="text-right text-[0.85rem] font-medium text-deep">
-        {value && value.trim().length > 0 ? value : (
-          <span className="italic font-normal text-light">— non renseigné</span>
+    <div className="border-bd-light flex items-baseline justify-between gap-4 border-b py-1.5 last:border-b-0">
+      <span className="text-mid text-[0.78rem]">{label}</span>
+      <span className="text-deep text-right text-[0.85rem] font-medium">
+        {value && value.trim().length > 0 ? (
+          value
+        ) : (
+          <span className="text-light font-normal italic">— non renseigné</span>
         )}
       </span>
     </div>

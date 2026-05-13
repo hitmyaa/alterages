@@ -13,31 +13,31 @@ sans modifier le code (ou modifie le code pour pointer vers d'autres fichiers).
 
 ### Hero
 
-| Fichier | Emplacement dans le code | Dimensions conseillées |
-|---|---|---|
+| Fichier    | Emplacement dans le code                 | Dimensions conseillées                |
+| ---------- | ---------------------------------------- | ------------------------------------- |
 | `hero.jpg` | Section hero, colonne droite (ratio 4:5) | 1200 × 1500 px, JPG optimisé ≤ 300 Ko |
 
 ### Cartes prescripteurs (3 cartes dans la section "Vous orientez…")
 
-| Fichier | Carte | Dimensions |
-|---|---|---|
+| Fichier                    | Carte                      | Dimensions   |
+| -------------------------- | -------------------------- | ------------ |
 | `prescripteurs/card-1.jpg` | Zéro charge administrative | 800 × 600 px |
-| `prescripteurs/card-2.jpg` | Des étudiants formés | 800 × 600 px |
-| `prescripteurs/card-3.jpg` | Un suivi de confiance | 800 × 600 px |
+| `prescripteurs/card-2.jpg` | Des étudiants formés       | 800 × 600 px |
+| `prescripteurs/card-3.jpg` | Un suivi de confiance      | 800 × 600 px |
 
 ### Profils étudiants (4 portraits)
 
-| Fichier | Profil | Dimensions |
-|---|---|---|
-| `etudiants/lea.jpg` | Léa, 22 ans | 300 × 300 px, carré |
-| `etudiants/theo.jpg` | Théo, 24 ans | idem |
-| `etudiants/camille.jpg` | Camille, 21 ans | idem |
-| `etudiants/rayan.jpg` | Rayan, 26 ans | idem |
+| Fichier                 | Profil          | Dimensions          |
+| ----------------------- | --------------- | ------------------- |
+| `etudiants/lea.jpg`     | Léa, 22 ans     | 300 × 300 px, carré |
+| `etudiants/theo.jpg`    | Théo, 24 ans    | idem                |
+| `etudiants/camille.jpg` | Camille, 21 ans | idem                |
+| `etudiants/rayan.jpg`   | Rayan, 26 ans   | idem                |
 
 ### Signature Faustine (section Contact)
 
-| Fichier | Emplacement | Dimensions |
-|---|---|---|
+| Fichier        | Emplacement                | Dimensions          |
+| -------------- | -------------------------- | ------------------- |
 | `faustine.jpg` | Avatar dans la card sombre | 200 × 200 px, carré |
 
 ## Format conseillé
