@@ -1,10 +1,11 @@
 'use client';
 
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+
+import { submitQuestionnaire } from './_actions';
 
 import { Stepper } from './_components/stepper';
 import {
@@ -28,7 +29,6 @@ const STEPS = [
 ] as const;
 
 export default function CandidaturePage() {
-  const router = useRouter();
   const [step, setStep] = React.useState<StepId>(1);
   const [identity, setIdentity] = React.useState<IdentityData>(emptyIdentity);
   const [availability, setAvailability] = React.useState<Set<AvailabilityKey>>(
@@ -37,11 +37,32 @@ export default function CandidaturePage() {
   const [availabilityLater, setAvailabilityLater] = React.useState(false);
   const [zones, setZones] = React.useState<Set<string>>(() => new Set());
   const [transport, setTransport] = React.useState('');
+  const [submitting, setSubmitting] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
 
   const goPrev = () => setStep((s) => Math.max(1, s - 1) as StepId);
+
+  const submit = async () => {
+    setSubmitting(true);
+    setSubmitError(null);
+    const result = await submitQuestionnaire({
+      identity,
+      availability: Array.from(availability),
+      availabilityLater,
+      zones: Array.from(zones),
+      transport,
+    });
+    /* En cas de succès, la server action a déjà fait un `redirect()`.
+     * On n'arrive ici que si une erreur a été renvoyée. */
+    if (result && 'error' in result) {
+      setSubmitError(result.error);
+      setSubmitting(false);
+    }
+  };
+
   const goNext = () => {
     if (step < 3) setStep((s) => (s + 1) as StepId);
-    else router.push('/espace');
+    else void submit();
   };
 
   /* ----------------- Tunnel ----------------- */
@@ -117,6 +138,16 @@ export default function CandidaturePage() {
           )}
         </div>
 
+        {/* Erreur soumission */}
+        {submitError ? (
+          <p
+            role="alert"
+            className="mt-6 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-2.5 text-[0.82rem] text-destructive"
+          >
+            {submitError}
+          </p>
+        ) : null}
+
         {/* Footer nav */}
         <div className="mt-10 flex items-center justify-between border-t border-bd-light pt-6">
           <span className="text-[0.78rem] text-light">
@@ -136,13 +167,18 @@ export default function CandidaturePage() {
             <button
               type="button"
               onClick={goNext}
-              disabled={!canGoNext}
+              disabled={!canGoNext || submitting}
               className={cn(
                 'group inline-flex items-center gap-2 rounded-sm bg-terra px-6 py-2.5 text-[0.85rem] font-medium text-white transition-all hover:bg-terra-dark',
-                !canGoNext && 'cursor-not-allowed opacity-50 hover:bg-terra',
+                (!canGoNext || submitting) &&
+                  'cursor-not-allowed opacity-50 hover:bg-terra',
               )}
             >
-              {step === 3 ? 'Soumettre' : 'Continuer'}
+              {submitting
+                ? 'Envoi…'
+                : step === 3
+                  ? 'Soumettre'
+                  : 'Continuer'}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </button>
           </div>
