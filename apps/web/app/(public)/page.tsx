@@ -36,15 +36,14 @@ function HeroSection() {
   return (
     <section
       id="accueil"
-      className="relative overflow-hidden bg-warm px-6 pb-24 pt-20 md:px-8 md:pb-32 md:pt-28"
+      className="bg-warm relative overflow-hidden px-6 pb-24 pt-20 md:px-8 md:pb-32 md:pt-28"
     >
       {/* Halo terracotta haut-droite */}
       <div
         aria-hidden
         className="pointer-events-none absolute -right-40 -top-40 h-[650px] w-[650px] rounded-full"
         style={{
-          background:
-            'radial-gradient(circle, rgba(184,92,44,0.09) 0%, transparent 65%)',
+          background: 'radial-gradient(circle, rgba(184,92,44,0.09) 0%, transparent 65%)',
         }}
       />
       {/* Halo sauge bas-gauche */}
@@ -52,41 +51,40 @@ function HeroSection() {
         aria-hidden
         className="pointer-events-none absolute -bottom-60 -left-40 h-[500px] w-[500px] rounded-full"
         style={{
-          background:
-            'radial-gradient(circle, rgba(92,122,98,0.08) 0%, transparent 65%)',
+          background: 'radial-gradient(circle, rgba(92,122,98,0.08) 0%, transparent 65%)',
         }}
       />
 
       <div className="container relative z-10 grid grid-cols-1 items-stretch gap-12 lg:grid-cols-2 lg:gap-20">
-        <div className="flex animate-fade-up flex-col justify-center">
-          <span className="mb-7 inline-flex w-fit items-center gap-2 self-start rounded-full border border-sage-light/60 bg-warm px-3.5 py-1.5 text-[0.7rem] uppercase tracking-[0.12em] text-sage shadow-sm">
+        <div className="animate-fade-up flex flex-col justify-center">
+          <span className="border-sage-light/60 bg-warm text-sage mb-7 inline-flex w-fit items-center gap-2 self-start rounded-full border px-3.5 py-1.5 text-[0.7rem] uppercase tracking-[0.12em] shadow-sm">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sage opacity-75" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-sage" />
+              <span className="bg-sage absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
+              <span className="bg-sage relative inline-flex h-1.5 w-1.5 rounded-full" />
             </span>
             Lyon · Lancement septembre 2026
           </span>
 
-          <h1 className="max-w-xl font-serif text-[clamp(2.2rem,4.5vw,4rem)] font-normal italic leading-[1.1] tracking-tight text-deep">
-            Quand la <span className="not-italic text-terra">jeunesse</span> prend soin
-            de la <span className="not-italic text-terra">sagesse</span>
+          <h1 className="text-deep max-w-xl font-serif text-[clamp(2.2rem,4.5vw,4rem)] font-normal italic leading-[1.1] tracking-tight">
+            Quand la <span className="text-terra not-italic">jeunesse</span> prend soin de la{' '}
+            <span className="text-terra not-italic">sagesse</span>
           </h1>
 
-          <p className="mt-6 max-w-md text-[0.95rem] leading-[1.95] text-mid">
+          <p className="text-mid mt-6 max-w-md text-[0.95rem] leading-[1.95]">
             Des services d'aide à domicile assurés par des étudiants formés et engagés.
           </p>
 
           <div className="mt-10 flex flex-wrap gap-3">
             <a
               href="#contact"
-              className="group inline-flex items-center gap-2 rounded-sm bg-terra px-7 py-3 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-terra-dark hover:shadow-md"
+              className="bg-terra hover:bg-terra-dark group inline-flex items-center gap-2 rounded-sm px-7 py-3 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
             >
               Je suis intéressé(e)
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
             <a
               href="#etudiants"
-              className="inline-flex items-center rounded-sm border border-bd px-7 py-3 text-sm text-mid transition-colors hover:border-terra hover:text-terra"
+              className="border-bd text-mid hover:border-terra hover:text-terra inline-flex items-center rounded-sm border px-7 py-3 text-sm transition-colors"
             >
               Découvrir le projet
             </a>
@@ -95,8 +93,8 @@ function HeroSection() {
 
         {/* Visuel hero — la hauteur est dict\u00e9e par le bloc texte \u00e0 gauche ; l'image
              crop via object-cover pour remplir cette hauteur. Masqu\u00e9e sous lg. */}
-        <div className="relative hidden animate-fade-up lg:flex lg:[animation-delay:120ms]">
-          <div className="relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl shadow-[0_30px_80px_-20px_rgba(61,48,32,0.25)] ring-1 ring-bd/60">
+        <div className="animate-fade-up relative hidden lg:flex lg:[animation-delay:120ms]">
+          <div className="ring-bd/60 relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl shadow-[0_30px_80px_-20px_rgba(61,48,32,0.25)] ring-1">
             <Image
               src="/images/image-principale.png"
               alt="Accompagnement intergénérationnel AlterAges — une jeune étudiante et une personne âgée"
@@ -120,7 +118,8 @@ function PrescripteursSection() {
       <div className="container">
         <span className="eyebrow-invert">Pour les aidants</span>
         <h2 className="heading-serif max-w-2xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-white">
-          Vous nous contactez,<br />
+          Vous nous contactez,
+          <br />
           on s'occupe du reste
         </h2>
         <p className="mt-4 max-w-xl text-[0.95rem] leading-[1.9] text-white/65">
@@ -151,7 +150,7 @@ function PrescripteursSection() {
         </div>
 
         <div className="mt-16">
-          <span className="mb-4 block text-[0.67rem] font-medium uppercase tracking-tag text-terra-light">
+          <span className="tracking-tag text-terra-light mb-4 block text-[0.67rem] font-medium uppercase">
             Ce que disent les professionnels
           </span>
           <div className="grid gap-4 md:grid-cols-3">
@@ -169,7 +168,6 @@ function PrescripteursSection() {
             />
           </div>
         </div>
-
       </div>
     </section>
   );
@@ -201,8 +199,7 @@ function PrescCard({
         aria-hidden
         className="absolute inset-0"
         style={{
-          background:
-            'linear-gradient(to top, rgba(30,20,10,0.92) 40%, rgba(30,20,10,0.55) 100%)',
+          background: 'linear-gradient(to top, rgba(30,20,10,0.92) 40%, rgba(30,20,10,0.55) 100%)',
         }}
       />
 
@@ -215,18 +212,10 @@ function PrescCard({
   );
 }
 
-function Testimonial({
-  quote,
-  role,
-  meta,
-}: {
-  quote: string;
-  role: string;
-  meta?: string;
-}) {
+function Testimonial({ quote, role, meta }: { quote: string; role: string; meta?: string }) {
   return (
     <article className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-6">
-      <Quote className="h-5 w-5 text-terra-light" aria-hidden />
+      <Quote className="text-terra-light h-5 w-5" aria-hidden />
       <p className="mt-4 text-[0.88rem] italic leading-[1.8] text-white/75">
         &laquo; {quote} &raquo;
       </p>
@@ -246,33 +235,32 @@ function EtudiantsSection() {
       <div className="container grid gap-16 lg:grid-cols-2 lg:gap-20">
         <div>
           <span className="eyebrow">Le lien intergénérationnel</span>
-          <h2 className="heading-serif max-w-md font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-deep">
+          <h2 className="heading-serif text-deep max-w-md font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
             Des étudiants du médico-social, formés et encadrés
           </h2>
-          <p className="mt-6 max-w-md text-[0.95rem] leading-[1.95] text-mid">
-            AlterAges recrute des étudiants du secteur médico-social et social. Nous
-            valorisons autant les expériences terrain que les parcours académiques.
+          <p className="text-mid mt-6 max-w-md text-[0.95rem] leading-[1.95]">
+            AlterAges recrute des étudiants du secteur médico-social et social. Nous valorisons
+            autant les expériences terrain que les parcours académiques.
           </p>
 
           <ul className="mt-8 flex flex-col gap-3">
             <ChecklistItem>
-              Bénévolat, stages en établissement, expériences auprès de personnes âgées :
-              valorisés au même titre que le diplôme
+              Bénévolat, stages en établissement, expériences auprès de personnes âgées : valorisés
+              au même titre que le diplôme
             </ChecklistItem>
             <ChecklistItem>
-              Sélection sur profil, entretien de motivation et vérification du casier
-              judiciaire
+              Sélection sur profil, entretien de motivation et vérification du casier judiciaire
             </ChecklistItem>
             <ChecklistItem>
-              Formation interne obligatoire avant toute première intervention :
-              communication bienveillante, gestes adaptés aux personnes fragiles, limites
-              d'intervention, posture professionnelle
+              Formation interne obligatoire avant toute première intervention : communication
+              bienveillante, gestes adaptés aux personnes fragiles, limites d'intervention, posture
+              professionnelle
             </ChecklistItem>
           </ul>
 
           <a
             href="/etudiants"
-            className="group mt-8 inline-flex items-center gap-2 text-sm font-medium text-terra transition-colors hover:text-terra-dark"
+            className="text-terra hover:text-terra-dark group mt-8 inline-flex items-center gap-2 text-sm font-medium transition-colors"
           >
             Découvrir le programme étudiant
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -305,9 +293,9 @@ function EtudiantsSection() {
             accent="#B0A08A"
           />
 
-          <p className="col-span-2 pt-2 text-[0.72rem] leading-[1.6] text-light">
-            * Ces profils sont illustratifs et représentent le type d'intervenants
-            qu'AlterAges souhaite recruter d'ici septembre 2026.
+          <p className="text-light col-span-2 pt-2 text-[0.72rem] leading-[1.6]">
+            * Ces profils sont illustratifs et représentent le type d'intervenants qu'AlterAges
+            souhaite recruter d'ici septembre 2026.
           </p>
         </div>
       </div>
@@ -317,8 +305,8 @@ function EtudiantsSection() {
 
 function ChecklistItem({ children }: { children: React.ReactNode }) {
   return (
-    <li className="flex items-start gap-3 rounded-lg border-l-2 border-terra bg-warm px-4 py-3 text-[0.88rem] leading-[1.65] text-mid">
-      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-terra" />
+    <li className="border-terra bg-warm text-mid flex items-start gap-3 rounded-lg border-l-2 px-4 py-3 text-[0.88rem] leading-[1.65]">
+      <CheckCircle2 className="text-terra mt-0.5 h-4 w-4 shrink-0" />
       <span>{children}</span>
     </li>
   );
@@ -337,16 +325,16 @@ function ProfileCard({
 }) {
   const initial = name.charAt(0);
   return (
-    <article className="group rounded-xl border border-bd bg-warm p-5 text-center transition-all hover:-translate-y-1 hover:border-sage-light">
+    <article className="border-bd bg-warm hover:border-sage-light group rounded-xl border p-5 text-center transition-all hover:-translate-y-1">
       <div
         className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full font-sans text-lg font-semibold text-white"
         style={{ background: accent }}
       >
         {initial}
       </div>
-      <div className="text-[0.92rem] font-medium text-deep">{name}</div>
-      <div className="mt-1 text-[0.75rem] leading-snug text-mid">{meta}</div>
-      <span className="mt-3 inline-block rounded-full bg-sage-light/20 px-3 py-0.5 text-[0.66rem] font-medium tracking-wide text-sage">
+      <div className="text-deep text-[0.92rem] font-medium">{name}</div>
+      <div className="text-mid mt-1 text-[0.75rem] leading-snug">{meta}</div>
+      <span className="bg-sage-light/20 text-sage mt-3 inline-block rounded-full px-3 py-0.5 text-[0.66rem] font-medium tracking-wide">
         {badge}
       </span>
     </article>
@@ -388,11 +376,12 @@ function SuiviSection() {
     <section id="suivi" className="bg-warm px-6 py-24 md:py-28">
       <div className="container">
         <span className="eyebrow">Le parcours client</span>
-        <h2 className="heading-serif max-w-3xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-deep">
+        <h2 className="heading-serif text-deep max-w-3xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
           De l'orientation à l'intervention, un seul fil conducteur
         </h2>
-        <p className="mt-4 text-[0.95rem] leading-[1.8] text-mid">
-          Un interlocuteur unique, joignable, qui connaît le dossier. De la première prise de contact au suivi mensuel.
+        <p className="text-mid mt-4 text-[0.95rem] leading-[1.8]">
+          Un interlocuteur unique, joignable, qui connaît le dossier. De la première prise de
+          contact au suivi mensuel.
         </p>
 
         <ol className="relative mt-16 grid gap-10 md:grid-cols-5 md:gap-0">
@@ -408,12 +397,12 @@ function SuiviSection() {
               key={title}
               className="group relative flex flex-col items-center text-center md:px-3"
             >
-              <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] border-terra bg-warm font-sans text-base font-semibold tabular-nums text-terra transition-all group-hover:bg-terra group-hover:text-white">
+              <div className="border-terra bg-warm text-terra group-hover:bg-terra relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] font-sans text-base font-semibold tabular-nums transition-all group-hover:text-white">
                 <span className="group-hover:hidden">{idx + 1}</span>
                 <Icon className="hidden h-5 w-5 group-hover:block" aria-hidden />
               </div>
-              <h3 className="mt-4 font-serif text-[0.95rem] text-deep">{title}</h3>
-              <p className="mt-1 max-w-[200px] text-[0.78rem] leading-[1.55] text-mid">
+              <h3 className="text-deep mt-4 font-serif text-[0.95rem]">{title}</h3>
+              <p className="text-mid mt-1 max-w-[200px] text-[0.78rem] leading-[1.55]">
                 {description}
               </p>
             </li>
@@ -479,18 +468,19 @@ function TarifSection() {
     <section id="tarif" className="bg-cream bg-grain px-6 py-24 md:py-28">
       <div className="container">
         <span className="eyebrow">Tarification</span>
-        <h2 className="heading-serif max-w-3xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-deep">
-          Moins cher qu'un prestataire,<br />
+        <h2 className="heading-serif text-deep max-w-3xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
+          Moins cher qu'un prestataire,
+          <br />
           infiniment plus humain
         </h2>
-        <p className="mt-4 max-w-2xl text-[0.95rem] leading-[1.8] text-mid">
-          Le bénéficiaire paie directement le salaire de son intervenant. AlterAges
-          facture un forfait de gestion mensuel fixe, couvrant toute l'administration.
+        <p className="text-mid mt-4 max-w-2xl text-[0.95rem] leading-[1.8]">
+          Le bénéficiaire paie directement le salaire de son intervenant. AlterAges facture un
+          forfait de gestion mensuel fixe, couvrant toute l'administration.
         </p>
 
         <div className="mt-12 grid items-start gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
           {/* Tableau comparatif — colonne gauche */}
-          <div className="overflow-hidden rounded-xl border border-bd bg-warm">
+          <div className="border-bd bg-warm overflow-hidden rounded-xl border">
             {/* Desktop */}
             <table className="hidden w-full border-collapse text-left md:table">
               <thead>
@@ -508,19 +498,19 @@ function TarifSection() {
               </thead>
               <tbody>
                 {comparisonRows.map((row) => (
-                  <tr key={row.label} className="border-t border-bd">
-                    <td className="whitespace-nowrap bg-cream px-3 py-2.5 text-[0.78rem] font-medium text-deep">
+                  <tr key={row.label} className="border-bd border-t">
+                    <td className="bg-cream text-deep whitespace-nowrap px-3 py-2.5 text-[0.78rem] font-medium">
                       {row.label}
                     </td>
-                    <td className="whitespace-nowrap bg-cream px-3 py-2.5 text-[0.78rem]">
-                      <span className="inline-flex items-center gap-1.5 text-light">
+                    <td className="bg-cream whitespace-nowrap px-3 py-2.5 text-[0.78rem]">
+                      <span className="text-light inline-flex items-center gap-1.5">
                         <X className="h-3.5 w-3.5 shrink-0" aria-hidden />
                         {row.alt}
                       </span>
                     </td>
-                    <td className="whitespace-nowrap bg-[#fef2ea] px-3 py-2.5 text-[0.78rem] font-medium text-terra">
+                    <td className="text-terra whitespace-nowrap bg-[#fef2ea] px-3 py-2.5 text-[0.78rem] font-medium">
                       <span className="inline-flex items-center gap-1.5">
-                        <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-terra" aria-hidden />
+                        <CheckCircle2 className="text-terra h-3.5 w-3.5 shrink-0" aria-hidden />
                         {row.good}
                       </span>
                     </td>
@@ -531,7 +521,7 @@ function TarifSection() {
 
             {/* Mobile — cartes compactes avec header comparatif */}
             <div className="md:hidden">
-              <div className="grid grid-cols-2 border-b border-bd">
+              <div className="border-bd grid grid-cols-2 border-b">
                 <div className="bg-[#4a3a28] px-4 py-2.5 text-center text-[0.68rem] font-medium uppercase tracking-[0.09em] text-white">
                   Prestataire
                 </div>
@@ -540,19 +530,22 @@ function TarifSection() {
                 </div>
               </div>
 
-              <div className="flex flex-col divide-y divide-bd">
+              <div className="divide-bd flex flex-col divide-y">
                 {comparisonRows.map((row) => (
                   <article key={row.label} className="bg-warm px-4 py-4">
-                    <h3 className="text-[0.75rem] font-medium uppercase tracking-[0.08em] text-sage">
+                    <h3 className="text-sage text-[0.75rem] font-medium uppercase tracking-[0.08em]">
                       {row.label}
                     </h3>
                     <div className="mt-2 grid grid-cols-2 gap-3 text-[0.82rem]">
-                      <div className="flex items-start gap-1.5 text-light">
+                      <div className="text-light flex items-start gap-1.5">
                         <X className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
                         <span>{row.alt}</span>
                       </div>
-                      <div className="flex items-start gap-1.5 font-medium text-terra">
-                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-terra" aria-hidden />
+                      <div className="text-terra flex items-start gap-1.5 font-medium">
+                        <CheckCircle2
+                          className="text-terra mt-0.5 h-3.5 w-3.5 shrink-0"
+                          aria-hidden
+                        />
                         <span>{row.good}</span>
                       </div>
                     </div>
@@ -572,16 +565,13 @@ function TarifSection() {
               title="Forfait de gestion mensuel"
               description="Un montant fixe couvrant sélection, contrats, CESU, bulletins de salaire, suivi et remplacements. Communiqué au lancement en septembre 2026."
             />
-            <div className="flex items-center gap-5 rounded-xl bg-deep px-6 py-5 text-white">
-              <div className="font-sans text-[2.75rem] font-bold leading-none tracking-tight text-terra-light tabular-nums">
+            <div className="bg-deep flex items-center gap-5 rounded-xl px-6 py-5 text-white">
+              <div className="text-terra-light font-sans text-[2.75rem] font-bold tabular-nums leading-none tracking-tight">
                 50<span className="ml-0.5 align-top text-xl font-semibold">%</span>
               </div>
               <div className="text-[0.83rem] leading-[1.75] text-white/60">
-                <strong className="block font-medium text-white">
-                  Crédit d'impôt famille
-                </strong>
-                Sur la totalité des dépenses, salaire et forfait. Le coût réel est divisé
-                par deux.
+                <strong className="block font-medium text-white">Crédit d'impôt famille</strong>
+                Sur la totalité des dépenses, salaire et forfait. Le coût réel est divisé par deux.
               </div>
             </div>
           </div>
@@ -593,9 +583,9 @@ function TarifSection() {
 
 function InfoCard({ title, description }: { title: string; description: string }) {
   return (
-    <div className="rounded-xl border border-bd bg-warm px-6 py-5">
-      <h4 className="font-serif text-[0.98rem] text-deep">{title}</h4>
-      <p className="mt-1.5 text-[0.83rem] leading-[1.8] text-mid">{description}</p>
+    <div className="border-bd bg-warm rounded-xl border px-6 py-5">
+      <h4 className="text-deep font-serif text-[0.98rem]">{title}</h4>
+      <p className="text-mid mt-1.5 text-[0.83rem] leading-[1.8]">{description}</p>
     </div>
   );
 }
@@ -608,12 +598,12 @@ function ContactSection() {
       <div className="container grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
         <div>
           <span className="eyebrow">Contact</span>
-          <h2 className="heading-serif font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-deep">
+          <h2 className="heading-serif text-deep font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
             Parlons du projet
           </h2>
 
-          <div className="mt-7 flex items-start gap-5 rounded-xl bg-deep px-6 py-5">
-            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-terra ring-2 ring-terra/40 sm:h-24 sm:w-24">
+          <div className="bg-deep mt-7 flex items-start gap-5 rounded-xl px-6 py-5">
+            <div className="bg-terra ring-terra/40 relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 sm:h-24 sm:w-24">
               <Image
                 src="/images/faustine.webp"
                 alt="Portrait de Faustine Sornay"
@@ -630,17 +620,17 @@ function ContactSection() {
                 Porteuse du projet AlterAges · Lyon
               </span>
               <span className="mt-2 block text-[0.8rem] leading-[1.7] text-white/75">
-                Ancienne auxiliaire de vie, je crée AlterAges avec une idée simple :
-                replacer l'humain et le lien intergénérationnel au cœur d'un modèle
-                d'aide à domicile repensé.
+                Ancienne auxiliaire de vie, je crée AlterAges avec une idée simple : replacer
+                l'humain et le lien intergénérationnel au cœur d'un modèle d'aide à domicile
+                repensé.
               </span>
             </div>
           </div>
 
-          <p className="mt-5 max-w-md text-[0.92rem] leading-[1.95] text-mid">
-            Professionnel du secteur, famille qui anticipe, partenaire potentiel :
-            contactez-nous avant le lancement. Plus tôt on échange, mieux on construit
-            quelque chose qui répond vraiment à vos besoins.
+          <p className="text-mid mt-5 max-w-md text-[0.92rem] leading-[1.95]">
+            Professionnel du secteur, famille qui anticipe, partenaire potentiel : contactez-nous
+            avant le lancement. Plus tôt on échange, mieux on construit quelque chose qui répond
+            vraiment à vos besoins.
           </p>
 
           <div className="mt-6 flex flex-col gap-3">
@@ -663,11 +653,7 @@ function ContactSection() {
               href="https://www.linkedin.com/in/faustine-sornay/"
               external
             />
-            <CoordItem
-              icon={MapPin}
-              label="Territoire visé"
-              value="Lyon et agglomération (69)"
-            />
+            <CoordItem icon={MapPin} label="Territoire visé" value="Lyon et agglomération (69)" />
           </div>
         </div>
 
@@ -692,14 +678,14 @@ function CoordItem({
 }) {
   const content = (
     <>
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-warm text-terra">
+      <div className="bg-warm text-terra flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
         <Icon className="h-4 w-4" aria-hidden />
       </div>
       <div>
-        <strong className="block text-[0.67rem] font-medium uppercase tracking-[0.1em] text-light">
+        <strong className="text-light block text-[0.67rem] font-medium uppercase tracking-[0.1em]">
           {label}
         </strong>
-        <span className="text-[0.9rem] text-deep">{value}</span>
+        <span className="text-deep text-[0.9rem]">{value}</span>
       </div>
     </>
   );

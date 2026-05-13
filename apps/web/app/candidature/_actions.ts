@@ -78,10 +78,7 @@ export async function submitQuestionnaire(
   }
 
   /* --- 2. Replace availabilities (delete + insert) ------------------------ */
-  await supabase
-    .from('student_availabilities')
-    .delete()
-    .eq('profile_id', user.id);
+  await supabase.from('student_availabilities').delete().eq('profile_id', user.id);
 
   if (!payload.availabilityLater && payload.availability.length > 0) {
     const rows: { profile_id: string; day_idx: number; slot_idx: number }[] = [];
@@ -89,23 +86,14 @@ export async function submitQuestionnaire(
       const parts = key.split('-').map(Number);
       if (parts.length !== 2) continue;
       const [d, s] = parts as [number, number];
-      if (
-        !Number.isInteger(d) ||
-        !Number.isInteger(s) ||
-        d < 0 ||
-        d > 6 ||
-        s < 0 ||
-        s > 6
-      ) {
+      if (!Number.isInteger(d) || !Number.isInteger(s) || d < 0 || d > 6 || s < 0 || s > 6) {
         continue;
       }
       rows.push({ profile_id: user.id, day_idx: d, slot_idx: s });
     }
 
     if (rows.length > 0) {
-      const { error: availError } = await supabase
-        .from('student_availabilities')
-        .insert(rows);
+      const { error: availError } = await supabase.from('student_availabilities').insert(rows);
       if (availError) {
         return { error: `Disponibilités : ${availError.message}` };
       }
@@ -120,9 +108,7 @@ export async function submitQuestionnaire(
       profile_id: user.id,
       zone_id,
     }));
-    const { error: zonesError } = await supabase
-      .from('student_zones')
-      .insert(rows);
+    const { error: zonesError } = await supabase.from('student_zones').insert(rows);
     if (zonesError) {
       return { error: `Zones : ${zonesError.message}` };
     }

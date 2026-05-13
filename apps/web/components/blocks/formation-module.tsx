@@ -54,7 +54,7 @@ export function FormationModule({
         'group rounded-xl border transition-colors',
         highlight
           ? 'border-terra/40 bg-terra/[0.08] open:border-terra/60'
-          : 'border-white/10 bg-white/[0.03] hover:border-white/20 open:border-white/25 open:bg-white/[0.05]',
+          : 'border-white/10 bg-white/[0.03] open:border-white/25 open:bg-white/[0.05] hover:border-white/20',
         className,
       )}
     >
@@ -67,9 +67,7 @@ export function FormationModule({
         <span
           className={cn(
             'inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.66rem] font-medium uppercase tracking-[0.1em]',
-            highlight
-              ? 'bg-terra/20 text-terra-light'
-              : 'bg-white/10 text-white/65',
+            highlight ? 'bg-terra/20 text-terra-light' : 'bg-white/10 text-white/65',
           )}
         >
           {Icon ? <Icon className="h-3 w-3" aria-hidden /> : null}
@@ -77,12 +75,8 @@ export function FormationModule({
         </span>
 
         <div className="flex-1">
-          <h3 className="font-serif text-[1.02rem] leading-tight text-white">
-            {title}
-          </h3>
-          <p className="mt-1 text-[0.82rem] leading-[1.55] text-white/55">
-            {description}
-          </p>
+          <h3 className="font-serif text-[1.02rem] leading-tight text-white">{title}</h3>
+          <p className="mt-1 text-[0.82rem] leading-[1.55] text-white/55">{description}</p>
         </div>
 
         <ChevronDown
@@ -103,7 +97,7 @@ export function FormationModule({
             >
               <span
                 aria-hidden
-                className="mt-[0.55rem] inline-block h-[5px] w-[5px] shrink-0 rounded-full bg-terra"
+                className="bg-terra mt-[0.55rem] inline-block h-[5px] w-[5px] shrink-0 rounded-full"
               />
               {point}
             </li>

@@ -20,9 +20,7 @@ export async function GET(request: NextRequest) {
   const errorParam = searchParams.get('error');
 
   if (errorParam) {
-    return NextResponse.redirect(
-      `${origin}/?auth=error&reason=${encodeURIComponent(errorParam)}`,
-    );
+    return NextResponse.redirect(`${origin}/?auth=error&reason=${encodeURIComponent(errorParam)}`);
   }
 
   if (!code) {

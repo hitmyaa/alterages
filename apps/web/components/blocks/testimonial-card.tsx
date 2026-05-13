@@ -30,16 +30,11 @@ export function TestimonialCard({
     <article
       className={cn(
         'rounded-xl p-6',
-        invert
-          ? 'border border-white/[0.08] bg-white/[0.04]'
-          : 'border border-bd bg-warm',
+        invert ? 'border border-white/[0.08] bg-white/[0.04]' : 'border-bd bg-warm border',
         className,
       )}
     >
-      <Quote
-        className={cn('h-5 w-5', invert ? 'text-terra-light' : 'text-terra')}
-        aria-hidden
-      />
+      <Quote className={cn('h-5 w-5', invert ? 'text-terra-light' : 'text-terra')} aria-hidden />
       <p
         className={cn(
           'mt-4 text-[0.88rem] italic leading-[1.8]',
@@ -54,17 +49,10 @@ export function TestimonialCard({
           invert ? 'border-white/[0.08]' : 'border-bd',
         )}
       >
-        <strong
-          className={cn(
-            'block font-medium',
-            invert ? 'text-white/55' : 'text-deep',
-          )}
-        >
+        <strong className={cn('block font-medium', invert ? 'text-white/55' : 'text-deep')}>
           {role}
         </strong>
-        {meta ? (
-          <span className={invert ? 'text-white/35' : 'text-light'}>{meta}</span>
-        ) : null}
+        {meta ? <span className={invert ? 'text-white/35' : 'text-light'}>{meta}</span> : null}
       </div>
     </article>
   );

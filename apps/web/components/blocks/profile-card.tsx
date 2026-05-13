@@ -26,7 +26,7 @@ export function ProfileCard({
   return (
     <article
       className={cn(
-        'group rounded-xl border border-bd bg-warm p-5 text-center transition-all hover:-translate-y-1 hover:border-sage-light',
+        'border-bd bg-warm hover:border-sage-light group rounded-xl border p-5 text-center transition-all hover:-translate-y-1',
         className,
       )}
     >
@@ -37,9 +37,9 @@ export function ProfileCard({
       >
         {initial}
       </div>
-      <div className="text-[0.92rem] font-medium text-deep">{name}</div>
-      <div className="mt-1 text-[0.75rem] leading-snug text-mid">{meta}</div>
-      <span className="mt-3 inline-block rounded-full bg-sage-light/20 px-3 py-0.5 text-[0.66rem] font-medium tracking-wide text-sage">
+      <div className="text-deep text-[0.92rem] font-medium">{name}</div>
+      <div className="text-mid mt-1 text-[0.75rem] leading-snug">{meta}</div>
+      <span className="bg-sage-light/20 text-sage mt-3 inline-block rounded-full px-3 py-0.5 text-[0.66rem] font-medium tracking-wide">
         {badge}
       </span>
     </article>

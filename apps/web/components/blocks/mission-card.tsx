@@ -38,7 +38,7 @@ export function MissionCard({
   return (
     <article
       className={cn(
-        'group relative aspect-[4/3] cursor-default overflow-hidden rounded-xl bg-deep',
+        'bg-deep group relative aspect-[4/3] cursor-default overflow-hidden rounded-xl',
         className,
       )}
     >
@@ -55,7 +55,7 @@ export function MissionCard({
         <PlaceholderImage
           invert
           label="Image à venir"
-          className="absolute inset-0 rounded-none border-0 bg-deep/60 transition-opacity duration-300 group-hover:opacity-0"
+          className="bg-deep/60 absolute inset-0 rounded-none border-0 transition-opacity duration-300 group-hover:opacity-0"
         />
       )}
 
@@ -64,8 +64,7 @@ export function MissionCard({
         aria-hidden
         className="absolute inset-0 transition-opacity duration-300 group-hover:opacity-0"
         style={{
-          background:
-            'linear-gradient(to top, rgba(42,34,24,0.92) 40%, rgba(42,34,24,0.3) 100%)',
+          background: 'linear-gradient(to top, rgba(42,34,24,0.92) 40%, rgba(42,34,24,0.3) 100%)',
         }}
       />
 
@@ -75,11 +74,9 @@ export function MissionCard({
       </div>
 
       {/* État survol : panneau deep avec description */}
-      <div className="pointer-events-none absolute inset-0 flex flex-col justify-center bg-deep p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+      <div className="bg-deep pointer-events-none absolute inset-0 flex flex-col justify-center p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <h3 className="font-serif text-[1.05rem] text-white">{title}</h3>
-        <p className="mt-3 text-[0.85rem] leading-[1.8] text-white/70">
-          {description}
-        </p>
+        <p className="mt-3 text-[0.85rem] leading-[1.8] text-white/70">{description}</p>
         {warning ? (
           <div className="mt-4 border-t border-white/10 pt-3 text-[0.74rem] italic text-white/40">
             {warning}

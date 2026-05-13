@@ -3,12 +3,7 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 type HaloColor = 'terra' | 'sage';
-type HaloPosition =
-  | 'top-right'
-  | 'top-left'
-  | 'bottom-right'
-  | 'bottom-left'
-  | 'center';
+type HaloPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center';
 type HaloSize = 'md' | 'lg' | 'xl';
 
 const colorClasses: Record<HaloColor, string> = {

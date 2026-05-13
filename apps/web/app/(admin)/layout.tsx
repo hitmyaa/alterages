@@ -11,12 +11,12 @@ import Link from 'next/link';
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="border-b bg-muted/40">
+      <header className="bg-muted/40 border-b">
         <div className="container flex h-14 items-center justify-between">
           <Link href="/admin/dashboard" className="font-semibold">
             Alterages · Back-office
           </Link>
-          <span className="text-xs text-muted-foreground">Administration</span>
+          <span className="text-muted-foreground text-xs">Administration</span>
         </div>
       </header>
       <main className="container flex-1 py-8">{children}</main>

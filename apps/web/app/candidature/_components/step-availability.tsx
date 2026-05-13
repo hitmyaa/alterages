@@ -51,9 +51,7 @@ const PRESETS: ReadonlyArray<Preset> = [
     icon: Moon,
     keys: () => {
       const set = new Set<AvailabilityKey>();
-      WEEKDAYS.forEach((d) =>
-        EVENING_SLOTS.forEach((s) => set.add(cellKey(d, s))),
-      );
+      WEEKDAYS.forEach((d) => EVENING_SLOTS.forEach((s) => set.add(cellKey(d, s))));
       return set;
     },
   },
@@ -63,9 +61,7 @@ const PRESETS: ReadonlyArray<Preset> = [
     icon: Sun,
     keys: () => {
       const set = new Set<AvailabilityKey>();
-      WEEKEND.forEach((d) =>
-        SLOTS.forEach((_, s) => set.add(cellKey(d, s))),
-      );
+      WEEKEND.forEach((d) => SLOTS.forEach((_, s) => set.add(cellKey(d, s))));
       return set;
     },
   },
@@ -75,9 +71,7 @@ const PRESETS: ReadonlyArray<Preset> = [
     icon: Sparkles,
     keys: () => {
       const set = new Set<AvailabilityKey>();
-      DAYS.forEach((_, d) =>
-        SLOTS.forEach((_s, s) => set.add(cellKey(d, s))),
-      );
+      DAYS.forEach((_, d) => SLOTS.forEach((_s, s) => set.add(cellKey(d, s))));
       return set;
     },
   },
@@ -173,13 +167,8 @@ export function StepAvailability({
   return (
     <div className="flex flex-col gap-5">
       {/* Presets + Effacer — tous sur la même ligne, Effacer en style ghost */}
-      <div
-        className={cn(
-          'transition-opacity',
-          disabled && 'pointer-events-none opacity-50',
-        )}
-      >
-        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.06em] text-mid">
+      <div className={cn('transition-opacity', disabled && 'pointer-events-none opacity-50')}>
+        <p className="text-mid mb-2 text-[0.72rem] font-medium uppercase tracking-[0.06em]">
           Sélection rapide
         </p>
 
@@ -197,7 +186,7 @@ export function StepAvailability({
                   'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[0.76rem] font-medium transition-colors',
                   active
                     ? 'border-terra bg-terra/10 text-terra'
-                    : 'border-bd bg-white text-mid hover:border-terra hover:text-terra',
+                    : 'border-bd text-mid hover:border-terra hover:text-terra bg-white',
                 )}
               >
                 <Icon className="h-3.5 w-3.5" aria-hidden />
@@ -209,7 +198,7 @@ export function StepAvailability({
             type="button"
             onClick={clearAll}
             disabled={disabled || selectedCount === 0}
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.76rem] font-medium text-light transition-colors hover:text-mid disabled:cursor-not-allowed disabled:opacity-40"
+            className="text-light hover:text-mid inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.76rem] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Eraser className="h-3.5 w-3.5" aria-hidden />
             Effacer
@@ -227,13 +216,11 @@ export function StepAvailability({
         <table className="w-full border-separate border-spacing-1.5">
           <thead>
             <tr>
-              <th className="w-20 px-2 py-1.5 text-left text-[0.66rem] font-medium uppercase tracking-[0.06em] text-light">
+              <th className="text-light w-20 px-2 py-1.5 text-left text-[0.66rem] font-medium uppercase tracking-[0.06em]">
                 Créneau
               </th>
               {DAYS.map((day, dayIdx) => {
-                const allFilled = SLOTS.every((_, slot) =>
-                  value.has(cellKey(dayIdx, slot)),
-                );
+                const allFilled = SLOTS.every((_, slot) => value.has(cellKey(dayIdx, slot)));
                 return (
                   <th key={day} className="w-12 sm:w-auto">
                     <button
@@ -256,15 +243,10 @@ export function StepAvailability({
           </thead>
           <tbody>
             {SLOTS.map((slot, slotIdx) => {
-              const allFilled = DAYS.every((_, day) =>
-                value.has(cellKey(day, slotIdx)),
-              );
+              const allFilled = DAYS.every((_, day) => value.has(cellKey(day, slotIdx)));
               return (
                 <tr key={slot.label}>
-                  <th
-                    scope="row"
-                    className="whitespace-nowrap py-1.5 pr-1 text-left"
-                  >
+                  <th scope="row" className="whitespace-nowrap py-1.5 pr-1 text-left">
                     <button
                       type="button"
                       onClick={() => toggleRow(slotIdx)}
@@ -291,8 +273,8 @@ export function StepAvailability({
                           className={cn(
                             'h-10 w-full rounded-md border text-[0.74rem] transition-all sm:h-11',
                             isOn
-                              ? 'border-terra bg-terra text-white shadow-soft'
-                              : 'border-bd bg-white text-light hover:border-terra-light hover:text-terra',
+                              ? 'border-terra bg-terra shadow-soft text-white'
+                              : 'border-bd text-light hover:border-terra-light hover:text-terra bg-white',
                           )}
                         >
                           {isOn ? '✓' : ''}
@@ -308,7 +290,7 @@ export function StepAvailability({
       </div>
 
       {/* Compteur */}
-      <p className="text-[0.78rem] text-mid">
+      <p className="text-mid text-[0.78rem]">
         {disabled ? (
           <span className="text-light italic">
             Vous compléterez vos disponibilités plus tard depuis votre espace.
@@ -320,9 +302,7 @@ export function StepAvailability({
             <strong className="text-terra">{selectedCount}</strong>{' '}
             {selectedCount > 1 ? 'créneaux sélectionnés' : 'créneau sélectionné'}
             {', '}
-            <span className="text-light">
-              soit {selectedCount * 2}h par semaine
-            </span>
+            <span className="text-light">soit {selectedCount * 2}h par semaine</span>
           </>
         )}
       </p>
@@ -342,9 +322,9 @@ export function StepAvailability({
           type="checkbox"
           checked={unsetLater}
           onChange={(e) => onChangeUnsetLater(e.target.checked)}
-          className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-terra"
+          className="accent-terra mt-0.5 h-4 w-4 shrink-0 cursor-pointer"
         />
-        <span className="text-[0.84rem] font-medium leading-[1.6] text-deep">
+        <span className="text-deep text-[0.84rem] font-medium leading-[1.6]">
           Mon planning n’est pas encore fixé, je le compléterai plus tard.
         </span>
       </label>

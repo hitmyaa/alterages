@@ -15,16 +15,14 @@ type Mode = 'sign-in' | 'sign-up' | 'reset';
 /* Traduction française des erreurs Supabase les plus courantes. */
 function translateError(message: string): string {
   const m = message.toLowerCase();
-  if (m.includes('invalid login credentials'))
-    return 'E-mail ou mot de passe incorrect.';
+  if (m.includes('invalid login credentials')) return 'E-mail ou mot de passe incorrect.';
   if (m.includes('user already registered'))
     return 'Un compte existe déjà avec cet e-mail. Essayez de vous connecter.';
   if (m.includes('password should be at least'))
     return 'Le mot de passe doit contenir au moins 6 caractères.';
   if (m.includes('email not confirmed'))
     return 'E-mail non vérifié. Cliquez sur le lien envoyé dans votre boîte mail.';
-  if (m.includes('email rate limit'))
-    return 'Trop de tentatives. Réessayez dans quelques minutes.';
+  if (m.includes('email rate limit')) return 'Trop de tentatives. Réessayez dans quelques minutes.';
   return message;
 }
 
@@ -67,8 +65,7 @@ export function AuthModal() {
 
   if (!isOpen) return null;
 
-  const origin =
-    typeof window !== 'undefined' ? window.location.origin : '';
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
   /* Redirige selon le flag onboarded de l'utilisateur. */
   const routeAfterAuth = (onboarded: boolean) => {
@@ -136,10 +133,9 @@ export function AuthModal() {
     }
 
     /* mode === 'reset' */
-    const { error: err } = await supabase.auth.resetPasswordForEmail(
-      email.trim(),
-      { redirectTo: `${origin}/auth/reset-password` },
-    );
+    const { error: err } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${origin}/auth/reset-password`,
+    });
     if (err) {
       setError(translateError(err.message));
       setLoading(null);
@@ -154,11 +150,11 @@ export function AuthModal() {
       aria-modal="true"
       role="dialog"
       aria-labelledby="auth-modal-title"
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-deep/75 p-4 backdrop-blur-sm"
+      className="bg-deep/75 fixed inset-0 z-[200] flex items-center justify-center p-4 backdrop-blur-sm"
       onClick={close}
     >
       <div
-        className="relative w-full max-w-md overflow-hidden rounded-xl border border-white/10 bg-deep p-8 sm:p-10"
+        className="bg-deep relative w-full max-w-md overflow-hidden rounded-xl border border-white/10 p-8 sm:p-10"
         onClick={(e) => e.stopPropagation()}
       >
         <Halo color="terra" position="bottom-right" size="md" />
@@ -179,9 +175,7 @@ export function AuthModal() {
           </h2>
 
           <div className="text-center">
-            <p className="font-serif text-[1.5rem] leading-none text-terra-light">
-              AlterAges
-            </p>
+            <p className="text-terra-light font-serif text-[1.5rem] leading-none">AlterAges</p>
             <p className="mt-1 text-[0.72rem] uppercase tracking-[0.14em] text-white/40">
               Espace étudiant
             </p>
@@ -189,15 +183,21 @@ export function AuthModal() {
 
           {/* ----------------- ÉCRAN succès reset ----------------- */}
           {sentTo && mode === 'reset' ? (
-            <ResetSent email={sentTo} onBack={() => {
-              setSentTo(null);
-              setMode('sign-in');
-            }} />
+            <ResetSent
+              email={sentTo}
+              onBack={() => {
+                setSentTo(null);
+                setMode('sign-in');
+              }}
+            />
           ) : sentTo && mode === 'sign-up' ? (
-            <SignUpSent email={sentTo} onBack={() => {
-              setSentTo(null);
-              setMode('sign-in');
-            }} />
+            <SignUpSent
+              email={sentTo}
+              onBack={() => {
+                setSentTo(null);
+                setMode('sign-in');
+              }}
+            />
           ) : (
             <>
               {/* ------- GOOGLE OAUTH ------- */}
@@ -214,9 +214,7 @@ export function AuthModal() {
                       )}
                     >
                       <GoogleIcon />
-                      {loading === 'google'
-                        ? 'Redirection…'
-                        : 'Continuer avec Google'}
+                      {loading === 'google' ? 'Redirection…' : 'Continuer avec Google'}
                     </button>
                   </div>
 
@@ -245,7 +243,7 @@ export function AuthModal() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="votre@email.fr"
                     disabled={loading !== null}
-                    className="w-full rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 pl-10 text-[0.88rem] text-white placeholder:text-white/30 transition-colors focus:border-terra-light focus:outline-none focus:ring-1 focus:ring-terra-light/30 disabled:opacity-60"
+                    className="focus:border-terra-light focus:ring-terra-light/30 w-full rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 pl-10 text-[0.88rem] text-white transition-colors placeholder:text-white/30 focus:outline-none focus:ring-1 disabled:opacity-60"
                   />
                 </label>
 
@@ -259,18 +257,14 @@ export function AuthModal() {
                       type="password"
                       required
                       minLength={6}
-                      autoComplete={
-                        mode === 'sign-up' ? 'new-password' : 'current-password'
-                      }
+                      autoComplete={mode === 'sign-up' ? 'new-password' : 'current-password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder={
-                        mode === 'sign-up'
-                          ? 'Mot de passe (min. 6 caractères)'
-                          : 'Mot de passe'
+                        mode === 'sign-up' ? 'Mot de passe (min. 6 caractères)' : 'Mot de passe'
                       }
                       disabled={loading !== null}
-                      className="w-full rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 pl-10 text-[0.88rem] text-white placeholder:text-white/30 transition-colors focus:border-terra-light focus:outline-none focus:ring-1 focus:ring-terra-light/30 disabled:opacity-60"
+                      className="focus:border-terra-light focus:ring-terra-light/30 w-full rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 pl-10 text-[0.88rem] text-white transition-colors placeholder:text-white/30 focus:outline-none focus:ring-1 disabled:opacity-60"
                     />
                   </label>
                 ) : null}
@@ -283,7 +277,7 @@ export function AuthModal() {
                         setMode('reset');
                         setError(null);
                       }}
-                      className="text-[0.74rem] text-white/45 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+                      className="hover:text-terra-light text-[0.74rem] text-white/45 underline-offset-2 transition-colors hover:underline"
                     >
                       Mot de passe oublié ?
                     </button>
@@ -293,16 +287,14 @@ export function AuthModal() {
                 <button
                   type="submit"
                   disabled={
-                    loading !== null ||
-                    !email.trim() ||
-                    (mode !== 'reset' && password.length < 6)
+                    loading !== null || !email.trim() || (mode !== 'reset' && password.length < 6)
                   }
                   className={cn(
-                    'mt-1 flex w-full items-center justify-center gap-2 rounded-md bg-terra px-4 py-3 text-[0.85rem] font-medium text-white transition-colors hover:bg-terra-dark',
+                    'bg-terra hover:bg-terra-dark mt-1 flex w-full items-center justify-center gap-2 rounded-md px-4 py-3 text-[0.85rem] font-medium text-white transition-colors',
                     (loading !== null ||
                       !email.trim() ||
                       (mode !== 'reset' && password.length < 6)) &&
-                      'cursor-not-allowed opacity-60 hover:bg-terra',
+                      'hover:bg-terra cursor-not-allowed opacity-60',
                   )}
                 >
                   {loading === 'email'
@@ -320,7 +312,7 @@ export function AuthModal() {
               {error ? (
                 <p
                   role="alert"
-                  className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-center text-[0.78rem] text-white"
+                  className="border-destructive/30 bg-destructive/10 mt-4 rounded-md border px-3 py-2 text-center text-[0.78rem] text-white"
                 >
                   {error}
                 </p>
@@ -337,7 +329,7 @@ export function AuthModal() {
                         setMode('sign-up');
                         setError(null);
                       }}
-                      className="font-medium text-white/70 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+                      className="hover:text-terra-light font-medium text-white/70 underline-offset-2 transition-colors hover:underline"
                     >
                       Créer un compte
                     </button>
@@ -351,7 +343,7 @@ export function AuthModal() {
                         setMode('sign-in');
                         setError(null);
                       }}
-                      className="font-medium text-white/70 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+                      className="hover:text-terra-light font-medium text-white/70 underline-offset-2 transition-colors hover:underline"
                     >
                       Se connecter
                     </button>
@@ -363,7 +355,7 @@ export function AuthModal() {
                       setMode('sign-in');
                       setError(null);
                     }}
-                    className="font-medium text-white/70 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+                    className="hover:text-terra-light font-medium text-white/70 underline-offset-2 transition-colors hover:underline"
                   >
                     ← Revenir à la connexion
                   </button>
@@ -384,21 +376,18 @@ export function AuthModal() {
 function ResetSent({ email, onBack }: { email: string; onBack: () => void }) {
   return (
     <div className="mt-8 text-center">
-      <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sage/20 text-sage-light">
+      <div className="bg-sage/20 text-sage-light mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full">
         <CheckCircle2 className="h-6 w-6" aria-hidden />
       </div>
-      <p className="font-serif text-[1.15rem] italic text-white">
-        Lien envoyé !
-      </p>
+      <p className="font-serif text-[1.15rem] italic text-white">Lien envoyé !</p>
       <p className="mx-auto mt-3 max-w-xs text-[0.85rem] leading-[1.7] text-white/55">
-        Un lien de réinitialisation a été envoyé à{' '}
-        <strong className="text-white">{email}</strong>. Cliquez dessus pour
-        définir un nouveau mot de passe.
+        Un lien de réinitialisation a été envoyé à <strong className="text-white">{email}</strong>.
+        Cliquez dessus pour définir un nouveau mot de passe.
       </p>
       <button
         type="button"
         onClick={onBack}
-        className="mt-6 text-[0.78rem] text-white/55 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+        className="hover:text-terra-light mt-6 text-[0.78rem] text-white/55 underline-offset-2 transition-colors hover:underline"
       >
         ← Revenir à la connexion
       </button>
@@ -409,21 +398,18 @@ function ResetSent({ email, onBack }: { email: string; onBack: () => void }) {
 function SignUpSent({ email, onBack }: { email: string; onBack: () => void }) {
   return (
     <div className="mt-8 text-center">
-      <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sage/20 text-sage-light">
+      <div className="bg-sage/20 text-sage-light mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full">
         <CheckCircle2 className="h-6 w-6" aria-hidden />
       </div>
-      <p className="font-serif text-[1.15rem] italic text-white">
-        Confirmez votre e-mail
-      </p>
+      <p className="font-serif text-[1.15rem] italic text-white">Confirmez votre e-mail</p>
       <p className="mx-auto mt-3 max-w-xs text-[0.85rem] leading-[1.7] text-white/55">
-        Un lien de confirmation a été envoyé à{' '}
-        <strong className="text-white">{email}</strong>. Cliquez dessus pour
-        activer votre compte.
+        Un lien de confirmation a été envoyé à <strong className="text-white">{email}</strong>.
+        Cliquez dessus pour activer votre compte.
       </p>
       <button
         type="button"
         onClick={onBack}
-        className="mt-6 text-[0.78rem] text-white/55 underline-offset-2 transition-colors hover:text-terra-light hover:underline"
+        className="hover:text-terra-light mt-6 text-[0.78rem] text-white/55 underline-offset-2 transition-colors hover:underline"
       >
         ← Revenir à la connexion
       </button>

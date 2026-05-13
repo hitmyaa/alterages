@@ -97,8 +97,7 @@ export const alteragesPreset = {
       boxShadow: {
         /* Ombres douces calibrées sur la chaleur de la palette */
         soft: '0 1px 2px rgba(61, 48, 32, 0.04), 0 2px 6px rgba(61, 48, 32, 0.04)',
-        'soft-lg':
-          '0 4px 12px rgba(61, 48, 32, 0.06), 0 12px 32px rgba(61, 48, 32, 0.08)',
+        'soft-lg': '0 4px 12px rgba(61, 48, 32, 0.06), 0 12px 32px rgba(61, 48, 32, 0.08)',
         hero: '0 30px 80px -20px rgba(61, 48, 32, 0.25)',
       },
       keyframes: {

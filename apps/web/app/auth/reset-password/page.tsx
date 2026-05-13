@@ -54,38 +54,34 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-cream p-4">
-      <div className="w-full max-w-md rounded-2xl border border-bd bg-white p-8 shadow-soft md:p-10">
+    <div className="bg-cream flex min-h-screen items-center justify-center p-4">
+      <div className="border-bd shadow-soft w-full max-w-md rounded-2xl border bg-white p-8 md:p-10">
         <header className="mb-6 text-center">
-          <p className="font-serif text-[1.5rem] leading-none text-terra">
-            AlterAges
-          </p>
-          <p className="mt-1 text-[0.72rem] uppercase tracking-[0.14em] text-light">
+          <p className="text-terra font-serif text-[1.5rem] leading-none">AlterAges</p>
+          <p className="text-light mt-1 text-[0.72rem] uppercase tracking-[0.14em]">
             Réinitialiser le mot de passe
           </p>
         </header>
 
         {done ? (
           <div className="text-center">
-            <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sage/15 text-sage">
+            <div className="bg-sage/15 text-sage mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full">
               <CheckCircle2 className="h-6 w-6" aria-hidden />
             </div>
-            <p className="font-serif text-[1.15rem] italic text-deep">
-              Mot de passe mis à jour
-            </p>
-            <p className="mx-auto mt-2 max-w-xs text-[0.85rem] leading-[1.7] text-mid">
+            <p className="text-deep font-serif text-[1.15rem] italic">Mot de passe mis à jour</p>
+            <p className="text-mid mx-auto mt-2 max-w-xs text-[0.85rem] leading-[1.7]">
               Redirection vers votre espace…
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <p className="mb-2 text-[0.85rem] leading-[1.6] text-mid">
+            <p className="text-mid mb-2 text-[0.85rem] leading-[1.6]">
               Choisissez un nouveau mot de passe pour votre compte.
             </p>
 
             <label className="relative">
               <Lock
-                className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-light"
+                className="text-light pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2"
                 aria-hidden
               />
               <input
@@ -103,7 +99,7 @@ export default function ResetPasswordPage() {
 
             <label className="relative">
               <Lock
-                className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-light"
+                className="text-light pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2"
                 aria-hidden
               />
               <input
@@ -122,7 +118,7 @@ export default function ResetPasswordPage() {
             {error ? (
               <p
                 role="alert"
-                className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-[0.78rem] text-destructive"
+                className="border-destructive/30 bg-destructive/10 text-destructive rounded-md border px-3 py-2 text-[0.78rem]"
               >
                 {error}
               </p>
@@ -132,9 +128,9 @@ export default function ResetPasswordPage() {
               type="submit"
               disabled={loading || password.length < 6 || password !== confirm}
               className={cn(
-                'mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md bg-terra px-4 py-3 text-[0.85rem] font-medium text-white transition-colors hover:bg-terra-dark',
+                'bg-terra hover:bg-terra-dark mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md px-4 py-3 text-[0.85rem] font-medium text-white transition-colors',
                 (loading || password.length < 6 || password !== confirm) &&
-                  'cursor-not-allowed opacity-60 hover:bg-terra',
+                  'hover:bg-terra cursor-not-allowed opacity-60',
               )}
             >
               {loading ? 'Mise à jour…' : 'Mettre à jour mon mot de passe'}

@@ -28,12 +28,7 @@ export function StepsTimeline({ steps, className }: StepsTimelineProps) {
   const lineInset = `${50 / steps.length}%`;
 
   return (
-    <ol
-      className={cn(
-        'relative flex flex-col gap-10 md:flex-row md:gap-0',
-        className,
-      )}
-    >
+    <ol className={cn('relative flex flex-col gap-10 md:flex-row md:gap-0', className)}>
       <div
         aria-hidden
         className="absolute top-6 hidden h-px md:block"
@@ -48,16 +43,14 @@ export function StepsTimeline({ steps, className }: StepsTimelineProps) {
           key={title}
           className="group relative flex flex-col items-center text-center md:flex-1 md:px-3"
         >
-          <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] border-terra bg-warm font-sans text-base font-semibold tabular-nums text-terra transition-all group-hover:bg-terra group-hover:text-white">
+          <div className="border-terra bg-warm text-terra group-hover:bg-terra relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] font-sans text-base font-semibold tabular-nums transition-all group-hover:text-white">
             <span className="group-hover:hidden">{idx + 1}</span>
             <Icon className="hidden h-5 w-5 group-hover:block" aria-hidden />
           </div>
-          <h3 className="mt-4 font-serif text-[0.95rem] text-deep">{title}</h3>
-          <p className="mt-1 max-w-[300px] text-[0.82rem] leading-[1.55] text-mid">
-            {description}
-          </p>
+          <h3 className="text-deep mt-4 font-serif text-[0.95rem]">{title}</h3>
+          <p className="text-mid mt-1 max-w-[300px] text-[0.82rem] leading-[1.55]">{description}</p>
           {note ? (
-            <span className="mt-3 inline-flex items-center rounded-full bg-terra/10 px-3 py-1.5 text-[0.7rem] font-medium leading-none text-terra md:mt-auto">
+            <span className="bg-terra/10 text-terra mt-3 inline-flex items-center rounded-full px-3 py-1.5 text-[0.7rem] font-medium leading-none md:mt-auto">
               {note}
             </span>
           ) : null}

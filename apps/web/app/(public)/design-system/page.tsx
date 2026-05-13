@@ -55,14 +55,30 @@ const palette = [
 ];
 
 const typeScale = [
-  { className: 'h-display', label: 'Display — Hero h1', sample: 'Quand la jeunesse prend soin de la sagesse' },
+  {
+    className: 'h-display',
+    label: 'Display — Hero h1',
+    sample: 'Quand la jeunesse prend soin de la sagesse',
+  },
   { className: 'h1', label: 'H1 — Page titre', sample: 'Un accompagnement réinventé' },
   { className: 'h2', label: 'H2 — Section titre', sample: 'De l’orientation à l’intervention' },
   { className: 'h3', label: 'H3 — Sous-titre / carte', sample: 'Des étudiants formés' },
   { className: 'h4', label: 'H4 — Carte secondaire', sample: 'Forfait de gestion mensuel' },
-  { className: 'lead', label: 'Lead — Paragraphe d’intro', sample: 'Des services d’aide à domicile assurés par des étudiants formés et engagés.' },
-  { className: 'body-text', label: 'Body — Texte courant', sample: 'AlterAges recrute des étudiants du secteur médico-social et social.' },
-  { className: 'small-text', label: 'Small — Méta / aide', sample: 'Démarches d’obtention de l’agrément SAP en cours.' },
+  {
+    className: 'lead',
+    label: 'Lead — Paragraphe d’intro',
+    sample: 'Des services d’aide à domicile assurés par des étudiants formés et engagés.',
+  },
+  {
+    className: 'body-text',
+    label: 'Body — Texte courant',
+    sample: 'AlterAges recrute des étudiants du secteur médico-social et social.',
+  },
+  {
+    className: 'small-text',
+    label: 'Small — Méta / aide',
+    sample: 'Démarches d’obtention de l’agrément SAP en cours.',
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -80,17 +96,25 @@ export default function DesignSystemPage() {
         <h1 className="h-display heading-serif max-w-3xl">
           Le langage <em>visuel</em> d’AlterAges
         </h1>
-        <p className="mt-6 max-w-2xl lead">
-          Référence vivante des tokens, composants et blocks utilisés sur les pages
-          publiques. Cette page sert d’atlas pour l’équipe et de terrain de jeu pour
-          itérer avant de construire de nouvelles pages.
+        <p className="lead mt-6 max-w-2xl">
+          Référence vivante des tokens, composants et blocks utilisés sur les pages publiques. Cette
+          page sert d’atlas pour l’équipe et de terrain de jeu pour itérer avant de construire de
+          nouvelles pages.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
-          <a href="#palette" className="btn-primary">Palette</a>
-          <a href="#typography" className="btn-outline">Typographie</a>
-          <a href="#components" className="btn-outline">Composants</a>
-          <a href="#blocks" className="btn-outline">Blocks</a>
+          <a href="#palette" className="btn-primary">
+            Palette
+          </a>
+          <a href="#typography" className="btn-outline">
+            Typographie
+          </a>
+          <a href="#components" className="btn-outline">
+            Composants
+          </a>
+          <a href="#blocks" className="btn-outline">
+            Blocks
+          </a>
         </div>
       </Section>
 
@@ -104,17 +128,14 @@ export default function DesignSystemPage() {
 
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {palette.map((c) => (
-            <div
-              key={c.name}
-              className="overflow-hidden rounded-xl border border-bd shadow-soft"
-            >
+            <div key={c.name} className="border-bd shadow-soft overflow-hidden rounded-xl border">
               <div
                 className={`flex h-24 items-end p-3 text-[0.72rem] font-medium ${c.text}`}
                 style={{ background: c.hex }}
               >
                 {c.hex}
               </div>
-              <div className="bg-warm px-3 py-2 text-[0.78rem] text-deep">
+              <div className="bg-warm text-deep px-3 py-2 text-[0.78rem]">
                 <code>{c.name}</code>
               </div>
             </div>
@@ -126,16 +147,23 @@ export default function DesignSystemPage() {
       <Section tone="warm" id="typography">
         <SectionHeader
           eyebrow="Typographie"
-          title={<>Serif italique pour <em>l’émotion</em>, sans pour la clarté</>}
+          title={
+            <>
+              Serif italique pour <em>l’émotion</em>, sans pour la clarté
+            </>
+          }
           description="Les classes utilitaires `.h1` à `.h4`, `.lead` et `.body-text` répliquent l’échelle de la landing. Le `<em>` à l’intérieur d’un titre est colorisé terra via `.heading-serif em`."
         />
 
         <div className="mt-12 flex flex-col gap-8">
           {typeScale.map((t) => (
-            <div key={t.className} className="grid gap-2 md:grid-cols-[180px_1fr] md:items-baseline md:gap-8">
-              <div className="text-[0.72rem] font-medium uppercase tracking-[0.1em] text-light">
+            <div
+              key={t.className}
+              className="grid gap-2 md:grid-cols-[180px_1fr] md:items-baseline md:gap-8"
+            >
+              <div className="text-light text-[0.72rem] font-medium uppercase tracking-[0.1em]">
                 <code className="text-terra">.{t.className}</code>
-                <div className="mt-1 normal-case tracking-normal text-light">{t.label}</div>
+                <div className="text-light mt-1 normal-case tracking-normal">{t.label}</div>
               </div>
               <p className={`heading-serif ${t.className}`}>{t.sample}</p>
             </div>
@@ -152,17 +180,29 @@ export default function DesignSystemPage() {
         />
 
         {/* Buttons */}
-        <SubBlock title="Boutons (utilitaires CSS)" hint="Pour les CTA marketing — utilisés sur des `<a>` natifs.">
+        <SubBlock
+          title="Boutons (utilitaires CSS)"
+          hint="Pour les CTA marketing — utilisés sur des `<a>` natifs."
+        >
           <div className="flex flex-wrap gap-3">
-            <a href="#" className="btn-primary">Bouton primaire</a>
-            <a href="#" className="btn-outline">Bouton outline</a>
+            <a href="#" className="btn-primary">
+              Bouton primaire
+            </a>
+            <a href="#" className="btn-outline">
+              Bouton outline
+            </a>
           </div>
-          <div className="mt-3 rounded-xl bg-deep px-6 py-4">
-            <a href="#" className="btn-on-dark">Bouton sur fond sombre</a>
+          <div className="bg-deep mt-3 rounded-xl px-6 py-4">
+            <a href="#" className="btn-on-dark">
+              Bouton sur fond sombre
+            </a>
           </div>
         </SubBlock>
 
-        <SubBlock title="Boutons (shadcn)" hint="Pour les formulaires et l’UI interne — pilotés par tokens sémantiques.">
+        <SubBlock
+          title="Boutons (shadcn)"
+          hint="Pour les formulaires et l’UI interne — pilotés par tokens sémantiques."
+        >
           <div className="flex flex-wrap gap-3">
             <Button>Default</Button>
             <Button variant="secondary">Secondary</Button>
@@ -179,7 +219,10 @@ export default function DesignSystemPage() {
         </SubBlock>
 
         {/* Badges */}
-        <SubBlock title="Badges" hint="Petites étiquettes — variantes terra / sauge, plein / outline, taille SM / MD / LG.">
+        <SubBlock
+          title="Badges"
+          hint="Petites étiquettes — variantes terra / sauge, plein / outline, taille SM / MD / LG."
+        >
           <div className="flex flex-wrap gap-3">
             <Badge variant="sage">Sage</Badge>
             <Badge variant="sage-outline" pulse>
@@ -189,7 +232,7 @@ export default function DesignSystemPage() {
             <Badge variant="terra-outline">Terra outline</Badge>
             <Badge variant="muted">Muted</Badge>
           </div>
-          <div className="mt-3 rounded-xl bg-deep px-6 py-4">
+          <div className="bg-deep mt-3 rounded-xl px-6 py-4">
             <Badge variant="on-dark">Sur fond sombre</Badge>
           </div>
         </SubBlock>
@@ -205,16 +248,16 @@ export default function DesignSystemPage() {
         <SubBlock title="Accordéon (FAQ)">
           <Accordion>
             <AccordionItem question="Qui sont les étudiants intervenant à domicile ?" defaultOpen>
-              Étudiants du secteur médico-social et social, sélectionnés sur profil
-              avec un entretien de motivation et une vérification du casier judiciaire.
+              Étudiants du secteur médico-social et social, sélectionnés sur profil avec un
+              entretien de motivation et une vérification du casier judiciaire.
             </AccordionItem>
             <AccordionItem question="Quelle formation reçoivent-ils avant d’intervenir ?">
-              Une formation interne obligatoire avant toute première intervention :
-              communication bienveillante, gestes adaptés, limites d’intervention.
+              Une formation interne obligatoire avant toute première intervention : communication
+              bienveillante, gestes adaptés, limites d’intervention.
             </AccordionItem>
             <AccordionItem question="Comment se passe la mise en relation ?">
-              Après une visite à domicile gratuite, AlterAges propose 1 à 3 profils
-              au bénéficiaire qui fait son choix.
+              Après une visite à domicile gratuite, AlterAges propose 1 à 3 profils au bénéficiaire
+              qui fait son choix.
             </AccordionItem>
           </Accordion>
         </SubBlock>
@@ -298,7 +341,8 @@ export default function DesignSystemPage() {
         <SubBlock title="ChecklistItem">
           <ul className="flex flex-col gap-3">
             <ChecklistItem>
-              Bénévolat, stages en établissement, expériences auprès de personnes âgées : valorisés au même titre que le diplôme.
+              Bénévolat, stages en établissement, expériences auprès de personnes âgées : valorisés
+              au même titre que le diplôme.
             </ChecklistItem>
             <ChecklistItem>
               Sélection sur profil, entretien de motivation et vérification du casier judiciaire.
@@ -316,7 +360,11 @@ export default function DesignSystemPage() {
               { icon: Mail, title: 'Contact', description: 'Réponse sous 24h.' },
               { icon: Home, title: 'Visite domicile', description: 'Gratuite, sans engagement.' },
               { icon: Search, title: 'Mise en relation', description: '1 à 3 profils au choix.' },
-              { icon: FileCheck2, title: 'Contractualisation', description: 'CESU pris en charge.' },
+              {
+                icon: FileCheck2,
+                title: 'Contractualisation',
+                description: 'CESU pris en charge.',
+              },
               { icon: CalendarCheck2, title: 'Suivi', description: 'Vérifié, mensuel.' },
             ]}
           />
@@ -377,10 +425,7 @@ export default function DesignSystemPage() {
 
       {/* TÉMOIGNAGES — variante claire */}
       <Section tone="cream" grain>
-        <SectionHeader
-          eyebrow="Variante claire"
-          title="TestimonialCard sur fond crème"
-        />
+        <SectionHeader eyebrow="Variante claire" title="TestimonialCard sur fond crème" />
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           <TestimonialCard
             quote="Le projet répond à un vrai besoin terrain — la confiance et la régularité sont les deux piliers."
@@ -410,11 +455,18 @@ export default function DesignSystemPage() {
         <Halo color="sage" position="bottom-left" size="lg" />
         <SectionHeader
           eyebrow="Atmosphère"
-          title={<>Des <em>halos</em> diffus pour réchauffer les sections</>}
+          title={
+            <>
+              Des <em>halos</em> diffus pour réchauffer les sections
+            </>
+          }
           description="Posez `<Halo color='terra' position='top-right' />` comme premier enfant de `<Section>` — `relative overflow-hidden` est déjà géré."
         />
-        <p className="mt-8 small-text">
-          Couleurs disponibles : <code>terra</code>, <code>sage</code>. Positions : <code>top-right</code>, <code>top-left</code>, <code>bottom-right</code>, <code>bottom-left</code>, <code>center</code>. Tailles : <code>md</code>, <code>lg</code>, <code>xl</code>.
+        <p className="small-text mt-8">
+          Couleurs disponibles : <code>terra</code>, <code>sage</code>. Positions :{' '}
+          <code>top-right</code>, <code>top-left</code>, <code>bottom-right</code>,{' '}
+          <code>bottom-left</code>, <code>center</code>. Tailles : <code>md</code>, <code>lg</code>,{' '}
+          <code>xl</code>.
         </p>
       </Section>
     </>
@@ -436,9 +488,9 @@ function SubBlock({
 }) {
   return (
     <div className="mt-14 first:mt-12">
-      <div className="mb-5 flex flex-col gap-1 border-l-2 border-terra pl-4">
-        <h3 className="font-serif text-[1.05rem] text-deep">{title}</h3>
-        {hint ? <p className="text-[0.82rem] leading-snug text-mid">{hint}</p> : null}
+      <div className="border-terra mb-5 flex flex-col gap-1 border-l-2 pl-4">
+        <h3 className="text-deep font-serif text-[1.05rem]">{title}</h3>
+        {hint ? <p className="text-mid text-[0.82rem] leading-snug">{hint}</p> : null}
       </div>
       {children}
     </div>

@@ -30,8 +30,7 @@ const badgeVariants = cva(
 );
 
 export interface BadgeProps
-  extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof badgeVariants> {
+  extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof badgeVariants> {
   /** Affiche un point pulsant à gauche du badge (statut "live"). */
   pulse?: boolean;
 }
@@ -39,11 +38,7 @@ export interface BadgeProps
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   ({ className, variant, size, pulse, children, ...props }, ref) => {
     return (
-      <span
-        ref={ref}
-        className={cn(badgeVariants({ variant, size }), className)}
-        {...props}
-      >
+      <span ref={ref} className={cn(badgeVariants({ variant, size }), className)} {...props}>
         {pulse ? (
           <span className="relative flex h-1.5 w-1.5">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-current opacity-75" />

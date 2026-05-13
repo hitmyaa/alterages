@@ -28,7 +28,7 @@ import { Badge } from '@/components/ui/badge';
 export const metadata: Metadata = {
   title: 'Rejoindre AlterAges · Étudiants',
   description:
-    "Un travail étudiant flexible, rémunérateur et impactant — auprès de seniors lyonnais, à votre rythme, dans les quartiers de votre choix.",
+    'Un travail étudiant flexible, rémunérateur et impactant — auprès de seniors lyonnais, à votre rythme, dans les quartiers de votre choix.',
 };
 
 /* ------------------------------------------------------------------ */
@@ -63,8 +63,7 @@ const advantages = [
   {
     value: '3 mois',
     title: 'Recommandation professionnelle',
-    description:
-      'Une référence valorisable pour votre dossier, après 3 mois d’engagement.',
+    description: 'Une référence valorisable pour votre dossier, après 3 mois d’engagement.',
   },
 ];
 
@@ -108,7 +107,7 @@ const formationModules = [
     badge: 'Module 1',
     title: 'Être présent autrement',
     description:
-      "Comment créer un lien de confiance avec une personne fragile, sans franchir les limites du cadre professionnel.",
+      'Comment créer un lien de confiance avec une personne fragile, sans franchir les limites du cadre professionnel.',
     points: [
       'Posture professionnelle et communication bienveillante',
       "Respect de l'espace privé et des habitudes du bénéficiaire",
@@ -119,8 +118,7 @@ const formationModules = [
   {
     badge: 'Module 2',
     title: 'Intervenir en sécurité',
-    description:
-      'Les gestes adaptés aux personnes âgées, avec ou sans perte de mobilité.',
+    description: 'Les gestes adaptés aux personnes âgées, avec ou sans perte de mobilité.',
     points: [
       'Aide à la toilette partielle dans le respect de la dignité',
       'Mobilisation sécurisée : lever, habillage, déplacement',
@@ -133,7 +131,7 @@ const formationModules = [
     badge: 'Module 3',
     title: 'Réagir et alerter',
     description:
-      "Savoir quoi faire quand quelque chose ne va pas. Et à qui le dire, dans quel délai, avec quelles informations.",
+      'Savoir quoi faire quand quelque chose ne va pas. Et à qui le dire, dans quel délai, avec quelles informations.',
     points: [
       'Reconnaître les signes de détresse physique ou psychologique',
       'Procédure de signalement AlterAges : qui contacter, comment, quand',
@@ -161,8 +159,7 @@ const parcours = [
   {
     icon: Phone,
     title: 'On vous recontacte',
-    description:
-      'Un échange téléphonique court pour se présenter et répondre à vos questions.',
+    description: 'Un échange téléphonique court pour se présenter et répondre à vos questions.',
     note: 'Réponse rapide',
   },
   {
@@ -191,14 +188,14 @@ export default function EtudiantsPage() {
             <h1 className="h-display max-w-3xl">
               Un travail étudiant
               <br />
-              <span className="not-italic text-terra">flexible</span>,{' '}
-              <span className="not-italic text-terra">rémunérateur</span>
+              <span className="text-terra not-italic">flexible</span>,{' '}
+              <span className="text-terra not-italic">rémunérateur</span>
               <br />
-              et <span className="not-italic text-terra">impactant</span>.
+              et <span className="text-terra not-italic">impactant</span>.
             </h1>
-            <p className="mt-6 max-w-md lead">
-              Vous intervenez auprès de seniors lyonnais selon votre emploi
-              du temps, dans les quartiers qui vous conviennent.
+            <p className="lead mt-6 max-w-md">
+              Vous intervenez auprès de seniors lyonnais selon votre emploi du temps, dans les
+              quartiers qui vous conviennent.
             </p>
 
             <div className="mt-10">
@@ -206,8 +203,8 @@ export default function EtudiantsPage() {
             </div>
           </div>
 
-          <div className="relative hidden animate-fade-up lg:flex lg:[animation-delay:120ms]">
-            <div className="relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl shadow-hero ring-1 ring-bd/60">
+          <div className="animate-fade-up relative hidden lg:flex lg:[animation-delay:120ms]">
+            <div className="shadow-hero ring-bd/60 relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl ring-1">
               <Image
                 src="/images/image-principale.png"
                 alt="Accompagnement intergénérationnel AlterAges — une jeune étudiante et une personne âgée"
@@ -242,9 +239,8 @@ export default function EtudiantsPage() {
         </div>
 
         <p className="mt-8 pt-2 text-[0.72rem] leading-[1.6] text-white/40">
-          * Ce qu’AlterAges ne couvre pas : soins infirmiers, actes médicaux,
-          administration de médicaments, nursing lourd. Ces actes relèvent
-          exclusivement de professionnels de santé.
+          * Ce qu’AlterAges ne couvre pas : soins infirmiers, actes médicaux, administration de
+          médicaments, nursing lourd. Ces actes relèvent exclusivement de professionnels de santé.
         </p>
       </Section>
 
@@ -253,13 +249,10 @@ export default function EtudiantsPage() {
         <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
             <span className="eyebrow">Ce que vous y gagnez</span>
-            <h2 className="heading-serif h2 max-w-md">
-              Un travail qui s’adapte à vous.
-            </h2>
-            <p className="mt-6 max-w-md lead">
-              AlterAges s’adapte à votre emploi du temps pour que, le moment
-              venu, vous soyez entièrement disponible pour le senior que vous
-              accompagnez.
+            <h2 className="heading-serif h2 max-w-md">Un travail qui s’adapte à vous.</h2>
+            <p className="lead mt-6 max-w-md">
+              AlterAges s’adapte à votre emploi du temps pour que, le moment venu, vous soyez
+              entièrement disponible pour le senior que vous accompagnez.
             </p>
 
             <div className="mt-8 flex flex-col">
@@ -283,16 +276,12 @@ export default function EtudiantsPage() {
             <h3 className="heading-serif h2 max-w-md">
               Votre espace personnel <em>AlterAges</em>
             </h3>
-            <p className="mt-6 max-w-md lead">
-              Disponibilités, missions à venir, bulletins de salaire,
-              attestations : tout est centralisé dans un espace pensé pour les
-              étudiants.
+            <p className="lead mt-6 max-w-md">
+              Disponibilités, missions à venir, bulletins de salaire, attestations : tout est
+              centralisé dans un espace pensé pour les étudiants.
             </p>
             <div className="mt-6">
-              <PlaceholderImage
-                aspectRatio="4/5"
-                label="Mockup espace étudiant — à venir"
-              />
+              <PlaceholderImage aspectRatio="4/5" label="Mockup espace étudiant — à venir" />
             </div>
           </div>
         </div>
@@ -308,9 +297,15 @@ export default function EtudiantsPage() {
         />
 
         <div className="mt-8 flex flex-wrap gap-2">
-          <Badge variant="on-dark" size="lg">100% en ligne</Badge>
-          <Badge variant="on-dark" size="lg">Attestation délivrée</Badge>
-          <Badge variant="on-dark" size="lg">1h total</Badge>
+          <Badge variant="on-dark" size="lg">
+            100% en ligne
+          </Badge>
+          <Badge variant="on-dark" size="lg">
+            Attestation délivrée
+          </Badge>
+          <Badge variant="on-dark" size="lg">
+            1h total
+          </Badge>
         </div>
 
         <div className="mt-10 flex flex-col gap-3">
@@ -369,30 +364,25 @@ export default function EtudiantsPage() {
         <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
             <span className="eyebrow">Ce qu’on attend de vous</span>
-            <h2 className="heading-serif h2">
-              Un engagement humain avant tout
-            </h2>
-            <p className="mt-4 max-w-md lead">
-              AlterAges ne cherche pas des profils parfaits. On cherche des
-              personnes qui souhaitent s’engager dans un travail porteur de
-              vraies valeurs humaines.
+            <h2 className="heading-serif h2">Un engagement humain avant tout</h2>
+            <p className="lead mt-4 max-w-md">
+              AlterAges ne cherche pas des profils parfaits. On cherche des personnes qui souhaitent
+              s’engager dans un travail porteur de vraies valeurs humaines.
             </p>
 
             <ul className="mt-8 flex flex-col gap-3">
               <ChecklistItem icon={GraduationCap}>
-                Être étudiant, dans n’importe quelle filière, avec un intérêt
-                sincère pour l’accompagnement des personnes âgées.
+                Être étudiant, dans n’importe quelle filière, avec un intérêt sincère pour
+                l’accompagnement des personnes âgées.
               </ChecklistItem>
               <ChecklistItem icon={ShieldCheck}>
-                Avoir un casier judiciaire vierge (B3, vérification obligatoire
-                avant toute mise en relation).
+                Avoir un casier judiciaire vierge (B3, vérification obligatoire avant toute mise en
+                relation).
               </ChecklistItem>
               <ChecklistItem icon={FileCheck2}>
-                Valider la formation interne AlterAges avant la première
-                intervention.
+                Valider la formation interne AlterAges avant la première intervention.
               </ChecklistItem>
             </ul>
-
           </div>
 
           <div>
@@ -405,54 +395,46 @@ export default function EtudiantsPage() {
                   question="Puis-je candidater avec peu de disponibilités ?"
                   defaultOpen
                 >
-                  Oui. AlterAges ne vous impose pas de nombre d’heures
-                  minimum. En revanche, plus vous êtes disponible, plus vous
-                  serez contacté rapidement pour une mission.
+                  Oui. AlterAges ne vous impose pas de nombre d’heures minimum. En revanche, plus
+                  vous êtes disponible, plus vous serez contacté rapidement pour une mission.
                 </AccordionItem>
                 <AccordionItem
                   groupName="faq-etudiants"
                   question="Est-ce compatible avec un emploi du temps chargé ?"
                 >
-                  Oui. Vous mettez à jour vos disponibilités quand vous le
-                  souhaitez. Si vous avez des partiels ou un stage, vous
-                  signalez une indisponibilité temporaire. AlterAges organise
-                  le remplacement.
+                  Oui. Vous mettez à jour vos disponibilités quand vous le souhaitez. Si vous avez
+                  des partiels ou un stage, vous signalez une indisponibilité temporaire. AlterAges
+                  organise le remplacement.
                 </AccordionItem>
-                <AccordionItem
-                  groupName="faq-etudiants"
-                  question="Comment je suis payé ?"
-                >
-                  Vous êtes salarié directement du bénéficiaire, via le CESU.
-                  AlterAges gère les déclarations à votre place. Vous recevez
-                  votre salaire entre le 1er et le 5 du mois suivant les
-                  interventions, avec un bulletin de salaire édité
-                  automatiquement par l’URSSAF.
+                <AccordionItem groupName="faq-etudiants" question="Comment je suis payé ?">
+                  Vous êtes salarié directement du bénéficiaire, via le CESU. AlterAges gère les
+                  déclarations à votre place. Vous recevez votre salaire entre le 1er et le 5 du
+                  mois suivant les interventions, avec un bulletin de salaire édité automatiquement
+                  par l’URSSAF.
                 </AccordionItem>
                 <AccordionItem
                   groupName="faq-etudiants"
                   question="Que se passe-t-il si je pars en stage plusieurs semaines ?"
                 >
-                  Vous prévenez AlterAges en avance. On organise un
-                  remplacement temporaire auprès de votre bénéficiaire et on
-                  maintient votre profil dans le vivier. À votre retour, vous
-                  reprenez là où vous en étiez.
+                  Vous prévenez AlterAges en avance. On organise un remplacement temporaire auprès
+                  de votre bénéficiaire et on maintient votre profil dans le vivier. À votre retour,
+                  vous reprenez là où vous en étiez.
                 </AccordionItem>
                 <AccordionItem
                   groupName="faq-etudiants"
                   question="Je ne suis pas en filière de santé, puis-je candidater ?"
                 >
-                  Oui. AlterAges recrute des étudiants de toutes filières. Ce
-                  qui compte, c’est votre engagement envers les personnes âgées
-                  et votre capacité à créer un lien de confiance.
+                  Oui. AlterAges recrute des étudiants de toutes filières. Ce qui compte, c’est
+                  votre engagement envers les personnes âgées et votre capacité à créer un lien de
+                  confiance.
                 </AccordionItem>
                 <AccordionItem
                   groupName="faq-etudiants"
                   question="Quelles zones d’intervention sont couvertes ?"
                 >
-                  AlterAges intervient dans tous les arrondissements de Lyon
-                  (1er au 9e), Villeurbanne et Caluire-et-Cuire. Lors de votre
-                  candidature, vous cochez les arrondissements où vous êtes
-                  prêt à vous déplacer.
+                  AlterAges intervient dans tous les arrondissements de Lyon (1er au 9e),
+                  Villeurbanne et Caluire-et-Cuire. Lors de votre candidature, vous cochez les
+                  arrondissements où vous êtes prêt à vous déplacer.
                 </AccordionItem>
               </Accordion>
             </div>
@@ -467,9 +449,8 @@ export default function EtudiantsPage() {
             Prêt à rejoindre l’aventure ?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[0.95rem] leading-[1.9] text-white/80">
-            Pas de CV ni de lettre de motivation. Une candidature rapide,
-            une réponse rapide. Le lancement est prévu pour septembre 2026 —
-            c’est maintenant qu’on constitue l’équipe.
+            Pas de CV ni de lettre de motivation. Une candidature rapide, une réponse rapide. Le
+            lancement est prévu pour septembre 2026 — c’est maintenant qu’on constitue l’équipe.
           </p>
 
           <div className="mt-10 flex justify-center">

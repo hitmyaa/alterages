@@ -18,25 +18,14 @@ export interface StatCardProps {
  * Bloc mis en avant — gros chiffre terra-light sur fond deep, accompagné
  * d'un titre fort et d'une description courte. Format paysage compact.
  */
-export function StatCard({
-  value,
-  suffix,
-  title,
-  description,
-  className,
-}: StatCardProps) {
+export function StatCard({ value, suffix, title, description, className }: StatCardProps) {
   return (
     <div
-      className={cn(
-        'flex items-center gap-5 rounded-xl bg-deep px-6 py-5 text-white',
-        className,
-      )}
+      className={cn('bg-deep flex items-center gap-5 rounded-xl px-6 py-5 text-white', className)}
     >
-      <div className="font-sans text-[2.75rem] font-bold leading-none tracking-tight text-terra-light tabular-nums">
+      <div className="text-terra-light font-sans text-[2.75rem] font-bold tabular-nums leading-none tracking-tight">
         {value}
-        {suffix ? (
-          <span className="ml-0.5 align-top text-xl font-semibold">{suffix}</span>
-        ) : null}
+        {suffix ? <span className="ml-0.5 align-top text-xl font-semibold">{suffix}</span> : null}
       </div>
       <div className="text-[0.83rem] leading-[1.75] text-white/60">
         <strong className="block font-medium text-white">{title}</strong>

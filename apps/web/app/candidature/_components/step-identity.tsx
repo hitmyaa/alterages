@@ -34,10 +34,7 @@ export function isOver18(dateStr: string): boolean {
   const today = new Date();
   let age = today.getFullYear() - birth.getFullYear();
   const monthDiff = today.getMonth() - birth.getMonth();
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birth.getDate())
-  ) {
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
     age -= 1;
   }
   return age >= 18;
@@ -63,11 +60,7 @@ const formationGroups = [
   },
   {
     label: 'Social et humain',
-    options: [
-      'Travail social (DEASS, DEES, DECESF...)',
-      'Psychologie',
-      'Éducation spécialisée',
-    ],
+    options: ['Travail social (DEASS, DEES, DECESF...)', 'Psychologie', 'Éducation spécialisée'],
   },
   { label: 'Sport', options: ['STAPS'] },
   {
@@ -76,13 +69,7 @@ const formationGroups = [
   },
 ];
 
-const annees = [
-  '1ère année',
-  '2ème année',
-  '3ème année',
-  '4ème année',
-  '5ème année ou plus',
-];
+const annees = ['1ère année', '2ème année', '3ème année', '4ème année', '5ème année ou plus'];
 
 export function StepIdentity({ data, onChange }: StepIdentityProps) {
   const set = <K extends keyof IdentityData>(key: K, value: IdentityData[K]) => {
@@ -97,8 +84,7 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
   }, []);
 
   /* Erreur uniquement si une date a été saisie mais ne donne pas 18 ans. */
-  const showAgeError =
-    data.dateNaissance.length > 0 && !isOver18(data.dateNaissance);
+  const showAgeError = data.dateNaissance.length > 0 && !isOver18(data.dateNaissance);
 
   return (
     <div className="flex flex-col gap-5">
@@ -126,11 +112,7 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           label="Date de naissance"
-          error={
-            showAgeError
-              ? 'Vous devez avoir au moins 18 ans pour candidater.'
-              : undefined
-          }
+          error={showAgeError ? 'Vous devez avoir au moins 18 ans pour candidater.' : undefined}
         >
           <input
             type="date"
@@ -211,13 +193,11 @@ function Field({
 }) {
   return (
     <label className="flex flex-col gap-2">
-      <span className="text-[0.72rem] font-medium uppercase tracking-[0.06em] text-mid">
+      <span className="text-mid text-[0.72rem] font-medium uppercase tracking-[0.06em]">
         {label}
       </span>
       {children}
-      {error ? (
-        <span className="text-[0.74rem] text-destructive">{error}</span>
-      ) : null}
+      {error ? <span className="text-destructive text-[0.74rem]">{error}</span> : null}
     </label>
   );
 }

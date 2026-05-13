@@ -10,18 +10,14 @@ import Link from 'next/link';
  * Header minimal : un seul élément, le bouton de retour vers `/etudiants`.
  * Le logo est volontairement absent — moins d'options = moins de fuite.
  */
-export default function CandidatureLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function CandidatureLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col bg-warm">
-      <header className="sticky top-0 z-30 border-b border-bd-light/80 bg-cream/90 backdrop-blur-md">
+    <div className="bg-warm flex min-h-screen flex-col">
+      <header className="border-bd-light/80 bg-cream/90 sticky top-0 z-30 border-b backdrop-blur-md">
         <div className="container flex h-[68px] items-center">
           <Link
             href="/etudiants"
-            className="group inline-flex items-center gap-2 text-[0.85rem] font-medium text-mid transition-colors hover:text-terra"
+            className="text-mid hover:text-terra group inline-flex items-center gap-2 text-[0.85rem] font-medium transition-colors"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
             Retour à la page étudiants

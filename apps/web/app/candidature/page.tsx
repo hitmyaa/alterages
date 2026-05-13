@@ -8,10 +8,7 @@ import { cn } from '@/lib/utils';
 import { submitQuestionnaire } from './_actions';
 
 import { Stepper } from './_components/stepper';
-import {
-  StepAvailability,
-  type AvailabilityKey,
-} from './_components/step-availability';
+import { StepAvailability, type AvailabilityKey } from './_components/step-availability';
 import {
   StepIdentity,
   type IdentityData,
@@ -31,9 +28,7 @@ const STEPS = [
 export default function CandidaturePage() {
   const [step, setStep] = React.useState<StepId>(1);
   const [identity, setIdentity] = React.useState<IdentityData>(emptyIdentity);
-  const [availability, setAvailability] = React.useState<Set<AvailabilityKey>>(
-    () => new Set(),
-  );
+  const [availability, setAvailability] = React.useState<Set<AvailabilityKey>>(() => new Set());
   const [availabilityLater, setAvailabilityLater] = React.useState(false);
   const [zones, setZones] = React.useState<Set<string>>(() => new Set());
   const [transport, setTransport] = React.useState('');
@@ -75,21 +70,20 @@ export default function CandidaturePage() {
     (identity.dateNaissance === '' || isOver18(identity.dateNaissance));
   const isStep3Valid = zones.size > 0;
 
-  const canGoNext =
-    (step === 1 && isStep1Valid) || step === 2 || (step === 3 && isStep3Valid);
+  const canGoNext = (step === 1 && isStep1Valid) || step === 2 || (step === 3 && isStep3Valid);
 
   return (
     <div className="container max-w-3xl py-10 md:py-16">
-      <div className="rounded-2xl border border-bd bg-white p-6 shadow-soft md:p-10">
+      <div className="border-bd shadow-soft rounded-2xl border bg-white p-6 md:p-10">
         {/* Stepper en tête — pattern checkout : on situe l'utilisateur dans
             le parcours global avant d'introduire le contenu de l'étape. */}
-        <div className="pb-7 border-b border-bd-light">
+        <div className="border-bd-light border-b pb-7">
           <Stepper steps={STEPS} current={step} />
         </div>
 
         {/* Tag + intro */}
         <span className="eyebrow mt-7 block">Préinscription AlterAges</span>
-        <h1 className="heading-serif font-serif text-[clamp(1.6rem,3vw,2.1rem)] leading-[1.15] text-deep">
+        <h1 className="heading-serif text-deep font-serif text-[clamp(1.6rem,3vw,2.1rem)] leading-[1.15]">
           {step === 1 && (
             <>
               Vos informations <em>personnelles</em>
@@ -106,7 +100,7 @@ export default function CandidaturePage() {
             </>
           )}
         </h1>
-        <p className="mt-2 text-[0.88rem] leading-[1.7] text-mid">
+        <p className="text-mid mt-2 text-[0.88rem] leading-[1.7]">
           {step === 1 &&
             'Quelques informations pour faire connaissance. Seuls votre prénom, nom et formation sont obligatoires.'}
           {step === 2 &&
@@ -117,9 +111,7 @@ export default function CandidaturePage() {
 
         {/* Step body */}
         <div className="mt-8">
-          {step === 1 && (
-            <StepIdentity data={identity} onChange={setIdentity} />
-          )}
+          {step === 1 && <StepIdentity data={identity} onChange={setIdentity} />}
           {step === 2 && (
             <StepAvailability
               value={availability}
@@ -142,15 +134,15 @@ export default function CandidaturePage() {
         {submitError ? (
           <p
             role="alert"
-            className="mt-6 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-2.5 text-[0.82rem] text-destructive"
+            className="border-destructive/30 bg-destructive/10 text-destructive mt-6 rounded-md border px-4 py-2.5 text-[0.82rem]"
           >
             {submitError}
           </p>
         ) : null}
 
         {/* Footer nav */}
-        <div className="mt-10 flex items-center justify-between border-t border-bd-light pt-6">
-          <span className="text-[0.78rem] text-light">
+        <div className="border-bd-light mt-10 flex items-center justify-between border-t pt-6">
+          <span className="text-light text-[0.78rem]">
             Étape {step} sur {STEPS.length}
           </span>
           <div className="flex gap-2.5">
@@ -158,7 +150,7 @@ export default function CandidaturePage() {
               <button
                 type="button"
                 onClick={goPrev}
-                className="inline-flex items-center gap-1.5 rounded-sm border border-bd bg-white px-5 py-2.5 text-[0.85rem] text-mid transition-colors hover:border-mid"
+                className="border-bd text-mid hover:border-mid inline-flex items-center gap-1.5 rounded-sm border bg-white px-5 py-2.5 text-[0.85rem] transition-colors"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Précédent
@@ -169,16 +161,11 @@ export default function CandidaturePage() {
               onClick={goNext}
               disabled={!canGoNext || submitting}
               className={cn(
-                'group inline-flex items-center gap-2 rounded-sm bg-terra px-6 py-2.5 text-[0.85rem] font-medium text-white transition-all hover:bg-terra-dark',
-                (!canGoNext || submitting) &&
-                  'cursor-not-allowed opacity-50 hover:bg-terra',
+                'bg-terra hover:bg-terra-dark group inline-flex items-center gap-2 rounded-sm px-6 py-2.5 text-[0.85rem] font-medium text-white transition-all',
+                (!canGoNext || submitting) && 'hover:bg-terra cursor-not-allowed opacity-50',
               )}
             >
-              {submitting
-                ? 'Envoi…'
-                : step === 3
-                  ? 'Soumettre'
-                  : 'Continuer'}
+              {submitting ? 'Envoi…' : step === 3 ? 'Soumettre' : 'Continuer'}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </button>
           </div>

@@ -33,7 +33,7 @@ export function Stepper({ steps, current }: StepperProps) {
                   'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[0.72rem] font-medium transition-colors',
                   isDone && 'bg-sage text-white',
                   isActive && 'bg-terra text-white',
-                  !isDone && !isActive && 'border border-bd bg-warm text-light',
+                  !isDone && !isActive && 'border-bd bg-warm text-light border',
                 )}
               >
                 {isDone ? <Check className="h-3.5 w-3.5" aria-hidden /> : step.id}
@@ -50,10 +50,7 @@ export function Stepper({ steps, current }: StepperProps) {
               </span>
             </li>
             {!isLast ? (
-              <li
-                aria-hidden
-                className="h-px w-6 flex-shrink-0 bg-bd-light sm:w-10"
-              />
+              <li aria-hidden className="bg-bd-light h-px w-6 flex-shrink-0 sm:w-10" />
             ) : null}
           </React.Fragment>
         );

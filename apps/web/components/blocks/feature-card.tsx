@@ -60,9 +60,7 @@ export function FeatureCard({
         />
         <div className="relative p-6">
           <h3 className="font-serif text-lg text-white">{title}</h3>
-          <p className="mt-2 text-[0.85rem] leading-[1.75] text-white/75">
-            {description}
-          </p>
+          <p className="mt-2 text-[0.85rem] leading-[1.75] text-white/75">{description}</p>
         </div>
       </article>
     );
@@ -71,17 +69,17 @@ export function FeatureCard({
   return (
     <article
       className={cn(
-        'group rounded-xl border border-bd bg-warm p-6 transition-all hover:-translate-y-1 hover:border-terra hover:shadow-soft',
+        'border-bd bg-warm hover:border-terra hover:shadow-soft group rounded-xl border p-6 transition-all hover:-translate-y-1',
         className,
       )}
     >
       {Icon ? (
-        <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-terra/10 text-terra">
+        <div className="bg-terra/10 text-terra mb-4 flex h-10 w-10 items-center justify-center rounded-lg">
           <Icon className="h-5 w-5" aria-hidden />
         </div>
       ) : null}
-      <h3 className="font-serif text-lg text-deep">{title}</h3>
-      <p className="mt-2 text-[0.88rem] leading-[1.75] text-mid">{description}</p>
+      <h3 className="text-deep font-serif text-lg">{title}</h3>
+      <p className="text-mid mt-2 text-[0.88rem] leading-[1.75]">{description}</p>
     </article>
   );
 }

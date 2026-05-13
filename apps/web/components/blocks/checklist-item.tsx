@@ -22,11 +22,11 @@ export function ChecklistItem({
   return (
     <li
       className={cn(
-        'flex items-start gap-3 rounded-lg border-l-2 border-terra bg-warm px-4 py-3 text-[0.88rem] leading-[1.65] text-mid',
+        'border-terra bg-warm text-mid flex items-start gap-3 rounded-lg border-l-2 px-4 py-3 text-[0.88rem] leading-[1.65]',
         className,
       )}
     >
-      <Icon className="mt-0.5 h-4 w-4 shrink-0 text-terra" aria-hidden />
+      <Icon className="text-terra mt-0.5 h-4 w-4 shrink-0" aria-hidden />
       <span>{children}</span>
     </li>
   );

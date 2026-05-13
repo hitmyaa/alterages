@@ -78,9 +78,7 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <header className={cn(centered && 'text-center', className)}>
-      {eyebrow ? (
-        <span className={invert ? 'eyebrow-invert' : 'eyebrow'}>{eyebrow}</span>
-      ) : null}
+      {eyebrow ? <span className={invert ? 'eyebrow-invert' : 'eyebrow'}>{eyebrow}</span> : null}
       <h2
         className={cn(
           'heading-serif h2',
@@ -92,13 +90,7 @@ export function SectionHeader({
         {title}
       </h2>
       {description ? (
-        <p
-          className={cn(
-            'mt-4 max-w-2xl lead',
-            centered && 'mx-auto',
-            invert && 'text-white/65',
-          )}
-        >
+        <p className={cn('lead mt-4 max-w-2xl', centered && 'mx-auto', invert && 'text-white/65')}>
           {description}
         </p>
       ) : null}
