@@ -78,10 +78,10 @@ function HeroSection() {
 
           <div className="mt-10 flex flex-wrap gap-3">
             <a
-              href="#prescripteurs"
+              href="#contact"
               className="group inline-flex items-center gap-2 rounded-sm bg-terra px-7 py-3 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-terra-dark hover:shadow-md"
             >
-              Je suis prescripteur
+              Je suis intéressé(e)
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
             <a
@@ -118,10 +118,10 @@ function PrescripteursSection() {
   return (
     <section id="prescripteurs" className="bg-deep px-6 py-24 text-white md:py-28">
       <div className="container">
-        <span className="eyebrow-invert">Pour les professionnels</span>
+        <span className="eyebrow-invert">Pour les aidants</span>
         <h2 className="heading-serif max-w-2xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-white">
-          Vous orientez,<br />
-          on gère tout le reste
+          Vous nous contactez,<br />
+          on s'occupe du reste
         </h2>
         <p className="mt-4 max-w-xl text-[0.95rem] leading-[1.9] text-white/65">
           Nous prenons en charge de A à Z tous les bénéficiaires,
@@ -158,35 +158,18 @@ function PrescripteursSection() {
             <Testimonial
               quote="C'est sécurisant. Le fait d'avoir un interlocuteur principal permet de lever la crainte des bénéficiaires de faire entrer quelqu'un chez eux."
               role="Médecin généraliste · Lyon 6e"
-              meta="Entretien prescripteur · avril 2026"
             />
             <Testimonial
-              quote="Orienter vers des étudiants formés et suivis, c'est une garantie que je n'avais pas avec d'autres solutions. Je recommande maintenant avec confiance."
-              role="Médecin généraliste, Lyon 3e"
-              meta="Partenaire fondateur · avant lancement"
+              quote="Faustine m'a accompagné comme auxiliaire de vie pendant sept ans. Sa compétence, son efficacité et son énergie m'ont convaincu qu'elle a toutes les capacités pour mener ce projet à terme. Je soutiens inconditionnellement AlterAges."
+              role="Docteur Ingénieur CNRS en retraite · Lyon 2e"
             />
             <Testimonial
-              quote="La transparence sur les intervenants et le suivi proposé, ça change tout. Les familles que j'oriente reviennent avec du positif."
-              role="Infirmière coordinatrice, SSIAD Lyon"
-              meta="Partenaire fondatrice · avant lancement"
+              quote="Le modèle mandataire, c'est fait pour durer. Les familles savent à qui s'adresser, les bénéficiaires ont un interlocuteur de confiance. C'est ça qui crée une vraie relation dans le temps."
+              role="Professionnelle du secteur · 10 ans en aide à domicile"
             />
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 rounded-xl border border-terra/30 bg-terra/10 px-6 py-4 md:flex-row md:items-center md:justify-between md:gap-8">
-          <p className="text-sm text-white/75 md:whitespace-nowrap">
-            <strong className="font-medium text-white">Devenir partenaire fondateur</strong>
-            <span className="mx-2 text-white/30">—</span>
-            Le projet se construit, votre regard terrain est précieux avant le lancement.
-          </p>
-          <a
-            href="#contact"
-            className="group inline-flex shrink-0 items-center gap-2 self-start rounded-sm bg-white px-6 py-2.5 text-sm font-medium text-deep transition-opacity hover:opacity-90 md:self-auto"
-          >
-            Prendre contact
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
-        </div>
       </div>
     </section>
   );
@@ -239,7 +222,7 @@ function Testimonial({
 }: {
   quote: string;
   role: string;
-  meta: string;
+  meta?: string;
 }) {
   return (
     <article className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-6">
@@ -249,7 +232,7 @@ function Testimonial({
       </p>
       <div className="mt-4 border-t border-white/[0.08] pt-3 text-[0.74rem] tracking-wide">
         <strong className="block font-medium text-white/55">{role}</strong>
-        <span className="text-white/35">{meta}</span>
+        {meta ? <span className="text-white/35">{meta}</span> : null}
       </div>
     </article>
   );
@@ -286,6 +269,14 @@ function EtudiantsSection() {
               d'intervention, posture professionnelle
             </ChecklistItem>
           </ul>
+
+          <a
+            href="/etudiants"
+            className="group mt-8 inline-flex items-center gap-2 text-sm font-medium text-terra transition-colors hover:text-terra-dark"
+          >
+            Découvrir le programme étudiant
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
         </div>
 
         <div className="grid grid-cols-2 gap-3 self-start lg:mt-[10.5rem]">

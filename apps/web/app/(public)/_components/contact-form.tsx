@@ -3,58 +3,65 @@
 import { useState } from 'react';
 
 /**
- * Formulaire de contact — reproduit le comportement de l'HTML V12 :
- * ouvre la messagerie de l'utilisateur avec un mailto pré-rempli.
- * Aucune donnée n'est stockée côté serveur.
+ * Formulaire de contact — envoi server-side via /api/contact (Resend).
+ * Les données sont transmises par email à contact@alter-ages.fr.
  */
 export function ContactForm() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>(
+    'idle',
+  );
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    const prenom = String(data.get('prenom') ?? '').trim();
-    const nom = String(data.get('nom') ?? '').trim();
-    const email = String(data.get('email') ?? '').trim();
-    const telephone = String(data.get('telephone') ?? '').trim();
-    const profil = String(data.get('profil') ?? '').trim();
-    const message = String(data.get('message') ?? '').trim();
+    const payload = {
+      prenom: String(data.get('prenom') ?? '').trim(),
+      nom: String(data.get('nom') ?? '').trim(),
+      email: String(data.get('email') ?? '').trim(),
+      telephone: String(data.get('telephone') ?? '').trim(),
+      profil: String(data.get('profil') ?? '').trim(),
+      message: String(data.get('message') ?? '').trim(),
+      // Honeypot anti-bots
+      website: String(data.get('website') ?? ''),
+    };
 
-    if (!prenom || !nom || !email || !message) {
-      window.alert('Merci de remplir au moins votre prénom, nom, email et message.');
+    if (!payload.prenom || !payload.nom || !payload.email || !payload.message) {
+      setStatus('error');
+      setErrorMsg('Merci de remplir au moins votre prénom, nom, email et message.');
       return;
     }
 
-    const sujet = `[AlterAges] Contact — ${prenom} ${nom}`;
-    const corps = [
-      'Bonjour Faustine,',
-      '',
-      'Je vous contacte via le site AlterAges.',
-      '',
-      `Nom : ${prenom} ${nom}`,
-      `Email : ${email}`,
-      telephone ? `Téléphone : ${telephone}` : null,
-      profil ? `Profil : ${profil}` : null,
-      '',
-      message,
-      '',
-      '—',
-      'Envoyé depuis alterages.fr',
-    ]
-      .filter((line) => line !== null)
-      .join('\n');
+    setStatus('sending');
+    setErrorMsg('');
 
-    window.location.href =
-      'mailto:contact@alter-ages.fr' +
-      '?subject=' +
-      encodeURIComponent(sujet) +
-      '&body=' +
-      encodeURIComponent(corps);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
 
-    setSent(true);
+      if (!res.ok) {
+        const body = (await res.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(body?.error ?? 'network_error');
+      }
+
+      setStatus('sent');
+      form.reset();
+    } catch {
+      setStatus('error');
+      setErrorMsg(
+        "L'envoi a échoué. Réessayez dans un instant, ou écrivez à contact@alter-ages.fr.",
+      );
+    }
   }
+
+  const sending = status === 'sending';
 
   return (
     <form
@@ -118,21 +125,48 @@ export function ContactForm() {
         />
       </div>
 
+      {/* Honeypot anti-bots : champ cach\u00e9, invisible pour les humains */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          left: '-9999px',
+          width: '1px',
+          height: '1px',
+          overflow: 'hidden',
+        }}
+      >
+        <label>
+          Ne pas remplir
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            defaultValue=""
+          />
+        </label>
+      </div>
+
       <button
         type="submit"
-        className="mt-5 w-full rounded-[5px] bg-terra px-4 py-3.5 text-[0.9rem] font-medium text-white transition-colors hover:bg-terra-dark"
+        disabled={sending}
+        className="mt-5 w-full rounded-[5px] bg-terra px-4 py-3.5 text-[0.9rem] font-medium text-white transition-colors hover:bg-terra-dark disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Envoyer ma demande →
+        {sending ? 'Envoi en cours…' : 'Envoyer ma demande →'}
       </button>
-      <p className="mt-3 text-center text-[0.7rem] leading-[1.55] text-light">
-        Ce formulaire ouvre votre messagerie. Aucune donnée stockée.
-      </p>
 
-      {sent ? (
+      {status === 'sent' ? (
         <div className="mt-4 rounded-md border border-[#a8d5ad] bg-[#eaf5ec] px-5 py-3 text-[0.85rem] leading-[1.7] text-[#2a5c30]">
-          Votre messagerie s'est ouverte avec le message prêt à envoyer. Si rien ne
-          s'affiche, écrivez à <strong>contact@alter-ages.fr</strong> ou appelez le{' '}
-          <strong>06 73 87 75 71</strong>.
+          Merci ! Votre message a bien été envoyé à Faustine. Vous recevrez une
+          réponse sous peu à l'adresse indiquée.
+        </div>
+      ) : null}
+
+      {status === 'error' ? (
+        <div className="mt-4 rounded-md border border-[#e8b4b4] bg-[#fbecec] px-5 py-3 text-[0.85rem] leading-[1.7] text-[#7a2a2a]">
+          {errorMsg ||
+            "Un problème est survenu. Réessayez ou écrivez directement à contact@alter-ages.fr."}
         </div>
       ) : null}
     </form>

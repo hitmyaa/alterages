@@ -1,0 +1,203 @@
+'use client';
+
+import { MapPin } from 'lucide-react';
+import * as React from 'react';
+
+import { cn } from '@/lib/utils';
+
+/* ------------------------------------------------------------------ */
+/*                       DATA — zones                                  */
+/* ------------------------------------------------------------------ */
+
+interface Zone {
+  id: string;
+  label: string;
+}
+
+const ARRONDISSEMENTS: ReadonlyArray<Zone> = [
+  { id: 'lyon-1', label: 'Lyon 1er' },
+  { id: 'lyon-2', label: 'Lyon 2e' },
+  { id: 'lyon-3', label: 'Lyon 3e' },
+  { id: 'lyon-4', label: 'Lyon 4e' },
+  { id: 'lyon-5', label: 'Lyon 5e' },
+  { id: 'lyon-6', label: 'Lyon 6e' },
+  { id: 'lyon-7', label: 'Lyon 7e' },
+  { id: 'lyon-8', label: 'Lyon 8e' },
+  { id: 'lyon-9', label: 'Lyon 9e' },
+];
+
+const COMMUNES: ReadonlyArray<Zone> = [
+  { id: 'villeurbanne', label: 'Villeurbanne' },
+  { id: 'caluire', label: 'Caluire-et-Cuire' },
+  { id: 'bron', label: 'Bron' },
+  { id: 'venissieux', label: 'Vénissieux' },
+  { id: 'saint-fons', label: 'Saint-Fons' },
+  { id: 'decines', label: 'Décines' },
+  { id: 'vaulx-en-velin', label: 'Vaulx-en-Velin' },
+  { id: 'oullins', label: 'Oullins' },
+  { id: 'sainte-foy', label: 'Sainte-Foy-lès-Lyon' },
+  { id: 'ecully', label: 'Écully' },
+];
+
+const ALL_ZONES = [...ARRONDISSEMENTS, ...COMMUNES];
+
+const TRANSPORT_OPTIONS = [
+  'Transports en commun',
+  'Vélo / trottinette',
+  'Voiture personnelle',
+  'Plusieurs modes',
+] as const;
+
+/* ------------------------------------------------------------------ */
+/*                         PROPS                                       */
+/* ------------------------------------------------------------------ */
+
+interface StepZonesProps {
+  selected: ReadonlySet<string>;
+  onChangeSelected: (next: Set<string>) => void;
+  transport: string;
+  onChangeTransport: (value: string) => void;
+}
+
+/* ------------------------------------------------------------------ */
+/*                         COMPONENT                                   */
+/* ------------------------------------------------------------------ */
+
+export function StepZones({
+  selected,
+  onChangeSelected,
+  transport,
+  onChangeTransport,
+}: StepZonesProps) {
+  const toggle = (id: string) => {
+    const next = new Set(selected);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    onChangeSelected(next);
+  };
+
+  const selectedZones = ALL_ZONES.filter((z) => selected.has(z.id));
+
+  return (
+    <div className="flex flex-col gap-6">
+      {selected.size === 0 ? (
+        <div className="flex items-start gap-2.5 rounded-lg border border-terra/30 bg-terra/[0.06] px-4 py-3 text-[0.82rem] leading-[1.6] text-terra-dark">
+          <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+          <span>
+            <strong className="font-medium">Sélectionnez au moins une zone.</strong>{' '}
+            Vous pourrez la modifier à tout moment depuis votre espace.
+          </span>
+        </div>
+      ) : null}
+
+      {/* Arrondissements de Lyon */}
+      <ZoneGroup
+        title="Arrondissements de Lyon"
+        zones={ARRONDISSEMENTS}
+        selected={selected}
+        onToggle={toggle}
+      />
+
+      {/* Communes limitrophes */}
+      <ZoneGroup
+        title="Communes limitrophes"
+        zones={COMMUNES}
+        selected={selected}
+        onToggle={toggle}
+      />
+
+      {/* Récap sélection */}
+      <div className="border-t border-bd-light pt-5">
+        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.06em] text-mid">
+          {selectedZones.length === 0
+            ? 'Aucune zone sélectionnée'
+            : `${selectedZones.length} ${selectedZones.length > 1 ? 'zones sélectionnées' : 'zone sélectionnée'}`}
+        </p>
+        {selectedZones.length > 0 ? (
+          <div className="flex flex-wrap gap-1.5">
+            {selectedZones.map((z) => (
+              <span
+                key={z.id}
+                className="inline-flex items-center gap-1 rounded-full bg-terra/10 px-2.5 py-0.5 text-[0.74rem] text-terra"
+              >
+                {z.label}
+                <button
+                  type="button"
+                  onClick={() => toggle(z.id)}
+                  aria-label={`Retirer ${z.label}`}
+                  className="ml-0.5 text-terra/60 transition-colors hover:text-terra"
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+        ) : null}
+      </div>
+
+      {/* Mode de déplacement */}
+      <label className="flex flex-col gap-2">
+        <span className="text-[0.72rem] font-medium uppercase tracking-[0.06em] text-mid">
+          Mode de déplacement
+        </span>
+        <select
+          value={transport}
+          onChange={(e) => onChangeTransport(e.target.value)}
+          className="field-select"
+        >
+          <option value="">Sélectionner...</option>
+          {TRANSPORT_OPTIONS.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+      </label>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*                          SUB                                        */
+/* ------------------------------------------------------------------ */
+
+function ZoneGroup({
+  title,
+  zones,
+  selected,
+  onToggle,
+}: {
+  title: string;
+  zones: ReadonlyArray<Zone>;
+  selected: ReadonlySet<string>;
+  onToggle: (id: string) => void;
+}) {
+  return (
+    <div>
+      <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.06em] text-mid">
+        {title}
+      </p>
+      <div className="flex flex-wrap gap-2">
+        {zones.map((zone) => {
+          const isOn = selected.has(zone.id);
+          return (
+            <button
+              key={zone.id}
+              type="button"
+              onClick={() => onToggle(zone.id)}
+              aria-pressed={isOn}
+              className={cn(
+                'rounded-full border px-3.5 py-1.5 text-[0.8rem] font-medium transition-colors',
+                isOn
+                  ? 'border-terra bg-terra/10 text-terra'
+                  : 'border-bd bg-white text-mid hover:border-terra-light hover:text-terra',
+              )}
+            >
+              {zone.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

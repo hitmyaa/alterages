@@ -104,7 +104,9 @@
 }
 
 @layer components {
-  /* Étiquette de section (Playfair + uppercase + tracking) */
+  /* ===== Étiquettes de section (eyebrow) =====
+   * Petit caps uppercase tracé large, posé au-dessus des titres H2 de section.
+   */
   .eyebrow {
     @apply mb-3 inline-block text-[0.68rem] font-medium uppercase tracking-tag text-terra;
   }
@@ -113,12 +115,61 @@
     @apply mb-3 inline-block text-[0.68rem] font-medium uppercase tracking-tag text-terra-light;
   }
 
-  /* Titres serif avec italique de mise en valeur */
+  /* ===== Échelle typographique =====
+   * Classes utilitaires pour répliquer la typo de la landing sans devoir
+   * recopier les `text-[clamp(...)]` à chaque endroit. Tous les titres sont
+   * en serif italique avec leading serré.
+   */
+  .h-display {
+    @apply font-serif text-[clamp(2.2rem,4.5vw,4rem)] font-normal italic leading-[1.1] tracking-tight text-deep;
+  }
+
+  .h1 {
+    @apply font-serif text-[clamp(2rem,4vw,3.2rem)] font-normal italic leading-[1.1] tracking-tight text-deep;
+  }
+
+  .h2 {
+    @apply font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] font-normal leading-[1.1] text-deep;
+  }
+
+  .h3 {
+    @apply font-serif text-lg text-deep;
+  }
+
+  .h4 {
+    @apply font-serif text-[0.98rem] text-deep;
+  }
+
+  /* Titres serif avec italique terra sur le mot mis en valeur (`<em>`) */
   .heading-serif em {
     @apply font-normal italic text-terra;
   }
 
-  /* Texture douce en fond (grain léger) pour donner de la chaleur aux zones claires */
+  /* Paragraphe d'introduction (sous les H2) */
+  .lead {
+    @apply text-[0.95rem] leading-[1.95] text-mid;
+  }
+
+  /* Corps de texte courant */
+  .body-text {
+    @apply text-[0.88rem] leading-[1.65] text-mid;
+  }
+
+  /* Texte secondaire / méta */
+  .small-text {
+    @apply text-[0.78rem] leading-[1.55] text-mid;
+  }
+
+  /* ===== Espacement de section =====
+   * Padding vertical + horizontal standard des sections marketing.
+   */
+  .section-pad {
+    @apply px-6 py-section md:py-section-lg;
+  }
+
+  /* ===== Texture douce en fond (grain léger) =====
+   * Donne de la chaleur aux zones cream/warm sans visuel agressif.
+   */
   .bg-grain {
     background-image: radial-gradient(
       circle at 1px 1px,
@@ -126,5 +177,68 @@
       transparent 0
     );
     background-size: 24px 24px;
+  }
+
+  /* ===== Halos colorés =====
+   * Auréoles diffuses utilisées en arrière-plan des sections claires
+   * (à positionner via classes utilitaires sur un div absolute).
+   */
+  .halo-terra {
+    background: radial-gradient(
+      circle,
+      rgba(184, 92, 44, 0.09) 0%,
+      transparent 65%
+    );
+  }
+
+  .halo-sage {
+    background: radial-gradient(
+      circle,
+      rgba(92, 122, 98, 0.08) 0%,
+      transparent 65%
+    );
+  }
+
+  /* ===== Champs de formulaire =====
+   * `.field-input` : base inputs/textarea — border bd, focus terra avec
+   * ring discret. `.field-select` ajoute un chevron SVG custom (couleur
+   * mid) à la place de l'arrow laid du navigateur.
+   */
+  .field-input {
+    @apply w-full rounded-md border border-bd bg-white px-3.5 py-2.5 text-[0.9rem] text-deep transition-colors placeholder:text-light hover:border-terra-light/60 focus:border-terra focus:outline-none focus:ring-1 focus:ring-terra/30;
+  }
+
+  .field-select {
+    @apply field-input cursor-pointer pr-10;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236A5A3E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 14px;
+  }
+
+  .field-invalid {
+    @apply border-destructive/60 focus:border-destructive focus:ring-destructive/20;
+  }
+
+  /* ===== Boutons marketing =====
+   * Les boutons CTA de la landing n'utilisent pas le composant `<Button>`
+   * shadcn ; ces classes répliquent leur style pour permettre l'usage sur
+   * des `<a>` natifs ou des Link Next.
+   *
+   * Pour activer le micro-shift d'une icône `<ArrowRight>` au survol, ajouter
+   * `group` à la main sur l'élément et `group-hover:translate-x-0.5` sur
+   * l'icône — `@apply` ne supporte pas `group`.
+   */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-sm bg-terra px-7 py-3 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-terra-dark hover:shadow-md;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center rounded-sm border border-bd px-7 py-3 text-sm text-mid transition-colors hover:border-terra hover:text-terra;
+  }
+
+  .btn-on-dark {
+    @apply inline-flex shrink-0 items-center gap-2 rounded-sm bg-white px-6 py-2.5 text-sm font-medium text-deep transition-opacity hover:opacity-90;
   }
 }
