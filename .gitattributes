@@ -1,0 +1,26 @@
+# Force LF line endings for all text files — évite les conflits CRLF/LF
+# entre Windows (autocrlf=true) et macOS/Linux. Prettier exige LF dans
+# .prettierrc (`endOfLine: "lf"`) et le CI échoue sinon.
+* text=auto eol=lf
+
+# Scripts shell Windows : garder CRLF pour qu'ils restent exécutables
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
+
+# Binaires explicites — pas de conversion
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.svg   binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.eot   binary
+*.mp4   binary
+*.webm  binary
+*.zip   binary

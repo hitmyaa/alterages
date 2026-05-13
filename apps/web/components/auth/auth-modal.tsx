@@ -1,7 +1,6 @@
 'use client';
 
-import { CheckCircle2, Lock, Mail, X } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { Clock, Mail, X } from 'lucide-react';
 import * as React from 'react';
 
 import { Halo } from '@/components/blocks/halo';
@@ -10,55 +9,25 @@ import { cn } from '@/lib/utils';
 
 import { useAuthModal } from './auth-modal-provider';
 
-type Mode = 'sign-in' | 'sign-up' | 'reset';
-
-/* Traduction française des erreurs Supabase les plus courantes. */
-function translateError(message: string): string {
-  const m = message.toLowerCase();
-  if (m.includes('invalid login credentials')) return 'E-mail ou mot de passe incorrect.';
-  if (m.includes('user already registered'))
-    return 'Un compte existe déjà avec cet e-mail. Essayez de vous connecter.';
-  if (m.includes('password should be at least'))
-    return 'Le mot de passe doit contenir au moins 6 caractères.';
-  if (m.includes('email not confirmed'))
-    return 'E-mail non vérifié. Cliquez sur le lien envoyé dans votre boîte mail.';
-  if (m.includes('email rate limit')) return 'Trop de tentatives. Réessayez dans quelques minutes.';
-  return message;
-}
-
 /**
- * Modal d'authentification — email + mot de passe traditionnel + Google OAuth.
+ * Modal d'authentification — Google OAuth uniquement pour l'instant.
  *
- * 3 modes :
- * - sign-in : connexion classique
- * - sign-up : création de compte
- * - reset   : demande d'envoi d'un lien de réinitialisation
- *
- * En cas de succès :
- * - sign-in/sign-up avec session : redirige vers /espace ou /candidature
- *   selon `user_metadata.onboarded`
- * - reset : affiche l'écran de confirmation "lien envoyé"
+ * L'auth par email + mot de passe (et le flow de reset associé) est
+ * temporairement désactivé en attendant la configuration SMTP custom
+ * Supabase (Resend) en prod. Le bouton reste visible avec un badge
+ * "Bientôt" pour préserver l'intention UX.
  */
 export function AuthModal() {
   const { isOpen, close } = useAuthModal();
-  const router = useRouter();
   const supabase = React.useMemo(() => createClient(), []);
 
-  const [mode, setMode] = React.useState<Mode>('sign-in');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [loading, setLoading] = React.useState<'google' | 'email' | null>(null);
-  const [sentTo, setSentTo] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
   /* Reset l'état à chaque fermeture. */
   React.useEffect(() => {
     if (!isOpen) {
-      setMode('sign-in');
-      setEmail('');
-      setPassword('');
-      setLoading(null);
-      setSentTo(null);
+      setLoading(false);
       setError(null);
     }
   }, [isOpen]);
@@ -67,82 +36,18 @@ export function AuthModal() {
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
-  /* Redirige selon le flag onboarded de l'utilisateur. */
-  const routeAfterAuth = (onboarded: boolean) => {
-    close();
-    router.push(onboarded ? '/espace' : '/candidature');
-    router.refresh();
-  };
-
-  /* --- GOOGLE OAUTH --- */
   const handleGoogle = async () => {
     setError(null);
-    setLoading('google');
+    setLoading(true);
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo: `${origin}/auth/callback` },
     });
     if (err) {
-      setError(translateError(err.message));
-      setLoading(null);
+      setError(err.message);
+      setLoading(false);
     }
     /* Sinon redirection automatique vers Google. */
-  };
-
-  /* --- SUBMIT (sign-in / sign-up / reset) --- */
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setLoading('email');
-
-    if (mode === 'sign-in') {
-      const { data, error: err } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password,
-      });
-      if (err) {
-        setError(translateError(err.message));
-        setLoading(null);
-        return;
-      }
-      const onboarded = data.user?.user_metadata?.onboarded === true;
-      routeAfterAuth(onboarded);
-      return;
-    }
-
-    if (mode === 'sign-up') {
-      const { data, error: err } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: { emailRedirectTo: `${origin}/auth/callback` },
-      });
-      if (err) {
-        setError(translateError(err.message));
-        setLoading(null);
-        return;
-      }
-      /* Si "Confirm email" est désactivé côté Supabase, on a déjà une session.
-       * Sinon, on affiche l'écran "vérifiez votre email". */
-      if (data.session) {
-        routeAfterAuth(false);
-      } else {
-        setSentTo(email.trim());
-        setLoading(null);
-      }
-      return;
-    }
-
-    /* mode === 'reset' */
-    const { error: err } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-      redirectTo: `${origin}/auth/reset-password`,
-    });
-    if (err) {
-      setError(translateError(err.message));
-      setLoading(null);
-      return;
-    }
-    setSentTo(email.trim());
-    setLoading(null);
   };
 
   return (
@@ -181,238 +86,59 @@ export function AuthModal() {
             </p>
           </div>
 
-          {/* ----------------- ÉCRAN succès reset ----------------- */}
-          {sentTo && mode === 'reset' ? (
-            <ResetSent
-              email={sentTo}
-              onBack={() => {
-                setSentTo(null);
-                setMode('sign-in');
-              }}
-            />
-          ) : sentTo && mode === 'sign-up' ? (
-            <SignUpSent
-              email={sentTo}
-              onBack={() => {
-                setSentTo(null);
-                setMode('sign-in');
-              }}
-            />
-          ) : (
-            <>
-              {/* ------- GOOGLE OAUTH ------- */}
-              {mode !== 'reset' ? (
-                <>
-                  <div className="mt-8">
-                    <button
-                      type="button"
-                      onClick={handleGoogle}
-                      disabled={loading !== null}
-                      className={cn(
-                        'flex w-full items-center justify-center gap-3 rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 text-[0.85rem] text-white transition-colors hover:border-white/30 hover:bg-white/[0.12]',
-                        loading !== null && 'cursor-wait opacity-60',
-                      )}
-                    >
-                      <GoogleIcon />
-                      {loading === 'google' ? 'Redirection…' : 'Continuer avec Google'}
-                    </button>
-                  </div>
-
-                  <div className="my-5 flex items-center gap-3">
-                    <span className="h-px flex-1 bg-white/10" />
-                    <span className="text-[0.72rem] text-white/30">ou</span>
-                    <span className="h-px flex-1 bg-white/10" />
-                  </div>
-                </>
-              ) : (
-                <div className="mt-8" />
+          {/* GOOGLE OAUTH */}
+          <div className="mt-8 flex flex-col gap-2.5">
+            <button
+              type="button"
+              onClick={handleGoogle}
+              disabled={loading}
+              className={cn(
+                'flex w-full items-center justify-center gap-3 rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 text-[0.85rem] text-white transition-colors hover:border-white/30 hover:bg-white/[0.12]',
+                loading && 'cursor-wait opacity-60',
               )}
+            >
+              <GoogleIcon />
+              {loading ? 'Redirection…' : 'Continuer avec Google'}
+            </button>
 
-              {/* ------- FORMULAIRE ------- */}
-              <form onSubmit={handleSubmit} className="flex flex-col gap-2.5">
-                <label className="relative">
-                  <Mail
-                    className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30"
-                    aria-hidden
-                  />
-                  <input
-                    type="email"
-                    required
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="votre@email.fr"
-                    disabled={loading !== null}
-                    className="focus:border-terra-light focus:ring-terra-light/30 w-full rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 pl-10 text-[0.88rem] text-white transition-colors placeholder:text-white/30 focus:outline-none focus:ring-1 disabled:opacity-60"
-                  />
-                </label>
+            {/* EMAIL — désactivé, bientôt disponible */}
+            <button
+              type="button"
+              disabled
+              aria-disabled="true"
+              title="Connexion par e-mail bientôt disponible"
+              className="flex w-full cursor-not-allowed items-center justify-center gap-3 rounded-md border border-white/10 bg-white/[0.02] px-4 py-3 text-[0.85rem] text-white/40"
+            >
+              <Mail className="h-4 w-4" aria-hidden />
+              Continuer avec mon e-mail
+              <span className="bg-terra/20 text-terra-light ml-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.66rem] font-medium uppercase tracking-wider">
+                <Clock className="h-2.5 w-2.5" aria-hidden />
+                Bientôt
+              </span>
+            </button>
+          </div>
 
-                {mode !== 'reset' ? (
-                  <label className="relative">
-                    <Lock
-                      className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30"
-                      aria-hidden
-                    />
-                    <input
-                      type="password"
-                      required
-                      minLength={6}
-                      autoComplete={mode === 'sign-up' ? 'new-password' : 'current-password'}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder={
-                        mode === 'sign-up' ? 'Mot de passe (min. 6 caractères)' : 'Mot de passe'
-                      }
-                      disabled={loading !== null}
-                      className="focus:border-terra-light focus:ring-terra-light/30 w-full rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 pl-10 text-[0.88rem] text-white transition-colors placeholder:text-white/30 focus:outline-none focus:ring-1 disabled:opacity-60"
-                    />
-                  </label>
-                ) : null}
+          {error ? (
+            <p
+              role="alert"
+              className="border-destructive/30 bg-destructive/10 mt-4 rounded-md border px-3 py-2 text-center text-[0.78rem] text-white"
+            >
+              {error}
+            </p>
+          ) : null}
 
-                {mode === 'sign-in' ? (
-                  <div className="flex justify-end">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMode('reset');
-                        setError(null);
-                      }}
-                      className="hover:text-terra-light text-[0.74rem] text-white/45 underline-offset-2 transition-colors hover:underline"
-                    >
-                      Mot de passe oublié ?
-                    </button>
-                  </div>
-                ) : null}
-
-                <button
-                  type="submit"
-                  disabled={
-                    loading !== null || !email.trim() || (mode !== 'reset' && password.length < 6)
-                  }
-                  className={cn(
-                    'bg-terra hover:bg-terra-dark mt-1 flex w-full items-center justify-center gap-2 rounded-md px-4 py-3 text-[0.85rem] font-medium text-white transition-colors',
-                    (loading !== null ||
-                      !email.trim() ||
-                      (mode !== 'reset' && password.length < 6)) &&
-                      'hover:bg-terra cursor-not-allowed opacity-60',
-                  )}
-                >
-                  {loading === 'email'
-                    ? mode === 'reset'
-                      ? 'Envoi…'
-                      : 'Connexion…'
-                    : mode === 'sign-in'
-                      ? 'Se connecter'
-                      : mode === 'sign-up'
-                        ? 'Créer mon compte'
-                        : 'Envoyer le lien'}
-                </button>
-              </form>
-
-              {error ? (
-                <p
-                  role="alert"
-                  className="border-destructive/30 bg-destructive/10 mt-4 rounded-md border px-3 py-2 text-center text-[0.78rem] text-white"
-                >
-                  {error}
-                </p>
-              ) : null}
-
-              {/* ------- TOGGLE MODE ------- */}
-              <p className="mt-6 text-center text-[0.78rem] text-white/45">
-                {mode === 'sign-in' ? (
-                  <>
-                    Pas encore de compte ?{' '}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMode('sign-up');
-                        setError(null);
-                      }}
-                      className="hover:text-terra-light font-medium text-white/70 underline-offset-2 transition-colors hover:underline"
-                    >
-                      Créer un compte
-                    </button>
-                  </>
-                ) : mode === 'sign-up' ? (
-                  <>
-                    Déjà inscrit ?{' '}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMode('sign-in');
-                        setError(null);
-                      }}
-                      className="hover:text-terra-light font-medium text-white/70 underline-offset-2 transition-colors hover:underline"
-                    >
-                      Se connecter
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMode('sign-in');
-                      setError(null);
-                    }}
-                    className="hover:text-terra-light font-medium text-white/70 underline-offset-2 transition-colors hover:underline"
-                  >
-                    ← Revenir à la connexion
-                  </button>
-                )}
-              </p>
-            </>
-          )}
+          <p className="mt-6 text-center text-[0.74rem] text-white/45">
+            En continuant, vous acceptez nos{' '}
+            <a
+              href="/mentions-legales"
+              className="hover:text-terra-light text-white/70 underline-offset-2 transition-colors hover:underline"
+            >
+              conditions
+            </a>
+            .
+          </p>
         </div>
       </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*                        SUB COMPONENTS                               */
-/* ------------------------------------------------------------------ */
-
-function ResetSent({ email, onBack }: { email: string; onBack: () => void }) {
-  return (
-    <div className="mt-8 text-center">
-      <div className="bg-sage/20 text-sage-light mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full">
-        <CheckCircle2 className="h-6 w-6" aria-hidden />
-      </div>
-      <p className="font-serif text-[1.15rem] italic text-white">Lien envoyé !</p>
-      <p className="mx-auto mt-3 max-w-xs text-[0.85rem] leading-[1.7] text-white/55">
-        Un lien de réinitialisation a été envoyé à <strong className="text-white">{email}</strong>.
-        Cliquez dessus pour définir un nouveau mot de passe.
-      </p>
-      <button
-        type="button"
-        onClick={onBack}
-        className="hover:text-terra-light mt-6 text-[0.78rem] text-white/55 underline-offset-2 transition-colors hover:underline"
-      >
-        ← Revenir à la connexion
-      </button>
-    </div>
-  );
-}
-
-function SignUpSent({ email, onBack }: { email: string; onBack: () => void }) {
-  return (
-    <div className="mt-8 text-center">
-      <div className="bg-sage/20 text-sage-light mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full">
-        <CheckCircle2 className="h-6 w-6" aria-hidden />
-      </div>
-      <p className="font-serif text-[1.15rem] italic text-white">Confirmez votre e-mail</p>
-      <p className="mx-auto mt-3 max-w-xs text-[0.85rem] leading-[1.7] text-white/55">
-        Un lien de confirmation a été envoyé à <strong className="text-white">{email}</strong>.
-        Cliquez dessus pour activer votre compte.
-      </p>
-      <button
-        type="button"
-        onClick={onBack}
-        className="hover:text-terra-light mt-6 text-[0.78rem] text-white/55 underline-offset-2 transition-colors hover:underline"
-      >
-        ← Revenir à la connexion
-      </button>
     </div>
   );
 }
