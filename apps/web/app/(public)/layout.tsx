@@ -5,11 +5,10 @@ import { AuthModal } from '@/components/auth/auth-modal';
 import { AuthModalProvider } from '@/components/auth/auth-modal-provider';
 import { PublicHeader } from '@/components/site/public-header';
 
-const navLinks = [
+const navLinks: ReadonlyArray<{ href: string; label: string; disabled?: boolean }> = [
   { href: '/a-propos', label: 'À propos' },
   { href: '/etudiants', label: 'Rejoindre AlterAges' },
-  { href: '/tarifs', label: 'Tarification' },
-  { href: '/#suivi', label: 'Parcours client' },
+  { href: '/tarifs', label: 'Tarification', disabled: true },
 ];
 
 const legalLinks = [
@@ -116,22 +115,31 @@ function FooterColumn({
   links,
 }: {
   title: string;
-  links: ReadonlyArray<{ href: string; label: string }>;
+  links: ReadonlyArray<{ href: string; label: string; disabled?: boolean }>;
 }) {
   return (
     <div>
       <FooterColumnTitle>{title}</FooterColumnTitle>
       <ul className="mt-5 flex flex-col gap-2 text-[0.85rem]">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              className="hover:text-terra-light text-white/80 transition-colors"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
+        {links.map((link) =>
+          link.disabled ? (
+            <li key={link.href} className="flex items-center gap-2 text-white/35">
+              <span>{link.label}</span>
+              <span className="text-[0.7rem] uppercase tracking-[0.08em] text-white/30">
+                À venir
+              </span>
+            </li>
+          ) : (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="hover:text-terra-light text-white/80 transition-colors"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ),
+        )}
       </ul>
     </div>
   );
