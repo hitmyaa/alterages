@@ -21,7 +21,7 @@ const variantClasses: Record<Variant, string> = {
   'on-terra':
     'group inline-flex items-center gap-2 rounded-sm bg-white px-7 py-3 text-sm font-medium text-terra-dark shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md',
   /* Bouton du header — version desktop */
-  nav: 'rounded-sm bg-terra px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors hover:bg-terra-dark',
+  nav: 'whitespace-nowrap rounded-sm bg-terra px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors hover:bg-terra-dark',
   /* Bouton du header — version mobile compacte */
   'nav-short':
     'rounded-sm bg-terra px-4 py-2 text-xs font-medium uppercase tracking-wider text-white transition-colors hover:bg-terra-dark md:hidden',
