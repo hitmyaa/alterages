@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 
+import { EspaceAnalytics } from '@/components/espace/analytics';
 import { EspaceSidebar, type SidebarUser } from '@/components/espace/sidebar';
 import { createClient } from '@/lib/supabase/server';
 
@@ -34,6 +35,7 @@ export default async function EspaceLayout({ children }: { children: React.React
 
   return (
     <div className="bg-cream min-h-screen">
+      <EspaceAnalytics />
       <EspaceSidebar user={sidebarUser} />
       <main className="min-h-screen md:pl-64">{children}</main>
     </div>

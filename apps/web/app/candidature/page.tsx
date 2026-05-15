@@ -3,6 +3,7 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import * as React from 'react';
 
+import { GA_EVENTS, trackEvent } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
 
 import { submitQuestionnaire } from './_actions';
@@ -25,6 +26,12 @@ const STEPS = [
   { id: 3, label: 'Zones' },
 ] as const;
 
+const STEP_NAMES: Record<StepId, string> = {
+  1: 'identite',
+  2: 'disponibilites',
+  3: 'zones',
+};
+
 export default function CandidaturePage() {
   const [step, setStep] = React.useState<StepId>(1);
   const [identity, setIdentity] = React.useState<IdentityData>(emptyIdentity);
@@ -35,7 +42,30 @@ export default function CandidaturePage() {
   const [submitting, setSubmitting] = React.useState(false);
   const [submitError, setSubmitError] = React.useState<string | null>(null);
 
-  const goPrev = () => setStep((s) => Math.max(1, s - 1) as StepId);
+  /* form_start au premier rendu, form_step_view à chaque changement d'étape. */
+  React.useEffect(() => {
+    trackEvent(GA_EVENTS.FORM_START, { form_id: 'candidature' });
+  }, []);
+
+  React.useEffect(() => {
+    trackEvent(GA_EVENTS.FORM_STEP_VIEW, {
+      form_id: 'candidature',
+      step,
+      step_name: STEP_NAMES[step],
+    });
+  }, [step]);
+
+  const goPrev = () => {
+    setStep((s) => {
+      const next = Math.max(1, s - 1) as StepId;
+      trackEvent(GA_EVENTS.FORM_STEP_BACK, {
+        form_id: 'candidature',
+        from_step: s,
+        to_step: next,
+      });
+      return next;
+    });
+  };
 
   const submit = async () => {
     setSubmitting(true);
@@ -52,12 +82,31 @@ export default function CandidaturePage() {
     if (result && 'error' in result) {
       setSubmitError(result.error);
       setSubmitting(false);
+      return;
     }
+    /* Succès : on tague juste avant la navigation déclenchée par le
+     * redirect serveur. gtag utilise `sendBeacon`, l'event survit. */
+    trackEvent(GA_EVENTS.FORM_SUBMIT, {
+      form_id: 'candidature',
+      zones_count: zones.size,
+      slots_count: availabilityLater ? 0 : availability.size,
+      transport_mode: transport || 'non_renseigne',
+      availability_skipped: availabilityLater,
+    });
+    trackEvent(GA_EVENTS.SIGN_UP, { method: 'candidature' });
   };
 
   const goNext = () => {
-    if (step < 3) setStep((s) => (s + 1) as StepId);
-    else void submit();
+    if (step < 3) {
+      trackEvent(GA_EVENTS.FORM_STEP_COMPLETE, {
+        form_id: 'candidature',
+        step,
+        step_name: STEP_NAMES[step],
+      });
+      setStep((s) => (s + 1) as StepId);
+    } else {
+      void submit();
+    }
   };
 
   /* ----------------- Tunnel ----------------- */

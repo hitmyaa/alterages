@@ -60,29 +60,32 @@ export function FormationModule({
     >
       <summary
         className={cn(
-          'flex cursor-pointer items-center gap-5 px-6 py-5',
+          'flex cursor-pointer items-start gap-4 px-6 py-5 md:items-center md:gap-5',
           'list-none marker:hidden [&::-webkit-details-marker]:hidden',
         )}
       >
-        <span
-          className={cn(
-            'inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.66rem] font-medium uppercase tracking-[0.1em]',
-            highlight ? 'bg-terra/20 text-terra-light' : 'bg-white/10 text-white/65',
-          )}
-        >
-          {Icon ? <Icon className="h-3 w-3" aria-hidden /> : null}
-          {badge}
-        </span>
+        <div className="flex flex-1 flex-col gap-2.5 md:flex-row md:items-center md:gap-5">
+          <span
+            className={cn(
+              'inline-flex shrink-0 items-center gap-1.5 self-start rounded-full px-2.5 py-1 text-[0.66rem] font-medium uppercase tracking-[0.1em]',
+              highlight ? 'bg-terra/20 text-terra-light' : 'bg-white/10 text-white/65',
+            )}
+          >
+            {Icon ? <Icon className="h-3 w-3" aria-hidden /> : null}
+            {badge}
+          </span>
 
-        <div className="flex-1">
-          <h3 className="font-serif text-[1.02rem] leading-tight text-white">{title}</h3>
-          <p className="mt-1 text-[0.82rem] leading-[1.55] text-white/55">{description}</p>
+          <div className="flex-1">
+            <h3 className="font-serif text-[1.02rem] leading-tight text-white">{title}</h3>
+            <p className="mt-1 text-[0.82rem] leading-[1.55] text-white/55">{description}</p>
+          </div>
         </div>
 
         <ChevronDown
           aria-hidden
           className={cn(
-            'h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180',
+            'h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180 md:mt-0',
+            'mt-2',
             highlight ? 'text-terra-light' : 'text-white/40 group-open:text-white/70',
           )}
         />

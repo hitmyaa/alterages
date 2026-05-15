@@ -10,8 +10,8 @@ type NavItem = { href: string; label: string };
 
 /* Liens par défaut — landing + pages neutres (a-propos, tarifs, etc.). */
 const landingNav: ReadonlyArray<NavItem> = [
-  { href: '/#prescripteurs', label: 'Prescripteurs' },
-  { href: '/#etudiants', label: 'Étudiants' },
+  { href: '/#aidants', label: 'Aidants' },
+  { href: '/#etudiants', label: 'Intervenants' },
   { href: '/#suivi', label: 'Suivi' },
   { href: '/#tarif', label: 'Tarification' },
 ];
@@ -73,11 +73,11 @@ export function PublicHeader() {
                 Vous êtes étudiant ?
               </Link>
             )}
-            <InterestButton variant="nav" label="Se connecter" />
+            <InterestButton variant="nav" label="Se connecter" location="header" />
           </div>
         </nav>
 
-        <InterestButton variant="nav-short" label="Se connecter" />
+        <InterestButton variant="nav-short" label="Se connecter" location="header_mobile" />
       </div>
     </header>
   );
