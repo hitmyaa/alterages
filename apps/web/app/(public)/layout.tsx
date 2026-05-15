@@ -8,7 +8,7 @@ import { PublicHeader } from '@/components/site/public-header';
 const navLinks: ReadonlyArray<{ href: string; label: string; disabled?: boolean }> = [
   { href: '/a-propos', label: 'À propos' },
   { href: '/etudiants', label: 'Rejoindre AlterAges' },
-  { href: '/tarifs', label: 'Tarification', disabled: true },
+  { href: '/#pourquoi', label: 'Pourquoi AlterAges' },
 ];
 
 const legalLinks = [

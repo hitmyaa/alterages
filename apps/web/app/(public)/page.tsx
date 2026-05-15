@@ -81,16 +81,15 @@ function HeroSection() {
               href="#contact"
               ctaLocation="hero"
               ctaLabel="Je cherche un accompagnement"
-              className="bg-terra hover:bg-terra-dark group inline-flex items-center gap-2 rounded-sm px-7 py-3 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+              className="bg-terra hover:bg-terra-dark inline-flex w-full items-center justify-center rounded-sm px-7 py-3 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md sm:w-auto sm:justify-start"
             >
               Je cherche un accompagnement
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </TrackedLink>
             <TrackedLink
               href="/etudiants"
               ctaLocation="hero"
               ctaLabel="Devenir étudiant AlterAges"
-              className="border-bd text-mid hover:border-terra hover:text-terra inline-flex items-center rounded-sm border px-7 py-3 text-sm transition-colors"
+              className="border-bd text-mid hover:border-terra hover:text-terra inline-flex w-full items-center justify-center rounded-sm border px-7 py-3 text-sm transition-colors sm:w-auto sm:justify-start"
             >
               Devenir étudiant AlterAges
             </TrackedLink>
@@ -488,9 +487,9 @@ const comparisonRows = [
 
 function TarifSection() {
   return (
-    <section id="tarif" className="bg-cream bg-grain px-6 py-24 md:py-28">
+    <section id="pourquoi" className="bg-cream bg-grain px-6 py-24 md:py-28">
       <div className="container">
-        <span className="eyebrow">Tarification</span>
+        <span className="eyebrow">Pourquoi AlterAges</span>
         <h2 className="heading-serif text-deep max-w-3xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
           Moins cher qu'un prestataire,
           <br />
