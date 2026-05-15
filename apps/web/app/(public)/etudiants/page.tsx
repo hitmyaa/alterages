@@ -22,8 +22,10 @@ import {
   SectionHeader,
   StepsTimeline,
 } from '@/components/blocks';
-import { Accordion, AccordionItem } from '@/components/ui/accordion';
+import { Accordion } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
+
+import { TrackedFaqItem } from './_components/tracked-faq-item';
 
 export const metadata: Metadata = {
   title: 'Rejoindre AlterAges · Étudiants',
@@ -72,21 +74,29 @@ const missions = [
     title: 'Entretien du domicile',
     description:
       'Ménage courant et rangement. Vous aidez le bénéficiaire à maintenir un cadre de vie propre et agréable, selon ses habitudes et ses préférences.',
+    image: '/images/etudiants/mission-entretien.webp',
+    imageAlt: 'Étudiante AlterAges aidant une personne âgée à entretenir son domicile',
   },
   {
     title: 'Compagnie et lien social',
     description:
       "Présence, conversation, activités de loisir, accompagnement aux sorties. L'isolement est le premier ennemi des personnes âgées — votre présence compte plus que vous ne le pensez.",
+    image: '/images/etudiants/mission-compagnie.webp',
+    imageAlt: 'Étudiante AlterAges partageant un moment de complicité avec une personne âgée',
   },
   {
     title: 'Préparation des repas',
     description:
       'Préparation de repas simples selon les goûts et régimes du bénéficiaire. Aide à la prise des repas si nécessaire. Un moment de partage autant qu’une aide concrète.',
+    image: '/images/etudiants/mission-repas.webp',
+    imageAlt: 'Étudiante AlterAges préparant un repas avec une personne âgée',
   },
   {
     title: 'Accompagnement numérique',
     description:
       "Aide à l'utilisation du smartphone, de la tablette et des services en ligne. Vidéo avec les proches, démarches administratives, photos : des besoins simples mais essentiels.",
+    image: '/images/etudiants/mission-numerique.webp',
+    imageAlt: 'Étudiante AlterAges aidant une personne âgée à utiliser une tablette',
   },
   {
     title: 'Aide à la toilette partielle',
@@ -94,11 +104,15 @@ const missions = [
       "Aide au lavage du visage et des mains, à l'habillage et à l'hygiène courante. Toujours avec le consentement du bénéficiaire, dans le respect total de sa dignité.",
     warning:
       'Formation obligatoire avant cette mission. Gestes spécifiques abordés dans le module 2.',
+    image: '/images/etudiants/mission-toilette.webp',
+    imageAlt: 'Étudiante AlterAges accompagnant une personne âgée dans son hygiène quotidienne',
   },
   {
     title: 'Aide à la mobilité extérieure',
     description:
       "Accompagnement pour les sorties, les courses, les rendez-vous médicaux. Vous permettez à des personnes qui ne sortent parfois plus seules de garder un lien avec l'extérieur.",
+    image: '/images/etudiants/mission-mobilite.webp',
+    imageAlt: 'Étudiante AlterAges accompagnant une personne âgée lors d’une sortie',
   },
 ];
 
@@ -252,7 +266,6 @@ function DashboardMockup() {
           ))}
         </div>
       </article>
-
     </div>
   );
 }
@@ -285,14 +298,14 @@ export default function EtudiantsPage() {
             </p>
 
             <div className="mt-10">
-              <InterestButton />
+              <InterestButton location="hero" />
             </div>
           </div>
 
           <div className="animate-fade-up relative hidden lg:flex lg:[animation-delay:120ms]">
             <div className="shadow-hero ring-bd/60 relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl ring-1">
               <Image
-                src="/images/image-principale.png"
+                src="/images/etudiants/hero.webp"
                 alt="Accompagnement intergénérationnel AlterAges — une jeune étudiante et une personne âgée"
                 fill
                 priority
@@ -320,6 +333,8 @@ export default function EtudiantsPage() {
               title={m.title}
               description={m.description}
               warning={m.warning}
+              image={m.image}
+              imageAlt={m.imageAlt}
             />
           ))}
         </div>
@@ -353,7 +368,7 @@ export default function EtudiantsPage() {
             </div>
 
             <div className="mt-8">
-              <InterestButton />
+              <InterestButton location="pourquoi" />
             </div>
           </div>
 
@@ -423,7 +438,11 @@ export default function EtudiantsPage() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <InterestButton variant="on-dark" label="Rejoindre et accéder à la formation" />
+          <InterestButton
+            variant="on-dark"
+            label="Rejoindre et accéder à la formation"
+            location="formation"
+          />
         </div>
       </Section>
 
@@ -440,7 +459,7 @@ export default function EtudiantsPage() {
         </div>
 
         <div className="mt-12 flex justify-center">
-          <InterestButton label="Commencer la démarche" />
+          <InterestButton label="Commencer la démarche" location="parcours" />
         </div>
       </Section>
 
@@ -475,51 +494,51 @@ export default function EtudiantsPage() {
             <h2 className="heading-serif h2">FAQ</h2>
             <div className="mt-6">
               <Accordion>
-                <AccordionItem
+                <TrackedFaqItem
                   groupName="faq-etudiants"
                   question="Puis-je candidater avec peu de disponibilités ?"
                 >
                   Oui. AlterAges ne vous impose pas de nombre d’heures minimum. En revanche, plus
                   vous êtes disponible, plus vous serez contacté rapidement pour une mission.
-                </AccordionItem>
-                <AccordionItem
+                </TrackedFaqItem>
+                <TrackedFaqItem
                   groupName="faq-etudiants"
                   question="Est-ce compatible avec un emploi du temps chargé ?"
                 >
                   Oui. Vous mettez à jour vos disponibilités quand vous le souhaitez. Si vous avez
                   des partiels ou un stage, vous signalez une indisponibilité temporaire. AlterAges
                   organise le remplacement.
-                </AccordionItem>
-                <AccordionItem groupName="faq-etudiants" question="Comment je suis payé ?">
+                </TrackedFaqItem>
+                <TrackedFaqItem groupName="faq-etudiants" question="Comment je suis payé ?">
                   Vous êtes salarié directement du bénéficiaire, via le CESU. AlterAges gère les
                   déclarations à votre place. Vous recevez votre salaire entre le 1er et le 5 du
                   mois suivant les interventions, avec un bulletin de salaire édité automatiquement
                   par l’URSSAF.
-                </AccordionItem>
-                <AccordionItem
+                </TrackedFaqItem>
+                <TrackedFaqItem
                   groupName="faq-etudiants"
                   question="Que se passe-t-il si je pars en stage plusieurs semaines ?"
                 >
                   Vous prévenez AlterAges en avance. On organise un remplacement temporaire auprès
                   de votre bénéficiaire et on maintient votre profil dans le vivier. À votre retour,
                   vous reprenez là où vous en étiez.
-                </AccordionItem>
-                <AccordionItem
+                </TrackedFaqItem>
+                <TrackedFaqItem
                   groupName="faq-etudiants"
                   question="Je ne suis pas en filière de santé, puis-je candidater ?"
                 >
                   Oui. AlterAges recrute des étudiants de toutes filières. Ce qui compte, c’est
                   votre engagement envers les personnes âgées et votre capacité à créer un lien de
                   confiance.
-                </AccordionItem>
-                <AccordionItem
+                </TrackedFaqItem>
+                <TrackedFaqItem
                   groupName="faq-etudiants"
                   question="Quelles zones d’intervention sont couvertes ?"
                 >
                   AlterAges intervient dans tous les arrondissements de Lyon (1er au 9e),
                   Villeurbanne et Caluire-et-Cuire. Lors de votre candidature, vous cochez les
                   arrondissements où vous êtes prêt à vous déplacer.
-                </AccordionItem>
+                </TrackedFaqItem>
               </Accordion>
             </div>
           </div>
@@ -538,7 +557,7 @@ export default function EtudiantsPage() {
           </p>
 
           <div className="mt-10 flex justify-center">
-            <InterestButton variant="on-terra" />
+            <InterestButton variant="on-terra" location="final" />
           </div>
         </div>
       </Section>

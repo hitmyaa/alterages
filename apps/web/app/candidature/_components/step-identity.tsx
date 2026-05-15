@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 
+import { ANNEES_OPTIONS, FORMATION_GROUPS } from '@/lib/student-options';
+
 export interface IdentityData {
   prenom: string;
   nom: string;
@@ -44,32 +46,6 @@ interface StepIdentityProps {
   data: IdentityData;
   onChange: (data: IdentityData) => void;
 }
-
-/* Liste de formations, calquée sur le HTML fourni. */
-const formationGroups = [
-  {
-    label: 'Santé et paramédical',
-    options: [
-      'Infirmier(ère), IFSI',
-      'Aide-soignant(e), IFAS',
-      'Médecine',
-      'Pharmacie',
-      'Kiné / Ergothérapeute / Orthophoniste',
-      'Sage-femme',
-    ],
-  },
-  {
-    label: 'Social et humain',
-    options: ['Travail social (DEASS, DEES, DECESF...)', 'Psychologie', 'Éducation spécialisée'],
-  },
-  { label: 'Sport', options: ['STAPS'] },
-  {
-    label: 'Autre',
-    options: ['Autre formation universitaire', 'Autre formation en alternance'],
-  },
-];
-
-const annees = ['1ère année', '2ème année', '3ème année', '4ème année', '5ème année ou plus'];
 
 export function StepIdentity({ data, onChange }: StepIdentityProps) {
   const set = <K extends keyof IdentityData>(key: K, value: IdentityData[K]) => {
@@ -141,7 +117,7 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
           className="field-select"
         >
           <option value="">Sélectionner...</option>
-          {formationGroups.map((group) => (
+          {FORMATION_GROUPS.map((group) => (
             <optgroup key={group.label} label={group.label}>
               {group.options.map((opt) => (
                 <option key={opt} value={opt}>
@@ -170,7 +146,7 @@ export function StepIdentity({ data, onChange }: StepIdentityProps) {
             className="field-select"
           >
             <option value="">Sélectionner...</option>
-            {annees.map((a) => (
+            {ANNEES_OPTIONS.map((a) => (
               <option key={a} value={a}>
                 {a}
               </option>

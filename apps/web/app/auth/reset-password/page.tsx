@@ -4,6 +4,7 @@ import { CheckCircle2, Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
+import { GA_EVENTS, trackEvent } from '@/lib/analytics';
 import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';
 
@@ -45,6 +46,7 @@ export default function ResetPasswordPage() {
       setError(err.message);
       return;
     }
+    trackEvent(GA_EVENTS.PASSWORD_RESET_COMPLETE);
     setDone(true);
     /* Petit délai pour laisser le succès visible, puis redirect. */
     setTimeout(() => {

@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+
+import { GA_EVENTS, trackEvent } from '@/lib/analytics';
 
 /**
  * Formulaire de contact — envoi server-side via /api/contact (Resend).
@@ -9,6 +11,13 @@ import { useState } from 'react';
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState<string>('');
+  const startedRef = useRef(false);
+
+  function handleFirstInteraction() {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    trackEvent(GA_EVENTS.FORM_START, { form_id: 'contact' });
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -47,6 +56,15 @@ export function ContactForm() {
         throw new Error(body?.error ?? 'network_error');
       }
 
+      trackEvent(GA_EVENTS.FORM_SUBMIT, {
+        form_id: 'contact',
+        profil: payload.profil || 'non_renseigne',
+      });
+      trackEvent(GA_EVENTS.GENERATE_LEAD, {
+        form_id: 'contact',
+        currency: 'EUR',
+        value: 1,
+      });
       setStatus('sent');
       form.reset();
     } catch {
@@ -62,6 +80,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
+      onFocus={handleFirstInteraction}
       className="border-bd bg-cream rounded-2xl border p-8 md:p-9"
       noValidate
     >

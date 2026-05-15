@@ -3,24 +3,12 @@
 import { Eraser, Moon, Sparkles, Sun } from 'lucide-react';
 import * as React from 'react';
 
+import { DAYS, SLOTS } from '@/lib/student-options';
 import { cn } from '@/lib/utils';
 
 /* ------------------------------------------------------------------ */
 /*                        DATA / TYPES                                */
 /* ------------------------------------------------------------------ */
-
-const DAYS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'] as const;
-
-/* Créneaux de 2 heures entre 6h et 20h (7 créneaux). */
-const SLOTS = [
-  { label: '6h – 8h' },
-  { label: '8h – 10h' },
-  { label: '10h – 12h' },
-  { label: '12h – 14h' },
-  { label: '14h – 16h' },
-  { label: '16h – 18h' },
-  { label: '18h – 20h' },
-] as const;
 
 /** Clé d'une cellule : `${dayIdx}-${slotIdx}` (0..6 × 0..6). */
 export type AvailabilityKey = string;

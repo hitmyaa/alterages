@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 
+import { TrackedLink } from '@/components/site/tracked-link';
+
 import { ContactForm } from './_components/contact-form';
 
 export default function HomePage() {
@@ -74,20 +76,24 @@ function HeroSection() {
             Des services d'aide à domicile assurés par des étudiants formés et engagés.
           </p>
 
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <TrackedLink
               href="#contact"
+              ctaLocation="hero"
+              ctaLabel="Je cherche un accompagnement"
               className="bg-terra hover:bg-terra-dark group inline-flex items-center gap-2 rounded-sm px-7 py-3 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
             >
-              Je suis intéressé(e)
+              Je cherche un accompagnement
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
-            <a
-              href="#etudiants"
+            </TrackedLink>
+            <TrackedLink
+              href="/etudiants"
+              ctaLocation="hero"
+              ctaLabel="Devenir étudiant AlterAges"
               className="border-bd text-mid hover:border-terra hover:text-terra inline-flex items-center rounded-sm border px-7 py-3 text-sm transition-colors"
             >
-              Découvrir le projet
-            </a>
+              Devenir étudiant AlterAges
+            </TrackedLink>
           </div>
         </div>
 
@@ -114,7 +120,7 @@ function HeroSection() {
 
 function PrescripteursSection() {
   return (
-    <section id="prescripteurs" className="bg-deep px-6 py-24 text-white md:py-28">
+    <section id="aidants" className="bg-deep px-6 py-24 text-white md:py-28">
       <div className="container">
         <span className="eyebrow-invert">Pour les aidants</span>
         <h2 className="heading-serif max-w-2xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-white">
@@ -151,7 +157,7 @@ function PrescripteursSection() {
 
         <div className="mt-16">
           <span className="tracking-tag text-terra-light mb-4 block text-[0.67rem] font-medium uppercase">
-            Ce que disent les professionnels
+            Ce qu'en disent les professionnels
           </span>
           <div className="grid gap-4 md:grid-cols-3">
             <Testimonial
@@ -167,6 +173,18 @@ function PrescripteursSection() {
               role="Professionnelle du secteur · 10 ans en aide à domicile"
             />
           </div>
+        </div>
+
+        <div className="mt-12 text-center">
+          <TrackedLink
+            href="#contact"
+            ctaLocation="aidants_section"
+            ctaLabel="Demander un premier échange"
+            className="bg-terra hover:bg-terra-dark group inline-flex items-center gap-2 rounded-sm px-7 py-3 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+          >
+            Demander un premier échange
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </TrackedLink>
         </div>
       </div>
     </section>
@@ -234,13 +252,14 @@ function EtudiantsSection() {
     <section id="etudiants" className="bg-cream bg-grain px-6 py-24 md:py-28">
       <div className="container grid gap-16 lg:grid-cols-2 lg:gap-20">
         <div>
-          <span className="eyebrow">Le lien intergénérationnel</span>
+          <span className="eyebrow">Vos futurs intervenants</span>
           <h2 className="heading-serif text-deep max-w-md font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
-            Des étudiants du médico-social, formés et encadrés
+            Des étudiants du médico-social, choisis pour leur engagement
           </h2>
           <p className="text-mid mt-6 max-w-md text-[0.95rem] leading-[1.95]">
-            AlterAges recrute des étudiants du secteur médico-social et social. Nous valorisons
-            autant les expériences terrain que les parcours académiques.
+            Avant chaque mise en relation, nous sélectionnons et formons des étudiants du secteur
+            médico-social et social. Voici ce qui les distingue avant qu'ils n'entrent chez votre
+            proche.
           </p>
 
           <ul className="mt-8 flex flex-col gap-3">
@@ -258,10 +277,17 @@ function EtudiantsSection() {
             </ChecklistItem>
           </ul>
 
-          <a href="/etudiants" className="btn-primary group mt-8">
-            Découvrir le programme étudiant
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
+          <p className="text-light mt-8 text-center text-[0.82rem] leading-[1.6]">
+            Vous êtes étudiant·e et souhaitez nous rejoindre&nbsp;?{' '}
+            <TrackedLink
+              href="/etudiants"
+              ctaLocation="intervenants_section"
+              ctaLabel="Découvrir le programme étudiant"
+              className="text-terra hover:text-terra-dark font-medium underline-offset-4 transition-colors hover:underline"
+            >
+              Découvrir le programme étudiant →
+            </TrackedLink>
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-3 self-start lg:mt-[10.5rem]">
@@ -374,7 +400,7 @@ function SuiviSection() {
       <div className="container">
         <span className="eyebrow">Le parcours client</span>
         <h2 className="heading-serif text-deep max-w-3xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
-          De l'orientation à l'intervention, un seul fil conducteur
+          De votre première demande à la première intervention, un seul fil conducteur
         </h2>
         <p className="text-mid mt-4 text-[0.95rem] leading-[1.8]">
           Un interlocuteur unique, joignable, qui connaît le dossier. De la première prise de
@@ -560,7 +586,7 @@ function TarifSection() {
             />
             <InfoCard
               title="Forfait de gestion mensuel"
-              description="Un montant fixe couvrant sélection, contrats, CESU, bulletins de salaire, suivi et remplacements. Communiqué au lancement en septembre 2026."
+              description="Un montant fixe couvrant sélection, contrats, CESU, bulletins de salaire, suivi et remplacements. Communiqué dès l'ouverture des inscriptions, en septembre 2026 — laissez-nous votre email pour être prévenu·e en avant-première."
             />
             <div className="bg-deep flex items-center gap-5 rounded-xl px-6 py-5 text-white">
               <div className="text-terra-light font-sans text-[2.75rem] font-bold tabular-nums leading-none tracking-tight">
@@ -573,6 +599,18 @@ function TarifSection() {
             </div>
           </div>
         </div>
+
+        <p className="text-light mt-10 text-center text-[0.82rem] leading-[1.6]">
+          Vous êtes étudiant·e ?{' '}
+          <TrackedLink
+            href="/etudiants#pourquoi"
+            ctaLocation="tarif_section"
+            ctaLabel="Voir la rémunération étudiante"
+            className="text-terra hover:text-terra-dark font-medium underline-offset-4 transition-colors hover:underline"
+          >
+            Voir la rémunération étudiante →
+          </TrackedLink>
+        </p>
       </div>
     </section>
   );
@@ -596,7 +634,7 @@ function ContactSection() {
         <div>
           <span className="eyebrow">Contact</span>
           <h2 className="heading-serif text-deep font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
-            Parlons du projet
+            Parlons de votre besoin
           </h2>
 
           <div className="bg-deep mt-7 flex items-start gap-5 rounded-xl px-6 py-5">

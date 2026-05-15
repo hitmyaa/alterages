@@ -3,6 +3,7 @@
 import { ArrowRight } from 'lucide-react';
 import * as React from 'react';
 
+import { GA_EVENTS, trackEvent } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
 
 import { useAuthModal } from './auth-modal-provider';
@@ -32,6 +33,10 @@ export interface InterestButtonProps {
   /** Affiche une flèche après le label (active uniquement sur les variantes avec `group`). */
   withArrow?: boolean;
   className?: string;
+  /** Identifiant de l'emplacement du bouton dans la page (ex: `hero`,
+   *  `pourquoi`, `formation`, `parcours`, `final`, `nav`). Remonté à GA4
+   *  pour mesurer quel CTA convertit le mieux. */
+  location?: string;
 }
 
 /**
@@ -44,12 +49,22 @@ export function InterestButton({
   label = 'Je suis intéressé(e)',
   withArrow = true,
   className,
+  location,
 }: InterestButtonProps) {
   const { open } = useAuthModal();
   const showArrow = withArrow && variant !== 'nav' && variant !== 'nav-short';
 
+  const handleClick = () => {
+    trackEvent(GA_EVENTS.CTA_CLICK, {
+      cta_label: label,
+      cta_location: location ?? 'unknown',
+      cta_type: 'interest',
+    });
+    open();
+  };
+
   return (
-    <button type="button" onClick={open} className={cn(variantClasses[variant], className)}>
+    <button type="button" onClick={handleClick} className={cn(variantClasses[variant], className)}>
       {label}
       {showArrow ? (
         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

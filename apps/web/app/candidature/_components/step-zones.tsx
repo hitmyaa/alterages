@@ -3,50 +3,14 @@
 import { MapPin } from 'lucide-react';
 import * as React from 'react';
 
+import {
+  ALL_ZONES,
+  ARRONDISSEMENTS,
+  COMMUNES,
+  TRANSPORT_OPTIONS,
+  type Zone,
+} from '@/lib/student-options';
 import { cn } from '@/lib/utils';
-
-/* ------------------------------------------------------------------ */
-/*                       DATA — zones                                  */
-/* ------------------------------------------------------------------ */
-
-interface Zone {
-  id: string;
-  label: string;
-}
-
-const ARRONDISSEMENTS: ReadonlyArray<Zone> = [
-  { id: 'lyon-1', label: 'Lyon 1er' },
-  { id: 'lyon-2', label: 'Lyon 2e' },
-  { id: 'lyon-3', label: 'Lyon 3e' },
-  { id: 'lyon-4', label: 'Lyon 4e' },
-  { id: 'lyon-5', label: 'Lyon 5e' },
-  { id: 'lyon-6', label: 'Lyon 6e' },
-  { id: 'lyon-7', label: 'Lyon 7e' },
-  { id: 'lyon-8', label: 'Lyon 8e' },
-  { id: 'lyon-9', label: 'Lyon 9e' },
-];
-
-const COMMUNES: ReadonlyArray<Zone> = [
-  { id: 'villeurbanne', label: 'Villeurbanne' },
-  { id: 'caluire', label: 'Caluire-et-Cuire' },
-  { id: 'bron', label: 'Bron' },
-  { id: 'venissieux', label: 'Vénissieux' },
-  { id: 'saint-fons', label: 'Saint-Fons' },
-  { id: 'decines', label: 'Décines' },
-  { id: 'vaulx-en-velin', label: 'Vaulx-en-Velin' },
-  { id: 'oullins', label: 'Oullins' },
-  { id: 'sainte-foy', label: 'Sainte-Foy-lès-Lyon' },
-  { id: 'ecully', label: 'Écully' },
-];
-
-const ALL_ZONES = [...ARRONDISSEMENTS, ...COMMUNES];
-
-const TRANSPORT_OPTIONS = [
-  'Transports en commun',
-  'Vélo / trottinette',
-  'Voiture personnelle',
-  'Plusieurs modes',
-] as const;
 
 /* ------------------------------------------------------------------ */
 /*                         PROPS                                       */
