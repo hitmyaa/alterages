@@ -258,10 +258,7 @@ function EtudiantsSection() {
             </ChecklistItem>
           </ul>
 
-          <a
-            href="/etudiants"
-            className="text-terra hover:text-terra-dark group mt-8 inline-flex items-center gap-2 text-sm font-medium transition-colors"
-          >
+          <a href="/etudiants" className="btn-primary group mt-8">
             Découvrir le programme étudiant
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </a>

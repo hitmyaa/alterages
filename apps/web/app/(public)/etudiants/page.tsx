@@ -7,6 +7,7 @@ import {
   PenLine,
   Phone,
   ShieldCheck,
+  Wallet,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -17,7 +18,6 @@ import {
   FormationModule,
   Halo,
   MissionCard,
-  PlaceholderImage,
   Section,
   SectionHeader,
   StepsTimeline,
@@ -172,6 +172,92 @@ const parcours = [
 ] as const;
 
 /* ------------------------------------------------------------------ */
+/*                      MOCKUP ESPACE ÉTUDIANT                         */
+/* ------------------------------------------------------------------ */
+
+function DashboardMockup() {
+  const upcoming = [
+    { date: 'Mar. 19', time: '14h–17h', name: 'Mme Lefèvre', area: 'Lyon 3', tag: 'Compagnie' },
+    { date: 'Jeu. 21', time: '10h–12h', name: 'M. Bouchard', area: 'Villeurbanne', tag: 'Repas' },
+    { date: 'Sam. 23', time: '15h–18h', name: 'Mme Diallo', area: 'Lyon 7', tag: 'Numérique' },
+  ];
+
+  const months = [
+    { label: 'Févr.', height: 38 },
+    { label: 'Mars', height: 56 },
+    { label: 'Avril', height: 48 },
+    { label: 'Mai', height: 82, active: true },
+  ];
+
+  return (
+    <div className="flex flex-col gap-3">
+      {/* Planning */}
+      <article className="ring-bd/60 rounded-xl bg-white p-5 shadow-[0_20px_50px_-25px_rgba(61,48,32,0.25)] ring-1">
+        <header className="flex items-center justify-between">
+          <span className="eyebrow !mb-0">Planning · mai 2026</span>
+          <CalendarCheck2 className="text-terra h-4 w-4" />
+        </header>
+        <h4 className="heading-serif text-deep mt-3 text-[1rem] leading-tight">
+          Vos prochaines missions
+        </h4>
+        <ul className="divide-bd-light/70 mt-3 divide-y">
+          {upcoming.map((m) => (
+            <li
+              key={m.date}
+              className="flex items-center justify-between gap-3 py-2.5 text-[0.78rem]"
+            >
+              <div className="min-w-0">
+                <div className="text-deep font-medium">
+                  {m.date} · {m.time}
+                </div>
+                <div className="text-mid truncate text-[0.72rem]">
+                  {m.name} · {m.area}
+                </div>
+              </div>
+              <span className="bg-sage/15 text-sage shrink-0 rounded-full px-2 py-0.5 text-[0.62rem] font-medium">
+                {m.tag}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      {/* Revenus */}
+      <article className="ring-bd/60 rounded-xl bg-white p-5 shadow-[0_20px_50px_-25px_rgba(61,48,32,0.25)] ring-1">
+        <header className="flex items-center justify-between">
+          <span className="eyebrow !mb-0">Revenus · ce mois-ci</span>
+          <Wallet className="text-terra h-4 w-4" />
+        </header>
+        <div className="mt-3 flex items-baseline gap-2">
+          <span className="text-deep font-sans text-[1.65rem] font-medium leading-none">347€</span>
+          <span className="text-mid text-[0.72rem]">net · 23h travaillées</span>
+        </div>
+        <div className="mt-4 flex h-14 items-end gap-2">
+          {months.map((m) => (
+            <div
+              key={m.label}
+              className={`flex-1 rounded-sm ${m.active ? 'bg-terra' : 'bg-terra/25'}`}
+              style={{ height: `${m.height}%` }}
+            />
+          ))}
+        </div>
+        <div className="mt-1.5 flex gap-2 text-[0.62rem]">
+          {months.map((m) => (
+            <span
+              key={m.label}
+              className={`flex-1 text-center ${m.active ? 'text-terra font-medium' : 'text-light'}`}
+            >
+              {m.label}
+            </span>
+          ))}
+        </div>
+      </article>
+
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*                              PAGE                                   */
 /* ------------------------------------------------------------------ */
 
@@ -281,7 +367,7 @@ export default function EtudiantsPage() {
               centralisé dans un espace pensé pour les étudiants.
             </p>
             <div className="mt-6">
-              <PlaceholderImage aspectRatio="4/5" label="Mockup espace étudiant — à venir" />
+              <DashboardMockup />
             </div>
           </div>
         </div>
@@ -309,7 +395,7 @@ export default function EtudiantsPage() {
         </div>
 
         <div className="mt-10 flex flex-col gap-3">
-          {formationModules.map((m, idx) => (
+          {formationModules.map((m) => (
             <FormationModule
               key={m.badge}
               badge={m.badge}
@@ -318,7 +404,6 @@ export default function EtudiantsPage() {
               points={m.points}
               note={m.note}
               groupName="formation"
-              defaultOpen={idx === 0}
             />
           ))}
           <FormationModule
@@ -393,7 +478,6 @@ export default function EtudiantsPage() {
                 <AccordionItem
                   groupName="faq-etudiants"
                   question="Puis-je candidater avec peu de disponibilités ?"
-                  defaultOpen
                 >
                   Oui. AlterAges ne vous impose pas de nombre d’heures minimum. En revanche, plus
                   vous êtes disponible, plus vous serez contacté rapidement pour une mission.
