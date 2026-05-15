@@ -55,10 +55,7 @@ export function PublicHeader() {
         </Link>
 
         <div className="hidden items-center gap-6 md:flex lg:gap-8">
-          <nav
-            aria-label="Navigation principale"
-            className="hidden items-center gap-8 lg:flex"
-          >
+          <nav aria-label="Navigation principale" className="hidden items-center gap-8 lg:flex">
             {navItems.map((item) => (
               <Link
                 key={item.href}
