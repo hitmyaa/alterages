@@ -13,7 +13,7 @@ const landingNav: ReadonlyArray<NavItem> = [
   { href: '/#aidants', label: 'Aidants' },
   { href: '/#etudiants', label: 'Intervenants' },
   { href: '/#suivi', label: 'Suivi' },
-  { href: '/#tarif', label: 'Tarification' },
+  { href: '/#pourquoi', label: 'Pourquoi AlterAges' },
 ];
 
 /* Liens contextuels lorsqu'on est sur la page dédiée aux étudiants —
@@ -54,28 +54,33 @@ export function PublicHeader() {
           </span>
         </Link>
 
-        <nav aria-label="Navigation principale" className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-mid hover:text-terra text-[0.78rem] uppercase tracking-[0.07em] transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div className="hidden items-center gap-6 md:flex lg:gap-8">
+          <nav
+            aria-label="Navigation principale"
+            className="hidden items-center gap-8 lg:flex"
+          >
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-mid hover:text-terra text-[0.78rem] uppercase tracking-[0.07em] transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
           <div className="flex items-center gap-2">
             {isEtudiants ? null : (
               <Link
                 href="/etudiants"
-                className="bg-terra hover:bg-terra-dark rounded-sm px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors"
+                className="bg-terra hover:bg-terra-dark whitespace-nowrap rounded-sm px-[1.1rem] py-[0.4rem] text-[0.78rem] uppercase tracking-[0.07em] text-white transition-colors"
               >
                 Vous êtes étudiant ?
               </Link>
             )}
             <InterestButton variant="nav" label="Se connecter" location="header" />
           </div>
-        </nav>
+        </div>
 
         <InterestButton variant="nav-short" label="Se connecter" location="header_mobile" />
       </div>
