@@ -13,6 +13,7 @@
   "dependencies": {
     "@alterages/shared": "workspace:*",
     "@alterages/tailwind-config": "workspace:*",
+    "@next/third-parties": "^14.2.15",
     "@radix-ui/react-slot": "^1.1.0",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.45.6",

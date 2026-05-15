@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { DM_Sans, Playfair_Display } from 'next/font/google';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 import './globals.css';
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -105,6 +108,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-background text-foreground min-h-screen font-sans font-light leading-relaxed antialiased">
         {children}
       </body>
+      {GA_ID ? <GoogleAnalytics gaId={GA_ID} /> : null}
     </html>
   );
 }
