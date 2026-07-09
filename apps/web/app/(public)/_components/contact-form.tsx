@@ -109,7 +109,7 @@ export function ContactForm() {
           defaultValue=""
           className="border-bd bg-warm text-deep focus:border-terra w-full appearance-none rounded-[5px] border px-[0.95rem] py-3 text-[0.87rem] outline-none transition-colors"
         >
-          <option value="">— Sélectionnez —</option>
+          <option value="">Sélectionnez…</option>
           <option>Famille / Proche aidant</option>
           <option>Prescripteur (SSIAD, CLIC, AS…)</option>
           <option>Bénéficiaire</option>

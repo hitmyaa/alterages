@@ -84,9 +84,7 @@ export default function TarifsPage() {
             </p>
 
             <div className="mt-7">
-              <p className="text-light text-[0.85rem]">
-                <span className="line-through">69 €</span> avant crédit d’impôt
-              </p>
+              <p className="text-light text-[0.85rem]">69 € avant crédit d’impôt</p>
               <p className="mt-1 flex items-baseline gap-2">
                 <span className="text-terra font-sans text-[3rem] font-bold leading-none tracking-tight">
                   34,50 €
@@ -98,6 +96,18 @@ export default function TarifsPage() {
               </span>
             </div>
           </div>
+        </div>
+
+        <div className="mt-10 flex flex-col items-center gap-2 text-center">
+          <TrackedLink
+            href="/#contact"
+            ctaLocation="tarifs_intro"
+            ctaLabel="Demander un premier échange"
+            className="bg-terra hover:bg-terra-dark inline-flex items-center justify-center rounded-sm px-8 py-3.5 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+          >
+            Demander un premier échange
+          </TrackedLink>
+          <p className="text-light text-[0.82rem]">Réponse sous 24h. Sans engagement.</p>
         </div>
       </Section>
 
@@ -137,7 +147,7 @@ export default function TarifsPage() {
               autre professionnel partenaire d’AlterAges, votre mois découverte est gratuit.
             </p>
           </div>
-          <div className="text-center md:text-right">
+          <div className="text-center md:pr-8 md:text-right">
             <span className="font-sans text-[4rem] font-bold leading-none tracking-tight text-white">
               0 €
             </span>
@@ -201,21 +211,6 @@ export default function TarifsPage() {
           </Accordion>
         </div>
       </Section>
-
-      {/* CTA final */}
-      <section className="bg-deep px-6 py-20 text-center text-white md:py-24">
-        <div className="container flex flex-col items-center">
-          <TrackedLink
-            href="/#contact"
-            ctaLocation="tarifs_cta"
-            ctaLabel="Demander un premier échange"
-            className="bg-terra hover:bg-terra-dark inline-flex items-center justify-center rounded-sm px-8 py-3.5 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-          >
-            Demander un premier échange
-          </TrackedLink>
-          <p className="mt-4 text-[0.85rem] text-white/60">Réponse sous 24h. Sans engagement.</p>
-        </div>
-      </section>
     </>
   );
 }

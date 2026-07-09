@@ -5,7 +5,7 @@ import { LegalLayout, LegalSection } from '../_components/legal';
 export const metadata: Metadata = {
   title: 'Mentions légales',
   description:
-    "Mentions légales du site alter-ages.fr — éditeur, hébergeur, activité de services à la personne et informations juridiques d'AlterAges.",
+    "Mentions légales du site alter-ages.fr : éditeur, hébergeur, activité de services à la personne et informations juridiques d'AlterAges.",
 };
 
 export default function MentionsLegalesPage() {
@@ -16,7 +16,7 @@ export default function MentionsLegalesPage() {
           AlterAges, association déclarée régie par la loi du 1<sup>er</sup> juillet 1901.
         </p>
         <p>
-          Siège social : 26 rue Lalande — 69006 Lyon
+          Siège social : 26 rue Lalande, 69006 Lyon
           <br />
           RNA : W691112992
           <br />
@@ -42,7 +42,7 @@ export default function MentionsLegalesPage() {
         <p>
           OVH SAS
           <br />
-          2 rue Kellermann — 59100 Roubaix — France
+          2 rue Kellermann, 59100 Roubaix, France
           <br />
           Téléphone : 1007
           <br />
@@ -58,7 +58,7 @@ export default function MentionsLegalesPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="Activité — Services à la personne">
+      <LegalSection title="Activité : services à la personne">
         <p>
           AlterAges est un organisme de services à la personne déclaré auprès de la Direction
           Départementale de l’Emploi, du Travail et des Solidarités (DDETS) du Rhône.
@@ -105,7 +105,7 @@ export default function MentionsLegalesPage() {
       </LegalSection>
 
       <LegalSection title="Crédits">
-        <p>Photographies : illustrations générées par intelligence artificielle — usage libre.</p>
+        <p>Photographies : illustrations générées par intelligence artificielle, usage libre.</p>
       </LegalSection>
     </LegalLayout>
   );

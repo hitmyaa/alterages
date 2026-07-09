@@ -46,7 +46,7 @@ export function CTABand({
         <strong className={cn('font-medium', invert ? 'text-white' : 'text-white')}>{title}</strong>
         {description ? (
           <>
-            <span className={cn('mx-2', invert ? 'text-white/30' : 'text-white/50')}>—</span>
+            <span className={cn('mx-2', invert ? 'text-white/30' : 'text-white/50')}>·</span>
             {description}
           </>
         ) : null}

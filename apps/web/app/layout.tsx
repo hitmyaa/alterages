@@ -26,7 +26,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
 
 export const metadata: Metadata = {
   title: {
-    default: 'AlterAges — Quand la jeunesse prend soin de la sagesse',
+    default: 'AlterAges : quand la jeunesse prend soin de la sagesse',
     template: '%s · AlterAges',
   },
   description:
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
     locale: 'fr_FR',
     url: '/',
     siteName: 'AlterAges',
-    title: 'AlterAges — Quand la jeunesse prend soin de la sagesse',
+    title: 'AlterAges : quand la jeunesse prend soin de la sagesse',
     description:
       'Aide à domicile à Lyon assurée par des étudiants du médico-social, formés et engagés. Éligible au crédit d’impôt de 50 %.',
     images: [
@@ -85,13 +85,13 @@ export const metadata: Metadata = {
         url: '/images/image-principale.png',
         width: 1200,
         height: 630,
-        alt: 'AlterAges — accompagnement à domicile par des étudiants formés',
+        alt: 'AlterAges : accompagnement à domicile par des étudiants formés',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AlterAges — Quand la jeunesse prend soin de la sagesse',
+    title: 'AlterAges : quand la jeunesse prend soin de la sagesse',
     description:
       'Aide à domicile à Lyon assurée par des étudiants du médico-social, formés et engagés.',
     images: ['/images/image-principale.png'],

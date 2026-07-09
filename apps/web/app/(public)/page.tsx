@@ -3,7 +3,6 @@ import {
   CalendarCheck2,
   CheckCircle2,
   FileCheck2,
-  HeartHandshake,
   Home,
   Linkedin,
   type LucideIcon,
@@ -12,12 +11,13 @@ import {
   Phone,
   Quote,
   Search,
-  UserCheck,
   X,
 } from 'lucide-react';
 import Image from 'next/image';
 
+import { MissionCard } from '@/components/blocks';
 import { TrackedLink } from '@/components/site/tracked-link';
+import { missions } from '@/lib/missions';
 
 import { ContactForm } from './_components/contact-form';
 
@@ -25,10 +25,12 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <ServicesSection />
       <PrescripteursSection />
       <EtudiantsSection />
-      <SuiviSection />
       <TarifSection />
+      <PricingSection />
+      <TestimonialsSection />
       <ContactSection />
     </>
   );
@@ -104,7 +106,7 @@ function HeroSection() {
           <div className="ring-bd/60 relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl shadow-[0_30px_80px_-20px_rgba(61,48,32,0.25)] ring-1">
             <Image
               src="/images/image-principale.png"
-              alt="Accompagnement intergénérationnel AlterAges — une jeune étudiante et une personne âgée"
+              alt="Accompagnement intergénérationnel AlterAges : une jeune étudiante et une personne âgée"
               fill
               priority
               sizes="(min-width: 1024px) 45vw, 100vw"
@@ -117,67 +119,100 @@ function HeroSection() {
   );
 }
 
+/* ---------------------------------------------------------- SERVICES */
+
+function ServicesSection() {
+  return (
+    <section id="services" className="bg-deep px-6 py-24 text-white md:py-28">
+      <div className="container">
+        <span className="eyebrow-invert">Nos services</span>
+        <h2 className="heading-serif max-w-2xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-white">
+          Ce que fait AlterAges, concrètement
+        </h2>
+        <p className="mt-4 max-w-2xl text-[0.95rem] leading-[1.8] text-white/65">
+          Des interventions du quotidien, assurées par des étudiants formés et sélectionnés, dans un
+          cadre non médicalisé.
+        </p>
+
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          {missions.map((m) => (
+            <MissionCard
+              key={m.title}
+              title={m.title}
+              description={m.description}
+              image={m.image}
+              imageAlt={m.imageAlt}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------------------------------------------------- PRESCRIPTEURS */
+
+const vousItems = [
+  'Vous nous recevez pour la visite à domicile',
+  'Vous choisissez votre intervenant',
+  'Vous signez et restez décideur à chaque étape',
+] as const;
+
+const nousItems = [
+  "Sélection, présentation et cadrage de l'intervenant",
+  'Contrats, déclarations URSSAF, mise en place du CESU',
+  'Coordination, remplacements et suivi au quotidien',
+  'Aides, attestations fiscales et démarches associées',
+] as const;
 
 function PrescripteursSection() {
   return (
-    <section id="aidants" className="bg-deep px-6 py-24 text-white md:py-28">
+    <section id="aidants" className="bg-warm px-6 py-24 md:py-28">
       <div className="container">
-        <span className="eyebrow-invert">Pour les aidants</span>
-        <h2 className="heading-serif max-w-2xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-white">
+        <span className="eyebrow">Pour les aidants</span>
+        <h2 className="heading-serif text-deep max-w-2xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
           L'employeur, c'est vous.
           <br />
           L'administratif, c'est nous.
         </h2>
-        <p className="mt-4 max-w-xl text-[0.95rem] leading-[1.9] text-white/65">
+        <p className="text-mid mt-4 max-w-xl text-[0.95rem] leading-[1.9]">
           Vous restez décideur. Nous prenons en charge la construction du dossier, la coordination
-          et le suivi — avec vous, à chaque étape.
+          et le suivi, avec vous, à chaque étape.
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
-          <GestionCard
-            icon={FileCheck2}
-            title="Le dossier initial, ensemble"
-            description="Nous vous accompagnons dans la constitution du dossier de la personne aidée : contrat de travail de l'intervenant, déclaration URSSAF, mise en place du CESU. Vous signez, nous préparons."
-          />
-          <GestionCard
-            icon={UserCheck}
-            title="Le lien avec l'intervenant"
-            description="Sélection du profil, présentation, cadrage des interventions, planning. Vous choisissez l'intervenant. Nous gérons le reste."
-          />
-          <GestionCard
-            icon={CalendarCheck2}
-            title="Le suivi au quotidien"
-            description="Coordination des interventions, gestion des remplacements, planning en ligne, messagerie directe avec Faustine. Une interlocutrice unique, joignable, présente."
-          />
-          <GestionCard
-            icon={HeartHandshake}
-            title="Les démarches associées"
-            description="Orientation vers les aides existantes, préparation des attestations fiscales. Nous vous guidons dans les démarches administratives liées au maintien à domicile."
-          />
+          <RoleColumn badge="L'employeur, c'est vous" accent="terra" items={vousItems} />
+          <RoleColumn badge="L'administratif, c'est nous" accent="sage" items={nousItems} />
         </div>
 
         <div className="mt-16">
-          <span className="tracking-tag text-terra-light mb-4 block text-[0.67rem] font-medium uppercase">
-            Ce qu'en disent les professionnels
-          </span>
-          <div className="grid gap-4 md:grid-cols-3">
-            <Testimonial
-              quote="C'est sécurisant. Le fait d'avoir un interlocuteur principal permet de lever la crainte des bénéficiaires de faire entrer quelqu'un chez eux."
-              role="Médecin généraliste · Lyon 6e"
+          <ol className="relative grid gap-10 md:grid-cols-5 md:gap-0">
+            <div
+              aria-hidden
+              className="absolute left-8 right-8 top-6 hidden h-px md:block"
+              style={{
+                background: 'linear-gradient(to right, #B85C2C, #5C7A62)',
+              }}
             />
-            <Testimonial
-              quote="Faustine m'a accompagné comme auxiliaire de vie pendant sept ans. Sa compétence, son efficacité et son énergie m'ont convaincu qu'elle a toutes les capacités pour mener ce projet à terme. Je soutiens inconditionnellement AlterAges."
-              role="Docteur Ingénieur CNRS en retraite · Lyon 2e"
-            />
-            <Testimonial
-              quote="Le modèle mandataire, c'est fait pour durer. Les familles savent à qui s'adresser, les bénéficiaires ont un interlocuteur de confiance. C'est ça qui crée une vraie relation dans le temps."
-              role="Professionnelle du secteur · 10 ans en aide à domicile"
-            />
-          </div>
+            {steps.map(({ icon: Icon, title, description }, idx) => (
+              <li
+                key={title}
+                className="group relative flex flex-col items-center text-center md:px-3"
+              >
+                <div className="border-terra bg-warm text-terra group-hover:bg-terra relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] font-sans text-base font-semibold tabular-nums transition-all group-hover:text-white">
+                  <span className="group-hover:hidden">{idx + 1}</span>
+                  <Icon className="hidden h-5 w-5 group-hover:block" aria-hidden />
+                </div>
+                <h4 className="text-deep mt-4 font-serif text-[0.95rem]">{title}</h4>
+                <p className="text-mid mt-1 max-w-[200px] text-[0.78rem] leading-[1.55]">
+                  {description}
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-14 text-center">
           <TrackedLink
             href="#contact"
             ctaLocation="aidants_section"
@@ -193,36 +228,72 @@ function PrescripteursSection() {
   );
 }
 
-function GestionCard({
-  icon: Icon,
-  title,
-  description,
+function RoleColumn({
+  badge,
+  accent,
+  items,
 }: {
-  icon: LucideIcon;
-  title: string;
-  description: string;
+  badge: string;
+  accent: 'terra' | 'sage';
+  items: readonly string[];
 }) {
+  const badgeClass = accent === 'terra' ? 'text-terra border-terra' : 'text-sage border-sage';
+  const iconClass = accent === 'terra' ? 'text-terra' : 'text-sage';
   return (
-    <article className="flex flex-col rounded-xl border border-white/10 bg-white/[0.04] p-6 transition-transform hover:-translate-y-1">
-      <div className="bg-terra/15 text-terra-light mb-4 flex h-11 w-11 items-center justify-center rounded-lg">
-        <Icon className="h-5 w-5" aria-hidden />
+    <div className="border-bd bg-cream rounded-xl border p-6">
+      <span
+        className={`inline-block rounded-full border px-3.5 py-1 text-[0.72rem] font-medium ${badgeClass}`}
+      >
+        {badge}
+      </span>
+      <ul className="mt-5 flex flex-col gap-3">
+        {items.map((it) => (
+          <li key={it} className="text-mid flex items-start gap-2.5 text-[0.88rem] leading-[1.6]">
+            <CheckCircle2 className={`mt-0.5 h-4 w-4 shrink-0 ${iconClass}`} aria-hidden />
+            <span>{it}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function TestimonialsSection() {
+  return (
+    <section id="temoignages" className="bg-cream bg-grain px-6 py-24 md:py-28">
+      <div className="container">
+        <span className="eyebrow">Ce qu'en disent les professionnels</span>
+        <h2 className="heading-serif text-deep max-w-2xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
+          Témoignages
+        </h2>
+
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          <Testimonial
+            quote="C'est sécurisant. Le fait d'avoir un interlocuteur principal permet de lever la crainte des bénéficiaires de faire entrer quelqu'un chez eux."
+            role="Médecin généraliste · Lyon 6e"
+          />
+          <Testimonial
+            quote="Faustine m'a accompagné comme auxiliaire de vie pendant sept ans. Sa compétence, son efficacité et son énergie m'ont convaincu qu'elle a toutes les capacités pour mener ce projet à terme. Je soutiens inconditionnellement AlterAges."
+            role="Docteur Ingénieur CNRS en retraite · Lyon 2e"
+          />
+          <Testimonial
+            quote="Le modèle mandataire, c'est fait pour durer. Les familles savent à qui s'adresser, les bénéficiaires ont un interlocuteur de confiance. C'est ça qui crée une vraie relation dans le temps."
+            role="Professionnelle du secteur · 10 ans en aide à domicile"
+          />
+        </div>
       </div>
-      <h3 className="font-serif text-lg text-white">{title}</h3>
-      <p className="mt-2 text-[0.85rem] leading-[1.75] text-white/70">{description}</p>
-    </article>
+    </section>
   );
 }
 
 function Testimonial({ quote, role, meta }: { quote: string; role: string; meta?: string }) {
   return (
-    <article className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-6">
-      <Quote className="text-terra-light h-5 w-5" aria-hidden />
-      <p className="mt-4 text-[0.88rem] italic leading-[1.8] text-white/75">
-        &laquo; {quote} &raquo;
-      </p>
-      <div className="mt-4 border-t border-white/[0.08] pt-3 text-[0.74rem] tracking-wide">
-        <strong className="block font-medium text-white/55">{role}</strong>
-        {meta ? <span className="text-white/35">{meta}</span> : null}
+    <article className="border-bd bg-warm rounded-xl border p-6">
+      <Quote className="text-terra h-5 w-5" aria-hidden />
+      <p className="text-mid mt-4 text-[0.88rem] italic leading-[1.8]">&laquo; {quote} &raquo;</p>
+      <div className="border-bd mt-4 border-t pt-3 text-[0.74rem] tracking-wide">
+        <strong className="text-deep block font-medium">{role}</strong>
+        {meta ? <span className="text-light">{meta}</span> : null}
       </div>
     </article>
   );
@@ -377,48 +448,6 @@ const steps = [
   },
 ] as const;
 
-function SuiviSection() {
-  return (
-    <section id="suivi" className="bg-warm px-6 py-24 md:py-28">
-      <div className="container">
-        <span className="eyebrow">Le parcours client</span>
-        <h2 className="heading-serif text-deep max-w-3xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
-          De votre première demande à la première intervention, un seul fil conducteur
-        </h2>
-        <p className="text-mid mt-4 text-[0.95rem] leading-[1.8]">
-          Un interlocuteur unique, joignable, qui connaît le dossier. De la première prise de
-          contact au suivi mensuel.
-        </p>
-
-        <ol className="relative mt-16 grid gap-10 md:grid-cols-5 md:gap-0">
-          <div
-            aria-hidden
-            className="absolute left-8 right-8 top-6 hidden h-px md:block"
-            style={{
-              background: 'linear-gradient(to right, #B85C2C, #5C7A62)',
-            }}
-          />
-          {steps.map(({ icon: Icon, title, description }, idx) => (
-            <li
-              key={title}
-              className="group relative flex flex-col items-center text-center md:px-3"
-            >
-              <div className="border-terra bg-warm text-terra group-hover:bg-terra relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] font-sans text-base font-semibold tabular-nums transition-all group-hover:text-white">
-                <span className="group-hover:hidden">{idx + 1}</span>
-                <Icon className="hidden h-5 w-5 group-hover:block" aria-hidden />
-              </div>
-              <h3 className="text-deep mt-4 font-serif text-[0.95rem]">{title}</h3>
-              <p className="text-mid mt-1 max-w-[200px] text-[0.78rem] leading-[1.55]">
-                {description}
-              </p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-}
-
 /* ---------------------------------------------------------- TARIF */
 
 const comparisonRows = [
@@ -471,7 +500,7 @@ const comparisonRows = [
 
 function TarifSection() {
   return (
-    <section id="pourquoi" className="bg-cream bg-grain px-6 py-24 md:py-28">
+    <section id="pourquoi" className="bg-warm px-6 py-24 md:py-28">
       <div className="container">
         <span className="eyebrow">Pourquoi AlterAges</span>
         <h2 className="heading-serif text-deep max-w-3xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1]">
@@ -605,6 +634,74 @@ function InfoCard({ title, description }: { title: string; description: string }
       <h4 className="text-deep font-serif text-[0.98rem]">{title}</h4>
       <p className="text-mid mt-1.5 text-[0.83rem] leading-[1.8]">{description}</p>
     </div>
+  );
+}
+
+/* ---------------------------------------------------------- PRICING */
+
+const pricingPrestations = [
+  "Sélection et présentation de l'intervenant",
+  'Rédaction des contrats et démarches CESU',
+  'Planning, remplacements et suivi au quotidien',
+  'Messagerie directe avec Faustine',
+  'Accompagnement des démarches administratives',
+] as const;
+
+function PricingSection() {
+  return (
+    <section id="tarifs" className="bg-deep px-6 py-24 text-white md:py-28">
+      <div className="container">
+        <span className="eyebrow-invert">Tarifs</span>
+        <h2 className="heading-serif max-w-2xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-white">
+          Un forfait unique, tout compris
+        </h2>
+        <p className="mt-4 max-w-2xl text-[0.95rem] leading-[1.8] text-white/65">
+          Vous rémunérez directement l'intervenant en CESU. AlterAges facture un seul forfait
+          mensuel qui couvre toute la gestion administrative de la relation.
+        </p>
+
+        <div className="mt-10 grid items-center gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-14">
+          {/* Carte prix */}
+          <div className="border-bd bg-cream rounded-2xl border p-8 text-center">
+            <p className="text-light text-[0.85rem]">69 € avant crédit d'impôt</p>
+            <p className="mt-1 flex items-baseline justify-center gap-1.5">
+              <span className="text-terra font-sans text-[3rem] font-bold leading-none tracking-tight">
+                34,50 €
+              </span>
+              <span className="text-mid text-[0.9rem]">/ mois</span>
+            </p>
+            <span className="bg-sage-light/25 text-sage mt-4 inline-block rounded-full px-3.5 py-1 text-[0.72rem] font-medium tracking-wide">
+              50 % de crédit d'impôt appliqué
+            </span>
+            <p className="text-mid mt-4 text-[0.85rem] leading-[1.7]">
+              Premier mois découverte à 19 €, sans engagement.
+            </p>
+          </div>
+
+          {/* Résumé des prestations */}
+          <div>
+            <ul className="flex flex-col gap-2.5">
+              {pricingPrestations.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-[0.9rem] text-white/80">
+                  <CheckCircle2 className="text-terra-light mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-8 text-[0.9rem]">
+              <TrackedLink
+                href="/tarifs"
+                ctaLocation="pricing_section"
+                ctaLabel="En savoir plus sur les tarifs"
+                className="text-terra-light font-medium underline-offset-4 transition-colors hover:text-white hover:underline"
+              >
+                En savoir plus →
+              </TrackedLink>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
