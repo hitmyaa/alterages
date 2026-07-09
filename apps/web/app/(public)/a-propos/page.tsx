@@ -309,7 +309,7 @@ function CadreLegalSection() {
           <LegalFact
             term="Statut"
             value="Association loi 1901 déclarée"
-            detail="Préfecture du Rhône — RNA W691112992"
+            detail="Préfecture du Rhône · RNA W691112992"
           />
           <LegalFact
             term="Immatriculation"
@@ -319,7 +319,7 @@ function CadreLegalSection() {
           <LegalFact
             term="Services à la personne"
             value="Organisme déclaré"
-            detail="DDETS du Rhône — N° SAP106758006"
+            detail="DDETS du Rhône · N° SAP106758006"
           />
           <LegalFact
             term="Avantage fiscal"
@@ -331,7 +331,7 @@ function CadreLegalSection() {
         <div className="flex flex-col items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-8 text-center">
           <Image
             src="/images/sap-declaration.jpg"
-            alt="Organisme déclaré services à la personne — DDETS du Rhône"
+            alt="Organisme déclaré services à la personne, DDETS du Rhône"
             width={96}
             height={81}
             className="h-20 w-auto rounded"

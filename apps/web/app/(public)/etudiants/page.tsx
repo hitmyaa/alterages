@@ -24,13 +24,14 @@ import {
 } from '@/components/blocks';
 import { Accordion } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
+import { missions } from '@/lib/missions';
 
 import { TrackedFaqItem } from './_components/tracked-faq-item';
 
 export const metadata: Metadata = {
   title: 'Rejoindre AlterAges · Étudiants',
   description:
-    'Un travail étudiant flexible, rémunérateur et impactant — auprès de seniors lyonnais, à votre rythme, dans les quartiers de votre choix.',
+    'Un travail étudiant flexible, rémunérateur et impactant, auprès de seniors lyonnais, à votre rythme, dans les quartiers de votre choix.',
 };
 
 /* ------------------------------------------------------------------ */
@@ -66,44 +67,6 @@ const advantages = [
     value: '3 mois',
     title: 'Recommandation professionnelle',
     description: 'Une référence valorisable pour votre dossier, après 3 mois d’engagement.',
-  },
-];
-
-const missions = [
-  {
-    title: 'Entretien du domicile',
-    description:
-      'Ménage courant et rangement. Vous aidez le bénéficiaire à maintenir un cadre de vie propre et agréable, selon ses habitudes et ses préférences.',
-    image: '/images/etudiants/mission-entretien.webp',
-    imageAlt: 'Étudiante AlterAges aidant une personne âgée à entretenir son domicile',
-  },
-  {
-    title: 'Compagnie et lien social',
-    description:
-      "Présence, conversation, activités de loisir, accompagnement aux sorties. L'isolement est le premier ennemi des personnes âgées — votre présence compte plus que vous ne le pensez.",
-    image: '/images/etudiants/mission-compagnie.webp',
-    imageAlt: 'Étudiante AlterAges partageant un moment de complicité avec une personne âgée',
-  },
-  {
-    title: 'Préparation des repas',
-    description:
-      'Préparation de repas simples selon les goûts et régimes du bénéficiaire. Aide à la prise des repas si nécessaire. Un moment de partage autant qu’une aide concrète.',
-    image: '/images/etudiants/mission-repas.webp',
-    imageAlt: 'Étudiante AlterAges préparant un repas avec une personne âgée',
-  },
-  {
-    title: 'Accompagnement numérique',
-    description:
-      "Aide à l'utilisation du smartphone, de la tablette et des services en ligne. Vidéo avec les proches, démarches administratives, photos : des besoins simples mais essentiels.",
-    image: '/images/etudiants/mission-numerique.webp',
-    imageAlt: 'Étudiante AlterAges aidant une personne âgée à utiliser une tablette',
-  },
-  {
-    title: 'Aide à la mobilité extérieure',
-    description:
-      "Accompagnement pour les sorties, les courses, les promenades et les rendez-vous du quotidien. Vous permettez à des personnes qui ne sortent parfois plus seules de garder un lien avec l'extérieur, dans un cadre non médicalisé.",
-    image: '/images/etudiants/mission-mobilite.webp',
-    imageAlt: 'Étudiante AlterAges accompagnant une personne âgée lors d’une sortie',
   },
 ];
 
@@ -297,7 +260,7 @@ export default function EtudiantsPage() {
             <div className="shadow-hero ring-bd/60 relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl ring-1">
               <Image
                 src="/images/etudiants/hero.webp"
-                alt="Accompagnement intergénérationnel AlterAges — une jeune étudiante et une personne âgée"
+                alt="Accompagnement intergénérationnel AlterAges : une jeune étudiante et une personne âgée"
                 fill
                 priority
                 sizes="(min-width: 1024px) 45vw, 100vw"
@@ -543,7 +506,7 @@ export default function EtudiantsPage() {
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[0.95rem] leading-[1.9] text-white/80">
             Pas de CV ni de lettre de motivation. Une candidature rapide, une réponse rapide.
-            Rejoignez les premiers étudiants qui écrivent l’histoire d’AlterAges — l’équipe se
+            Rejoignez les premiers étudiants qui écrivent l’histoire d’AlterAges. L’équipe se
             constitue maintenant.
           </p>
 

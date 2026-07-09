@@ -80,7 +80,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                     rel="noopener noreferrer"
                     className="hover:text-terra-light text-white/80 underline-offset-4 transition-colors hover:underline"
                   >
-                    LinkedIn — Faustine Sornay
+                    LinkedIn · Faustine Sornay
                   </a>
                 </li>
                 <li className="mt-1 text-white/55">Lyon et agglomération (69)</li>
@@ -92,29 +92,27 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           <div className="border-t border-white/[0.08]">
             <div className="container flex flex-col gap-5 px-6 py-6 sm:flex-row sm:items-center sm:gap-6">
               <Image
-                src="/images/sap-declaration.jpg"
-                alt="Organisme déclaré services à la personne — DDETS du Rhône"
+                src="/images/icon-aide-domicile.png"
+                alt="AlterAges, aide à domicile"
                 width={72}
-                height={61}
-                className="h-[3.75rem] w-auto shrink-0 rounded"
+                height={60}
+                className="h-[3.75rem] w-auto shrink-0 self-start object-contain sm:self-center"
               />
-              <p className="text-[0.72rem] leading-[1.85] text-white/45">
-                AlterAges — Association loi 1901 · Déclaration Préfecture du Rhône : RNA W691112992
-                <br />
-                SIRET : 106 758 006 00014 — Code APE : 88.10A
-                <br />
-                Organisme de services à la personne déclaré auprès de la DDETS du Rhône — N° de
-                déclaration SAP106758006
-              </p>
-            </div>
-          </div>
-
-          <div className="border-t border-white/[0.08]">
-            <div className="container px-6 py-6 text-[0.72rem] leading-[1.7] text-white/45">
-              <p>
-                © {new Date().getFullYear()} AlterAges · Faustine Sornay · Lyon · Bénéficiaires
-                éligibles au crédit d’impôt de 50 %
-              </p>
+              <div className="text-[0.72rem] leading-[1.85] text-white/45">
+                <p>
+                  AlterAges · Association loi 1901 · Déclaration Préfecture du Rhône : RNA
+                  W691112992
+                  <br />
+                  SIRET : 106 758 006 00014 · Code APE : 88.10A
+                  <br />
+                  Organisme de services à la personne déclaré auprès de la DDETS du Rhône · N° de
+                  déclaration SAP106758006
+                </p>
+                <p className="mt-3">
+                  © {new Date().getFullYear()} AlterAges · Faustine Sornay · Lyon · Bénéficiaires
+                  éligibles au crédit d’impôt de 50 %
+                </p>
+              </div>
             </div>
           </div>
         </footer>
