@@ -99,18 +99,9 @@ const missions = [
     imageAlt: 'Étudiante AlterAges aidant une personne âgée à utiliser une tablette',
   },
   {
-    title: 'Aide à la toilette partielle',
-    description:
-      "Aide au lavage du visage et des mains, à l'habillage et à l'hygiène courante. Toujours avec le consentement du bénéficiaire, dans le respect total de sa dignité.",
-    warning:
-      'Formation obligatoire avant cette mission. Gestes spécifiques abordés dans le module 2.',
-    image: '/images/etudiants/mission-toilette.webp',
-    imageAlt: 'Étudiante AlterAges accompagnant une personne âgée dans son hygiène quotidienne',
-  },
-  {
     title: 'Aide à la mobilité extérieure',
     description:
-      "Accompagnement pour les sorties, les courses, les rendez-vous médicaux. Vous permettez à des personnes qui ne sortent parfois plus seules de garder un lien avec l'extérieur.",
+      "Accompagnement pour les sorties, les courses, les promenades et les rendez-vous du quotidien. Vous permettez à des personnes qui ne sortent parfois plus seules de garder un lien avec l'extérieur, dans un cadre non médicalisé.",
     image: '/images/etudiants/mission-mobilite.webp',
     imageAlt: 'Étudiante AlterAges accompagnant une personne âgée lors d’une sortie',
   },
@@ -134,12 +125,12 @@ const formationModules = [
     title: 'Intervenir en sécurité',
     description: 'Les gestes adaptés aux personnes âgées, avec ou sans perte de mobilité.',
     points: [
-      'Aide à la toilette partielle dans le respect de la dignité',
+      'Aide à l’habillage et au confort, dans le respect de la dignité',
       'Mobilisation sécurisée : lever, habillage, déplacement',
       'Prévention des chutes et réflexes de sécurité au domicile',
       "Ce qu'on ne fait pas : actes médicaux, nursing lourd, médicaments",
     ],
-    note: 'Obligatoire pour les missions de toilette partielle et de mobilité extérieure.',
+    note: 'Module clé avant les missions d’aide à la mobilité et de maintien à domicile.',
   },
   {
     badge: 'Module 3',
@@ -332,7 +323,6 @@ export default function EtudiantsPage() {
               key={m.title}
               title={m.title}
               description={m.description}
-              warning={m.warning}
               image={m.image}
               imageAlt={m.imageAlt}
             />
@@ -552,8 +542,9 @@ export default function EtudiantsPage() {
             Prêt à rejoindre l’aventure ?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[0.95rem] leading-[1.9] text-white/80">
-            Pas de CV ni de lettre de motivation. Une candidature rapide, une réponse rapide. Le
-            lancement est prévu pour septembre 2026 — c’est maintenant qu’on constitue l’équipe.
+            Pas de CV ni de lettre de motivation. Une candidature rapide, une réponse rapide.
+            Rejoignez les premiers étudiants qui écrivent l’histoire d’AlterAges — l’équipe se
+            constitue maintenant.
           </p>
 
           <div className="mt-10 flex justify-center">
