@@ -75,16 +75,16 @@ export default function ConfidentialitePage() {
       </LegalSection>
 
       <LegalSection title="Destinataires des données">
-        <p>Vos données sont destinées à AlterAges et à ses sous-traitants strictement nécessaires :</p>
+        <p>
+          Vos données sont destinées à AlterAges et à ses sous-traitants strictement nécessaires :
+        </p>
         <LegalList>
           <li>URSSAF (déclarations CESU).</li>
           <li>Prestataire de signature électronique (YouSign ou équivalent).</li>
           <li>Hébergeur (OVH).</li>
           <li>Outils de gestion interne.</li>
         </LegalList>
-        <p>
-          Aucune donnée n’est vendue, cédée ou communiquée à des tiers à des fins commerciales.
-        </p>
+        <p>Aucune donnée n’est vendue, cédée ou communiquée à des tiers à des fins commerciales.</p>
       </LegalSection>
 
       <LegalSection title="Durée de conservation">
