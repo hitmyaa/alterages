@@ -311,7 +311,11 @@ function CadreLegalSection() {
             value="Association loi 1901 déclarée"
             detail="Préfecture du Rhône — RNA W691112992"
           />
-          <LegalFact term="Immatriculation" value="SIRET 106 758 006 00014" detail="Code APE 88.10A" />
+          <LegalFact
+            term="Immatriculation"
+            value="SIRET 106 758 006 00014"
+            detail="Code APE 88.10A"
+          />
           <LegalFact
             term="Services à la personne"
             value="Organisme déclaré"

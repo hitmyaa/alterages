@@ -105,9 +105,7 @@ export default function MentionsLegalesPage() {
       </LegalSection>
 
       <LegalSection title="Crédits">
-        <p>
-          Photographies : illustrations générées par intelligence artificielle — usage libre.
-        </p>
+        <p>Photographies : illustrations générées par intelligence artificielle — usage libre.</p>
       </LegalSection>
     </LegalLayout>
   );
