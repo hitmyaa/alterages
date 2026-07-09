@@ -7,6 +7,7 @@ import { PublicHeader } from '@/components/site/public-header';
 
 const navLinks: ReadonlyArray<{ href: string; label: string; disabled?: boolean }> = [
   { href: '/a-propos', label: 'À propos' },
+  { href: '/tarifs', label: 'Tarifs' },
   { href: '/etudiants', label: 'Rejoindre AlterAges' },
   { href: '/#pourquoi', label: 'Pourquoi AlterAges' },
 ];
@@ -14,6 +15,8 @@ const navLinks: ReadonlyArray<{ href: string; label: string; disabled?: boolean 
 const legalLinks = [
   { href: '/mentions-legales', label: 'Mentions légales' },
   { href: '/confidentialite', label: 'Confidentialité' },
+  { href: '/cgu', label: "Conditions générales d'utilisation" },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
@@ -44,7 +47,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               </Link>
               <p className="mt-5 max-w-xs text-[0.85rem] leading-[1.8] text-white/65">
                 Association lyonnaise qui réinvente l’aide à domicile par le lien
-                intergénérationnel. Lancement septembre 2026.
+                intergénérationnel.
               </p>
             </div>
 
@@ -85,12 +88,32 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             </div>
           </div>
 
+          {/* Identité légale + déclaration officielle Services à la Personne */}
           <div className="border-t border-white/[0.08]">
-            <div className="container flex flex-col gap-3 px-6 py-6 text-[0.72rem] leading-[1.7] text-white/45 md:flex-row md:items-center md:justify-between">
-              <p>© {new Date().getFullYear()} AlterAges · Faustine Sornay · Lyon</p>
-              <p className="max-w-xl md:text-right">
-                Démarches d’obtention de l’agrément SAP en cours d’instruction. Aucun service n’est
-                actuellement commercialisé.
+            <div className="container flex flex-col gap-5 px-6 py-6 sm:flex-row sm:items-center sm:gap-6">
+              <Image
+                src="/images/sap-declaration.jpg"
+                alt="Organisme déclaré services à la personne — DDETS du Rhône"
+                width={72}
+                height={61}
+                className="h-[3.75rem] w-auto shrink-0 rounded"
+              />
+              <p className="text-[0.72rem] leading-[1.85] text-white/45">
+                AlterAges — Association loi 1901 · Déclaration Préfecture du Rhône : RNA W691112992
+                <br />
+                SIRET : 106 758 006 00014 — Code APE : 88.10A
+                <br />
+                Organisme de services à la personne déclaré auprès de la DDETS du Rhône — N° de
+                déclaration SAP106758006
+              </p>
+            </div>
+          </div>
+
+          <div className="border-t border-white/[0.08]">
+            <div className="container px-6 py-6 text-[0.72rem] leading-[1.7] text-white/45">
+              <p>
+                © {new Date().getFullYear()} AlterAges · Faustine Sornay · Lyon · Bénéficiaires
+                éligibles au crédit d’impôt de 50 %
               </p>
             </div>
           </div>

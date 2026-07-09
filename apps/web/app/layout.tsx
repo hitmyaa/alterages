@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: '%s · AlterAges',
   },
   description:
-    'AlterAges met en relation des étudiants du médico-social formés avec des personnes âgées, pour un accompagnement à domicile humain, transparent et de confiance. Lyon, lancement septembre 2026.',
+    'AlterAges met en relation des étudiants du médico-social formés avec des personnes âgées, pour un accompagnement à domicile humain, transparent et de confiance. Lyon. Éligible au crédit d’impôt de 50 %.',
   metadataBase: new URL(SITE_URL),
   applicationName: 'AlterAges',
   keywords: [
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     siteName: 'AlterAges',
     title: 'AlterAges — Quand la jeunesse prend soin de la sagesse',
     description:
-      'Aide à domicile à Lyon assurée par des étudiants du médico-social, formés et engagés. Lancement septembre 2026.',
+      'Aide à domicile à Lyon assurée par des étudiants du médico-social, formés et engagés. Éligible au crédit d’impôt de 50 %.',
     images: [
       {
         url: '/images/image-principale.png',

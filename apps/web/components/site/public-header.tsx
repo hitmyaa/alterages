@@ -13,6 +13,7 @@ const landingNav: ReadonlyArray<NavItem> = [
   { href: '/#aidants', label: 'Aidants' },
   { href: '/#etudiants', label: 'Intervenants' },
   { href: '/#suivi', label: 'Suivi' },
+  { href: '/tarifs', label: 'Tarifs' },
   { href: '/#pourquoi', label: 'Pourquoi AlterAges' },
 ];
 

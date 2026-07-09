@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 
-import { ChecklistItem, FeatureCard, InfoCard, Section, SectionHeader } from '@/components/blocks';
+import { ChecklistItem, FeatureCard, Section, SectionHeader } from '@/components/blocks';
 
 export const metadata: Metadata = {
   title: 'À propos · AlterAges',
@@ -49,9 +49,9 @@ const whatWeAre = [
   },
   {
     icon: ClipboardCheck,
-    title: 'Agrément SAP en instruction',
+    title: 'Organisme de services à la personne déclaré',
     description:
-      "Notre demande d'agrément Services à la Personne est en cours d'instruction auprès de la DREETS. Une fois obtenu, il ouvrira le droit au crédit d'impôt de 50 % sur 100 % des dépenses engagées.",
+      "AlterAges est déclaré auprès de la DDETS du Rhône (N° SAP106758006). Les bénéficiaires ouvrent droit au crédit d'impôt de 50 % sur 100 % des dépenses engagées.",
   },
 ];
 
@@ -66,34 +66,13 @@ const differentiators = [
     icon: Sparkles,
     title: 'La transparence des coûts',
     description:
-      "Le bénéficiaire paie directement le salaire de son intervenant·e via le CESU. AlterAges facture un forfait de gestion mensuel fixe, communiqué d'avance. Pas de marge cachée sur les heures, pas de frais surprise.",
+      "Le bénéficiaire paie directement le salaire de son intervenant·e via le CESU. AlterAges facture un forfait de gestion mensuel fixe de 69 € (34,50 € après crédit d'impôt). Pas de marge cachée sur les heures, pas de frais surprise.",
   },
   {
     icon: HandHeart,
     title: 'La gestion administrative prise en charge',
     description:
       "Contrats, déclarations CESU, bulletins de salaire, attestations fiscales, remplacements, suivi : tout est géré par AlterAges. Les familles gardent l'esprit tranquille, sans renoncer au modèle mandataire.",
-  },
-];
-
-const milestones = [
-  {
-    label: 'Aujourd’hui',
-    title: 'Construction du projet',
-    description:
-      "Affinage du modèle avec des professionnels du secteur, des familles et de futurs étudiants. Recueil des premières manifestations d'intérêt.",
-  },
-  {
-    label: 'Été 2026',
-    title: 'Obtention de l’agrément SAP',
-    description:
-      "Finalisation de l'instruction par la DREETS. Activation du crédit d'impôt à 50 % pour les bénéficiaires.",
-  },
-  {
-    label: 'Septembre 2026',
-    title: 'Lancement opérationnel à Lyon',
-    description:
-      'Premières mises en relation entre seniors et étudiants formés sur Lyon et son agglomération. Démarrage progressif et encadré.',
   },
 ];
 
@@ -135,7 +114,7 @@ function HeroSection() {
         <p className="lead mt-6 max-w-2xl">
           AlterAges fait le pari que la jeunesse, bien formée et bien encadrée, peut transformer
           l’accompagnement à domicile des personnes âgées. Voici comment et pourquoi ce projet est
-          né, ce qu’il est juridiquement, et où il en est aujourd’hui.
+          né, ce qu’il est juridiquement, et le cadre dans lequel il agit.
         </p>
       </div>
     </section>
@@ -310,56 +289,67 @@ function DifferentiateurSection() {
   );
 }
 
-/* ---------- CADRE LÉGAL & AVANCEMENT ---------- */
+/* ---------- CADRE LÉGAL & DÉCLARATION ---------- */
 function CadreLegalSection() {
   return (
-    <Section tone="deep" id="avancement">
+    <Section tone="deep" id="cadre-legal">
       <SectionHeader
         invert
-        eyebrow="État d’avancement"
+        eyebrow="Cadre légal et déclaration"
         title={
           <>
-            Un projet en <em>construction publique</em>.
+            Un cadre <em>déclaré</em>, des références vérifiables.
           </>
         }
-        description="Nous n’attendons pas le lancement pour ouvrir le dialogue. Voici précisément où en est la structure, et ce qui reste à franchir."
+        description="AlterAges agit dans un cadre légal précis et transparent. Voici les références officielles de la structure."
       />
 
-      <ol className="relative mt-12 grid gap-6 md:grid-cols-3 md:gap-0">
-        <div
-          aria-hidden
-          className="absolute left-8 right-8 top-6 hidden h-px md:block"
-          style={{
-            background: 'linear-gradient(to right, #B85C2C, #5C7A62)',
-          }}
-        />
-        {milestones.map((step, idx) => (
-          <li key={step.title} className="relative flex flex-col md:px-3">
-            <div className="border-terra bg-deep text-terra relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] font-sans text-base font-semibold tabular-nums">
-              {idx + 1}
-            </div>
-            <span className="tracking-tag text-terra-light mt-4 block text-[0.67rem] font-medium uppercase">
-              {step.label}
-            </span>
-            <h3 className="mt-1 font-serif text-[1.05rem] text-white">{step.title}</h3>
-            <p className="mt-2 text-[0.85rem] leading-[1.8] text-white/70">{step.description}</p>
-          </li>
-        ))}
-      </ol>
+      <div className="mt-12 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+        <dl className="grid gap-x-10 gap-y-7 sm:grid-cols-2">
+          <LegalFact
+            term="Statut"
+            value="Association loi 1901 déclarée"
+            detail="Préfecture du Rhône — RNA W691112992"
+          />
+          <LegalFact term="Immatriculation" value="SIRET 106 758 006 00014" detail="Code APE 88.10A" />
+          <LegalFact
+            term="Services à la personne"
+            value="Organisme déclaré"
+            detail="DDETS du Rhône — N° SAP106758006"
+          />
+          <LegalFact
+            term="Avantage fiscal"
+            value="Crédit d’impôt de 50 %"
+            detail="Pour les bénéficiaires, sur 100 % des dépenses engagées"
+          />
+        </dl>
 
-      <div className="mt-14 grid gap-4 md:grid-cols-2">
-        <InfoCard
-          invert
-          title="Aucun service n’est commercialisé à ce jour"
-          description="Tant que l’agrément SAP n’est pas délivré, AlterAges ne facture aucune intervention. Les manifestations d’intérêt recueillies aujourd’hui nourrissent la préparation du lancement."
-        />
-        <InfoCard
-          invert
-          title="Territoire d’ouverture : Lyon et agglomération"
-          description="Le démarrage se fera à l’échelle de la métropole lyonnaise (69), avec une montée en charge progressive arrondissement par arrondissement."
-        />
+        <div className="flex flex-col items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-8 text-center">
+          <Image
+            src="/images/sap-declaration.jpg"
+            alt="Organisme déclaré services à la personne — DDETS du Rhône"
+            width={96}
+            height={81}
+            className="h-20 w-auto rounded"
+          />
+          <p className="text-[0.82rem] leading-[1.7] text-white/65">
+            Organisme de services à la personne déclaré auprès de la DDETS du Rhône.
+          </p>
+        </div>
       </div>
     </Section>
+  );
+}
+
+function LegalFact({ term, value, detail }: { term: string; value: string; detail: string }) {
+  return (
+    <div>
+      <dt className="text-terra-light text-[0.67rem] font-medium uppercase tracking-[0.12em]">
+        {term}
+      </dt>
+      <dd className="mt-1.5 text-[0.98rem] font-medium text-white">{value}</dd>
+      <dd className="mt-0.5 text-[0.82rem] leading-[1.6] text-white/60">{detail}</dd>
+    </div>
   );
 }
 

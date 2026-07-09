@@ -3,6 +3,7 @@ import {
   CalendarCheck2,
   CheckCircle2,
   FileCheck2,
+  HeartHandshake,
   Home,
   Linkedin,
   type LucideIcon,
@@ -11,6 +12,7 @@ import {
   Phone,
   Quote,
   Search,
+  UserCheck,
   X,
 } from 'lucide-react';
 import Image from 'next/image';
@@ -64,7 +66,7 @@ function HeroSection() {
               <span className="bg-sage absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
               <span className="bg-sage relative inline-flex h-1.5 w-1.5 rounded-full" />
             </span>
-            Lyon · Lancement septembre 2026
+            50 % de crédit d'impôt
           </span>
 
           <h1 className="text-deep max-w-xl font-serif text-[clamp(2.2rem,4.5vw,4rem)] font-normal italic leading-[1.1] tracking-tight">
@@ -123,34 +125,35 @@ function PrescripteursSection() {
       <div className="container">
         <span className="eyebrow-invert">Pour les aidants</span>
         <h2 className="heading-serif max-w-2xl font-serif text-[clamp(1.9rem,3.5vw,2.7rem)] leading-[1.1] text-white">
-          Vous nous contactez,
+          L'employeur, c'est vous.
           <br />
-          on s'occupe du reste
+          L'administratif, c'est nous.
         </h2>
         <p className="mt-4 max-w-xl text-[0.95rem] leading-[1.9] text-white/65">
-          Nous prenons en charge de A à Z tous les bénéficiaires,
-          <br />
-          avec confiance et professionnalisme.
+          Vous restez décideur. Nous prenons en charge la construction du dossier, la coordination
+          et le suivi — avec vous, à chaque étape.
         </p>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          <PrescCard
-            image="/images/prescripteurs/zero-charge-adminsitrative.webp"
-            imageAlt="Main tenant un stylo au-dessus de documents administratifs sur un bureau chaleureux"
-            title="Zéro paperasse"
-            description="Contrats, CESU, bulletins de salaire : tout est pris en charge."
+        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+          <GestionCard
+            icon={FileCheck2}
+            title="Le dossier initial, ensemble"
+            description="Nous vous accompagnons dans la constitution du dossier de la personne aidée : contrat de travail de l'intervenant, déclaration URSSAF, mise en place du CESU. Vous signez, nous préparons."
           />
-          <PrescCard
-            image="/images/prescripteurs/etudiants-formés.webp"
-            imageAlt="Étudiante en formation, concentrée, dans un intérieur lumineux"
-            title="Des étudiants formés"
-            description="Tous nos étudiants suivent une formation interne obligatoire."
+          <GestionCard
+            icon={UserCheck}
+            title="Le lien avec l'intervenant"
+            description="Sélection du profil, présentation, cadrage des interventions, planning. Vous choisissez l'intervenant. Nous gérons le reste."
           />
-          <PrescCard
-            image="/images/prescripteurs/suivi-de-confiance.webp"
-            imageAlt="Dossier ouvert et tasse de café sur un bureau en bois"
-            title="Un suivi de confiance"
-            description="Un suivi peut être mis en place à la demande du prescripteur."
+          <GestionCard
+            icon={CalendarCheck2}
+            title="Le suivi au quotidien"
+            description="Coordination des interventions, gestion des remplacements, planning en ligne, messagerie directe avec Faustine. Une interlocutrice unique, joignable, présente."
+          />
+          <GestionCard
+            icon={HeartHandshake}
+            title="Les démarches associées"
+            description="Orientation vers les aides existantes, préparation des attestations fiscales. Nous vous guidons dans les démarches administratives liées au maintien à domicile."
           />
         </div>
 
@@ -190,41 +193,22 @@ function PrescripteursSection() {
   );
 }
 
-function PrescCard({
-  image,
-  imageAlt,
+function GestionCard({
+  icon: Icon,
   title,
   description,
 }: {
-  image: string;
-  imageAlt: string;
+  icon: LucideIcon;
   title: string;
   description: string;
 }) {
   return (
-    <article className="group relative flex min-h-[260px] flex-col justify-end overflow-hidden rounded-xl border border-white/10 transition-transform hover:-translate-y-1">
-      {/* Image de fond */}
-      <Image
-        src={image}
-        alt={imageAlt}
-        fill
-        sizes="(min-width: 768px) 33vw, 100vw"
-        className="object-cover transition-transform duration-500 group-hover:scale-105"
-      />
-      {/* Dégradé sombre pour la lisibilité du texte */}
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background: 'linear-gradient(to top, rgba(30,20,10,0.92) 40%, rgba(30,20,10,0.55) 100%)',
-        }}
-      />
-
-      {/* Contenu textuel */}
-      <div className="relative p-6">
-        <h3 className="font-serif text-lg text-white">{title}</h3>
-        <p className="mt-2 text-[0.85rem] leading-[1.75] text-white/75">{description}</p>
+    <article className="flex flex-col rounded-xl border border-white/10 bg-white/[0.04] p-6 transition-transform hover:-translate-y-1">
+      <div className="bg-terra/15 text-terra-light mb-4 flex h-11 w-11 items-center justify-center rounded-lg">
+        <Icon className="h-5 w-5" aria-hidden />
       </div>
+      <h3 className="font-serif text-lg text-white">{title}</h3>
+      <p className="mt-2 text-[0.85rem] leading-[1.75] text-white/70">{description}</p>
     </article>
   );
 }
@@ -316,8 +300,8 @@ function EtudiantsSection() {
           />
 
           <p className="text-light col-span-2 pt-2 text-[0.72rem] leading-[1.6]">
-            * Ces profils sont illustratifs et représentent le type d'intervenants qu'AlterAges
-            souhaite recruter d'ici septembre 2026.
+            * Ces profils sont illustratifs et représentent le type d'intervenants que recrute
+            AlterAges.
           </p>
         </div>
       </div>
@@ -585,7 +569,7 @@ function TarifSection() {
             />
             <InfoCard
               title="Forfait de gestion mensuel"
-              description="Un montant fixe couvrant sélection, contrats, CESU, bulletins de salaire, suivi et remplacements. Communiqué dès l'ouverture des inscriptions, en septembre 2026 — laissez-nous votre email pour être prévenu·e en avant-première."
+              description="Un forfait unique et fixe couvrant sélection, contrats, CESU, bulletins de salaire, suivi et remplacements : 69 €/mois, soit 34,50 € après crédit d'impôt. Voir le détail sur la page Tarifs."
             />
             <div className="bg-deep flex items-center gap-5 rounded-xl px-6 py-5 text-white">
               <div className="text-terra-light font-sans text-[2.75rem] font-bold tabular-nums leading-none tracking-tight">
@@ -654,17 +638,16 @@ function ContactSection() {
                 Porteuse du projet AlterAges · Lyon
               </span>
               <span className="mt-2 block text-[0.8rem] leading-[1.7] text-white/75">
-                Ancienne auxiliaire de vie, je crée AlterAges avec une idée simple : replacer
-                l'humain et le lien intergénérationnel au cœur d'un modèle d'aide à domicile
-                repensé.
+                Après 7 ans comme auxiliaire de vie, j'ai fondé AlterAges avec une idée simple :
+                replacer l'humain et le lien intergénérationnel au cœur d'un modèle d'aide à
+                domicile repensé.
               </span>
             </div>
           </div>
 
           <p className="text-mid mt-5 max-w-md text-[0.92rem] leading-[1.95]">
-            Professionnel du secteur, famille qui anticipe, partenaire potentiel : contactez-nous
-            avant le lancement. Plus tôt on échange, mieux on construit quelque chose qui répond
-            vraiment à vos besoins.
+            Professionnel du secteur, famille, partenaire : contactez-nous. Plus tôt on échange,
+            mieux on construit un accompagnement qui répond vraiment à vos besoins.
           </p>
 
           <div className="mt-6 flex flex-col gap-3">
@@ -687,7 +670,7 @@ function ContactSection() {
               href="https://www.linkedin.com/in/faustine-sornay/"
               external
             />
-            <CoordItem icon={MapPin} label="Territoire visé" value="Lyon et agglomération (69)" />
+            <CoordItem icon={MapPin} label="Territoire" value="Lyon et agglomération (69)" />
           </div>
         </div>
 

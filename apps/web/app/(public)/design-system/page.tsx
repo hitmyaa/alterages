@@ -77,7 +77,7 @@ const typeScale = [
   {
     className: 'small-text',
     label: 'Small — Méta / aide',
-    sample: 'Démarches d’obtention de l’agrément SAP en cours.',
+    sample: 'Organisme de services à la personne déclaré — crédit d’impôt de 50 %.',
   },
 ];
 
@@ -226,7 +226,7 @@ export default function DesignSystemPage() {
           <div className="flex flex-wrap gap-3">
             <Badge variant="sage">Sage</Badge>
             <Badge variant="sage-outline" pulse>
-              Lyon · Lancement septembre 2026
+              50 % de crédit d’impôt
             </Badge>
             <Badge variant="terra">Terra</Badge>
             <Badge variant="terra-outline">Terra outline</Badge>
@@ -416,7 +416,7 @@ export default function DesignSystemPage() {
           <CTABand
             invert
             title="Devenir partenaire fondateur"
-            description="Le projet se construit, votre regard terrain est précieux avant le lancement."
+            description="Le projet grandit, et votre regard terrain nous est précieux."
             ctaLabel="Prendre contact"
             ctaHref="/#contact"
           />
@@ -442,7 +442,7 @@ export default function DesignSystemPage() {
         <div className="mt-10">
           <CTABand
             title="Une question, un retour terrain"
-            description="On prend le temps d’en parler avant le lancement."
+            description="On prend le temps d’en parler quand vous voulez."
             ctaLabel="Nous écrire"
             ctaHref="/#contact"
           />
